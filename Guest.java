@@ -33,4 +33,14 @@ public class Guest {
     public void setRewardsPoints(double rewardsPoints) {
         this.rewardsPoints = rewardsPoints;
     }
+
+    public List<Amenity> getAmenitiesBooked() {
+        return amenitiesBooked;
+    }
+
+    //Resets booking status
+    public void checkout() {
+        room = null;
+        amenitiesBooked.clear();
+    }
 }

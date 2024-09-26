@@ -1,4 +1,4 @@
 public interface Reservable {
-    boolean isReserved = false;
-    void reserve();
+    //Set item as reserved to a specific guest
+    void reserve(Guest g);
 }
