@@ -1,8 +1,16 @@
 public abstract class Room implements Reservable {
     protected int roomID;
     protected String level;
-    protected int guestID;
+    protected Guest guest;
+    protected boolean isReserved = false;
 
     @Override
-    public abstract void reserve();
+    public void reserve(Guest g) {
+        isReserved = true;
+        guest = g;
+    }
+
+    public int getRoomID() {
+        return roomID;
+    }
 }
