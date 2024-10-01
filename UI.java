@@ -41,22 +41,7 @@ public class UI {
 
             // user is a Guest
             if (userNum == 1) {
-                Guest user = null;
-                boolean returning = false;
-                System.out.println("Whose name will be on the booking?");
-                String name = input.nextLine();
-                for (Guest g : h.getGuestList()) {
-                    if (g.getName().equals(name)) {
-                        System.out.println("Welcome back " + name + "!");
-                        returning = true;
-                        user = g;
-                    }
-                    break;
-                }
-                if (!returning) {
-                    user = new Guest(name);
-                    h.getGuestList().add(user);
-                }
+                Guest user = assignGuestSession(input, h);
                 System.out.println("Select an option (enter a number):\n" +
                         "1. Book a room\n" +
                         "2. Book an amenity\n" +
@@ -73,7 +58,7 @@ public class UI {
                         Room bookedRoom = h.getOpenRooms().get(entered);
                         h.reservation(bookedRoom, user);
                         System.out.println("Room " + bookedRoom.getRoomID() +
-                                " successfully reserved for " + name);
+                                " successfully reserved for " + user.getName());
                         break;
                     case 2:
                     case 3:
@@ -117,5 +102,25 @@ public class UI {
             userNum = input.nextInt();
         }
         return userNum;
+    }
+
+    public static Guest assignGuestSession(Scanner input, Hotel h) {
+        Guest user = null;
+        boolean returning = false;
+        System.out.println("Whose name will be on the booking?");
+        String name = input.nextLine();
+        for (Guest g : h.getGuestList()) {
+            if (g.getName().equals(name)) {
+                System.out.println("Welcome back " + name + "!");
+                returning = true;
+                user = g;
+            }
+            break;
+        }
+        if (!returning) {
+            user = new Guest(name);
+            h.getGuestList().add(user);
+        }
+        return user;
     }
 }
