@@ -33,12 +33,30 @@ public class UI {
                         userNum = getUserNum(input);
                         break;
                     default:
-                        System.out.println("Please select one of the options from the menu.");
+                        System.out.println("Please select one of the " +
+                                "options from the menu.");
                 }
             } while (entered < 1 || entered > 4);
             System.out.println("Welcome to the " + h.getName() + "!");
+
             // user is a Guest
             if (userNum == 1) {
+                Guest user = null;
+                boolean returning = false;
+                System.out.println("Whose name will be on the booking?");
+                String name = input.nextLine();
+                for (Guest g : h.getGuestList()) {
+                    if (g.getName().equals(name)) {
+                        System.out.println("Welcome back " + name + "!");
+                        returning = true;
+                        user = g;
+                    }
+                    break;
+                }
+                if (!returning) {
+                    user = new Guest(name);
+                    h.getGuestList().add(user);
+                }
                 System.out.println("Select an option (enter a number):\n" +
                         "1. Book a room\n" +
                         "2. Book an amenity\n" +
@@ -47,7 +65,20 @@ public class UI {
                 entered = input.nextInt();
                 switch (entered) {
                     case 1:
-                        System.out.println();
+                        System.out.println("Select an available room from " +
+                                "the following list (for \\033[3m1. Room " +
+                                "200\\033[0m, enter 1");
+                        System.out.println(h.showRooms());
+                        entered = input.nextInt();
+                        Room bookedRoom = h.getOpenRooms().get(entered);
+                        h.reservation(bookedRoom, user);
+                        System.out.println("Room " + bookedRoom.getRoomID() +
+                                " successfully reserved for " + name);
+                        break;
+                    case 2:
+                    case 3:
+                    case 4:
+                    default:
                 }
             }
         }

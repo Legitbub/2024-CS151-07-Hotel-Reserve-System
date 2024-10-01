@@ -1,6 +1,6 @@
 import java.util.ArrayList;
 
-public abstract class Amenity implements Reservable{
+public abstract class Amenity implements Reservable {
     public String name;
     public String description;
     public boolean isAvailable;

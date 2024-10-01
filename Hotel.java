@@ -8,8 +8,8 @@ public class Hotel {
     private List<Employee> employeeList = new ArrayList<>();
     private List<Room> openRooms = new ArrayList<>();
     private List<Amenity> openAmenities = new ArrayList<>();
-    private HashMap<Room, Guest> roomLog = new HashMap<Room, Guest>();
-    private HashMap<Amenity, Guest> amenityLog = new HashMap<Amenity, Guest>();
+    private HashMap<Room, Guest> roomLog = new HashMap<>();
+    private HashMap<Amenity, Guest> amenityLog = new HashMap<>();
 
     public Hotel() {
         name = "Default Hotel";
@@ -29,6 +29,9 @@ public class Hotel {
 
     public List<Employee> getEmployeeList() {
         return employeeList;
+    }
+    public List<Room> getOpenRooms() {
+        return openRooms;
     }
 
     public HashMap<Room, Guest> getRoomLog() {
@@ -62,7 +65,7 @@ public class Hotel {
 
     //Set the list of open amenities
     public void addAmenities(List<Amenity> a) {
-        openAmenities.add(a);
+        openAmenities.addAll(a);
     }
 
     //Make a room reservation; update logs
@@ -84,8 +87,9 @@ public class Hotel {
     //Return a string showing the list of available rooms to book
     public String showRooms() {
         String s = "";
+        int i = 1;
         for (Room r : openRooms) {
-            s += (r.roomID + "\n");
+            s += (i + ". Room " + r.roomID + "\n");
         }
         return s;
     }
@@ -94,7 +98,7 @@ public class Hotel {
     public String showAmenities() {
         String s = "";
         for (Amenity a : openAmenities) {
-            s += (a.ID + "\n");
+            s += (a.name + "\n");
         }
         return s;
     }
