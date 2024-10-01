@@ -7,13 +7,13 @@ public abstract class Amenity implements Reservable{
     public int maxOccupancy;
     public ArrayList<Guest> occupants;
 
-    //Method to set amenitie's availability 
+    //Method to set amenity's availability
     public void setAvailable(boolean isAvailable){
         this.isAvailable = isAvailable;
     }
 
     public void displayAmenityDetails(){
-        System.out.printf("Name: %s\nDescription: %s\nAvailablility: %s\n", name, description,
+        System.out.printf("Name: %s\nDescription: %s\nAvailability: %s\n", name, description,
             isAvailable ? "available" : "unavailable");
     }
 
