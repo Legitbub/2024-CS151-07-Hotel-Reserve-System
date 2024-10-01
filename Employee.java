@@ -1,16 +1,17 @@
 public class Employee {
-    private int id;
+    private String ID;
     private String name;
     private double hoursWorked = 0;
     private String position;
     private double wage;
+    
 
     public Employee() {
 
     }
 
-    public Employee(int id, String name, String position, double wage) {
-        this.id = id;
+    public Employee(String ID, String name, String position, double wage) {
+        this.ID = ID;
         this.name = name;
         this.position = position;
         this.wage = wage;
@@ -24,8 +25,8 @@ public class Employee {
         this.wage = wage;
     }
 
-    public int getId() {
-        return id;
+    public String getId() {
+        return ID;
     }
 
     public double getHoursWorked() {
