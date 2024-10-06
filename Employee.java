@@ -5,8 +5,8 @@ public class Employee {
     private String position;
     private double wage;
 
-    public Employee() {
-
+    public Employee(int id) {
+        this.id = id;
     }
 
     public Employee(int id, String name, String position, double wage) {
@@ -46,5 +46,13 @@ public class Employee {
 
     public void setPosition(String position) {
         this.position = position;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj == null || obj.getClass() != getClass()) {
+            return false;
+        }
+        return id == ((Employee) obj).id;
     }
 }
