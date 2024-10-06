@@ -12,41 +12,17 @@ public class UI {
         Hotel h = null;
 
         while (session) {
-            do {
-                System.out.println("Select your hotel (enter a number):\n" +
-                        "1. Beachfront\n" +
-                        "2. Grand Street\n" +
-                        "3. Urban Life\n" +
-                        "4. Previous");
-                entered = input.nextInt();
-                switch (entered) {
-                    case 1:
-                        h = hotels.get(0);
-                        break;
-                    case 2:
-                        h = hotels.get(1);
-                        break;
-                    case 3:
-                        h = hotels.get(2);
-                        break;
-                    case 4:
-                        userNum = getUserNum(input);
-                        break;
-                    default:
-                        System.out.println("Please select one of the " +
-                                "options from the menu.");
-                }
-            } while (entered < 1 || entered > 4);
-            System.out.println("Welcome to the " + h.getName() + "!");
+            userNum = selectHotel(input, hotels, userNum, h);
 
-            // user is a Guest
-            if (userNum == 1) {
+            // User is a Guest
+            while (userNum == 1) {
                 Guest user = assignGuestSession(input, h);
                 System.out.println("Select an option (enter a number):\n" +
                         "1. Book a room\n" +
                         "2. Book an amenity\n" +
                         "3. Make a payment\n" +
-                        "4. Previous");
+                        "4. Previous\n" +
+                        "5. End session");
                 entered = input.nextInt();
                 switch (entered) {
                     case 1:
@@ -61,11 +37,27 @@ public class UI {
                                 " successfully reserved for " + user.getName());
                         break;
                     case 2:
+                        System.out.println("Select an available amenity from " +
+                                "the following list (enter the number)");
+                        h.showAmenities();
+                        entered = input.nextInt();
+                        Amenity bookedAmenity = h.getOpenAmenities().get(entered);
+                        h.reservation(bookedAmenity, user);
+                        System.out.println(bookedAmenity.getName() +
+                                " successfully reserved for " + user.getName());
                     case 3:
                     case 4:
+                        userNum = selectHotel(input, hotels, userNum, h);
+                    case 5:
+                        session = false;
+                        userNum = 0;
+                        break;
                     default:
+                        System.out.println("Invalid entry. Try again.");
                 }
             }
+
+            // User is an employee
         }
     }
 
@@ -101,6 +93,43 @@ public class UI {
                     "portal or 2 for Employee portal):");
             userNum = input.nextInt();
         }
+        return userNum;
+    }
+
+    // Prompt the user to select one of the hotels from the list
+    // If the user selects "previous", the method will call
+    // getUserNum to change the user session number and then continue
+    // until a hotel is selected
+    // Returns the user number for the initial method call
+    public static int selectHotel(Scanner input, List<Hotel> hotels,
+                                  int userNum, Hotel h) {
+        int entered;
+        do {
+            System.out.println("Select your hotel (enter a number):\n" +
+                    "1. Beachfront\n" +
+                    "2. Grand Street\n" +
+                    "3. Urban Life\n" +
+                    "4. Previous");
+            entered = input.nextInt();
+            switch (entered) {
+                case 1:
+                    h = hotels.get(0);
+                    break;
+                case 2:
+                    h = hotels.get(1);
+                    break;
+                case 3:
+                    h = hotels.get(2);
+                    break;
+                case 4:
+                    userNum = getUserNum(input);
+                    break;
+                default:
+                    System.out.println("Please select one of the " +
+                            "options from the menu.");
+            }
+        } while (entered < 1 || entered >= 4);
+        System.out.println("Welcome to the " + h.getName() + "!");
         return userNum;
     }
 
