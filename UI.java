@@ -49,6 +49,7 @@ public class UI {
                     case 3:
                     case 4:
                         userNum = selectHotel(input, hotels, userNum, h);
+                        break;
                     case 5:
                         session = false;
                         userNum = 0;
@@ -61,8 +62,8 @@ public class UI {
             // User is an employee
             while (userNum == 2) {
                 System.out.print("Enter employee ID: ");
-                entered = input.nextInt();
-                Employee search = new Employee(entered);
+                String ID = input.nextLine();
+                Employee search = new Employee(ID);
                 if (h.getEmployeeList().contains(search)) {
                     int searchIndex = h.getEmployeeList().indexOf(search);
                     Employee userEmploy = h.getEmployeeList().get(searchIndex);
@@ -106,12 +107,13 @@ public class UI {
                                 System.out.println("Only supervisors have permission " +
                                         "to change employee details.");
                             } else {
-
+                                ((Supervisor) userEmploy).modifyEmployeeDetails();
                             }
                             break;
                         case 5:
                         case 6:
                             userNum = selectHotel(input, hotels, userNum, h);
+                            break;
                         case 7:
                             session = false;
                             userNum = 0;
@@ -140,6 +142,17 @@ public class UI {
             grandStreet.addRooms(new VIPRoom(i));
             urbanLife.addRooms(new VIPRoom(i));
         }
+
+        List<Employee> workers = new ArrayList<>();
+        Employee rick = new Employee("001", "Rick", "Guest Services", 22);
+        Employee cheri = new Employee("002", "Cheri", "Accounts Manager", 35);
+        Employee bonzo = new Employee("003", "Bonzo", "Supervisor", 80);
+        workers.add(rick);
+        workers.add(cheri);
+        workers.add(bonzo);
+        beachfront.setEmployeeList(workers);
+        grandStreet.setEmployeeList(workers);
+        urbanLife.setEmployeeList(workers);
 
         List<Hotel> hotels = new ArrayList<>();
         hotels.add(beachfront);

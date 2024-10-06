@@ -6,8 +6,8 @@ public class Employee {
     private double wage;
     
 
-    public Employee(int id) {
-        this.id = id;
+    public Employee(String ID) {
+        this.ID = ID;
     }
 
     public Employee(String ID, String name, String position, double wage) {
@@ -49,11 +49,23 @@ public class Employee {
         this.position = position;
     }
 
+    public void modifyRoom() {
+
+    }
+
+    public void modifyAmenity() {
+
+    }
+
+    public void displayEmployeeDetails() {
+
+    }
+
     @Override
     public boolean equals(Object obj) {
         if (obj == null || obj.getClass() != getClass()) {
             return false;
         }
-        return id == ((Employee) obj).id;
+        return ID.equals(((Employee) obj).ID);
     }
 }

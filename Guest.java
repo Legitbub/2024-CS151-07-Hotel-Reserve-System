@@ -46,6 +46,10 @@ public class Guest {
         amenitiesBooked.clear();
     }
 
+    public void displayGuestAccount() {
+
+    }
+
     @Override
     public boolean equals(Object obj) {
         if (obj == null || obj.getClass() != getClass()) {
