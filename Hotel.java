@@ -67,18 +67,39 @@ public class Hotel {
 
     //Make a room reservation; update logs
     public void reservation(Room r, Guest g) {
-        openRooms.remove(r);
-        roomLog.put(r, g);
-        r.reserve(g);
-        g.setRoom(r);
+        if(!r.isReserved){
+            openRooms.remove(r);
+            roomLog.put(r, g);
+            r.reserve(g);
+            g.setRoom(r);
+        }else{
+            System.out.println("Room " + r.roomID + " already reserved");
+        }
+
     }
 
     //Make an amenity reservation; update logs
     public void reservation(Amenity a, Guest g) {
-        openAmenities.remove(a);
-        amenityLog.put(a, g);
-        a.reserve(g);
-        g.getAmenitiesBooked().add(a);
+        if(a.isAvailable){
+            amenityLog.put(a, g);
+            a.reserve(g);
+            g.getAmenitiesBooked().add(a);
+            if(a.occupants.size() == a.maxOccupancy){
+                openAmenities.remove(a);
+            }
+        }else{
+            System.out.println("Amenity is unavailable");
+        }
+    }
+
+    public void cancelReservation(Amenity a, Guest g){
+        if(a.occupants.contains(g)){
+            a.cancel(g);
+            amenityLog.remove(g);
+            if(!openAmenities.contains(g))
+        }else{
+            System.out.println("No reservation under the name " + g.getName());
+        }
     }
 
     //Return a string showing the list of available rooms to book
