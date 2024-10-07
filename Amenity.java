@@ -35,7 +35,7 @@ public abstract class Amenity implements Reservable{
 
     //display name, description, and availability of amenity
     public void displayAmenityDetails(){
-        System.out.printf("Name: %s\nDescription: %s\nAvailablility: %s\n", name, description,
+        System.out.printf("%s\nDescription: %s\nAvailability: %s\n", name, description,
             isAvailable ? "available" : "unavailable");
     }
 

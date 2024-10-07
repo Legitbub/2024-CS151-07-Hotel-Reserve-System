@@ -45,4 +45,16 @@ public class Guest {
         room = null;
         amenitiesBooked.clear();
     }
+
+    public void displayGuestAccount() {
+
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj == null || obj.getClass() != getClass()) {
+            return false;
+        }
+        return name.equals(((Guest) obj).getName());
+    }
 }
