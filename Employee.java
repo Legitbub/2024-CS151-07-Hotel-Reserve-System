@@ -4,17 +4,20 @@ public class Employee {
     private double hoursWorked = 0;
     private String position;
     private double wage;
+    private Hotel assignHotel;
     
 
     public Employee() {
 
     }
 
-    public Employee(String ID, String name, String position, double wage) {
+    public Employee(String ID, String name, String position, double wage, Hotel assignHotel) {
         this.ID = ID;
         this.name = name;
         this.position = position;
         this.wage = wage;
+        //Assign the employee to a Hotel.
+        this.assignHotel = assignHotel;
     }
 
     public double getWage() {
