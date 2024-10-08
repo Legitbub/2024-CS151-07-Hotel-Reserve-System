@@ -34,12 +34,20 @@ public class Hotel {
         return openRooms;
     }
 
+    public List<Amenity> getOpenAmenities() {
+        return openAmenities;
+    }
+
     public HashMap<Room, Guest> getRoomLog() {
         return roomLog;
     }
 
     public HashMap<Amenity, Guest> getAmenityLog() {
         return amenityLog;
+    }
+
+    public void setEmployeeList(List<Employee> l) {
+        employeeList = l;
     }
 
     //Add a room to the hotel list
@@ -95,11 +103,12 @@ public class Hotel {
     }
 
     //Return a string showing the list of available amenities to book
-    public String showAmenities() {
-        String s = "";
+    public void showAmenities() {
+        int i = 1;
         for (Amenity a : openAmenities) {
-            s += (a.name + "\n");
+            System.out.print(i + ". ");
+            a.displayAmenityDetails();
+            i++;
         }
-        return s;
     }
 }

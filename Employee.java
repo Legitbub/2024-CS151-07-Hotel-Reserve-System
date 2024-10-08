@@ -7,8 +7,8 @@ public class Employee {
     private Hotel assignHotel;
     
 
-    public Employee() {
-
+    public Employee(String ID) {
+        this.ID = ID;
     }
 
     public Employee(String ID, String name, String position, double wage, Hotel assignHotel) {
@@ -50,5 +50,25 @@ public class Employee {
 
     public void setPosition(String position) {
         this.position = position;
+    }
+
+    public void modifyRoom() {
+
+    }
+
+    public void modifyAmenity() {
+
+    }
+
+    public void displayEmployeeDetails() {
+
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj == null || obj.getClass() != getClass()) {
+            return false;
+        }
+        return ID.equals(((Employee) obj).ID);
     }
 }

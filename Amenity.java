@@ -13,8 +13,12 @@ public abstract class Amenity implements Reservable {
     }
 
     public void displayAmenityDetails(){
-        System.out.printf("Name: %s\nDescription: %s\nAvailability: %s\n", name, description,
+        System.out.printf("%s\nDescription: %s\nAvailability: %s\n", name, description,
             isAvailable ? "available" : "unavailable");
+    }
+
+    public String getName() {
+        return name;
     }
 
     @Override
