@@ -8,7 +8,7 @@ public abstract class Amenity implements Reservable{
     protected ArrayList<Guest> occupants = new ArrayList<>();
     private static final int DEFAULT_MAX_OCCUPANCY = 30;
 
-    //will finish constructors once subclasses are more flushed out- for now not technically needed in abstract class
+    //will finish constructors once subclasses are more flushed out- for now not technically needed
 
     // public Amenity(){
     //     name = "no name";
