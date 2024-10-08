@@ -5,6 +5,7 @@ public class Employee {
     private String position;
     private double wage;
     private Hotel assignHotel;
+    private Guest guest;
     
 
     public Employee(String ID) {
@@ -53,7 +54,7 @@ public class Employee {
     }
 
     public void modifyRoom() {
-
+        guest.checkout();
     }
 
     public void modifyAmenity() {
@@ -61,7 +62,7 @@ public class Employee {
     }
 
     public void displayEmployeeDetails() {
-
+        System.out.println("Name: %s , ID: %s, Position: %s, ")
     }
 
     @Override

@@ -19,6 +19,32 @@ public class EmployeePayment extends Payment {
         return hourlyRate * hoursWorked;
     }
 
+    @Override
+    public double calculateTaxes() {
+        double totalIncomeBeforeTax = calculateTotal();
+        double incomeAfterTax = 0;
+        if(totalIncomeBeforeTax <= 10099){
+            incomeAfterTax = totalIncomeBeforeTax * 0.01;
+        }
+        else if(incomeAfterTax >= 10100 && incomeAfterTax <= 23942){
+            incomeAfterTax = totalIncomeBeforeTax * 0.02;
+        }
+        else if(incomeAfterTax >= 23942 && incomeAfterTax <= 37788){
+            incomeAfterTax = totalIncomeBeforeTax * 0.04;
+        }
+        else if(incomeAfterTax >= 37789 && incomeAfterTax <= 52455){
+            incomeAfterTax = totalIncomeBeforeTax * 0.06;
+        }
+        else if(incomeAfterTax >= 52456 && incomeAfterTax <= 66295){
+            incomeAfterTax = totalIncomeBeforeTax * 0.08;
+        }
+        else{
+            incomeAfterTax = totalIncomeBeforeTax * 0.093;
+        }
+
+        return incomeAfterTax;
+    }
+
     // Method to process payment
     @Override
     public void processPayment(double amount) {
@@ -42,21 +68,12 @@ public class EmployeePayment extends Payment {
     }
 
 
-
-    @Override
-    public void applyDiscount(double discountAmount) {
-        // Not relevant for employees
-        System.out.println("Unsupported Action");
-    }
-
-    @Override
-    public void processRefund(double refundAmount) {
-        // Not needed in employee payment processing
-        System.out.println("Unsupported Action");
-    }
-
     @Override
     public void recordTransaction(String transactionDetails) {
         System.out.println("Recording employee transaction: " + transactionDetails);
     }
+
+
+    
+    
 }
