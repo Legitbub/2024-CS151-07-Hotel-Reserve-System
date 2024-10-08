@@ -8,9 +8,6 @@ public abstract class Payment{
     // Method to generate a detailed receipt of the payment transaction
     public abstract String generateReceipt();
 
-    // Method to calculate taxes on the payment
-    public abstract double calculateTaxes(double amount);
-
     // Method to record payment information for tracking and auditing purposes
     public abstract void recordTransaction(String transactionDetails);
 
@@ -18,6 +15,10 @@ public abstract class Payment{
     public void addLoyaltyPoints(int points) {
         // Logic to add loyalty points to guest account
     }
+    //Method to calculate taxes for both guess and employee
+    public abstract double calculateTaxes();
+
+    
     
     // Method to check if payment has been processed successfully
     public boolean isPaymentSuccessful() {

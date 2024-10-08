@@ -37,8 +37,9 @@ public class GuestPayment extends Payment {
 
     // Method to calculate taxes on the total bill
     @Override
-    public double calculateTaxes(double amount) {
+    public double calculateTaxes() {
         double taxRate = 0.10; 
+        double amount = calculateTotal();
         return amount * taxRate;
     }
 
