@@ -41,20 +41,6 @@ public class EmployeePayment extends Payment {
         return "Employee Payment Receipt: Total Hours Worked: " + hoursWorked + ", Total Payment: $" + calculateTotal();
     }
 
-
-
-    @Override
-    public void applyDiscount(double discountAmount) {
-        // Not relevant for employees
-        System.out.println("Unsupported Action");
-    }
-
-    @Override
-    public void processRefund(double refundAmount) {
-        // Not needed in employee payment processing
-        System.out.println("Unsupported Action");
-    }
-
     @Override
     public void recordTransaction(String transactionDetails) {
         System.out.println("Recording employee transaction: " + transactionDetails);

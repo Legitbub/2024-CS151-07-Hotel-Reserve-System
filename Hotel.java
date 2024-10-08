@@ -92,7 +92,7 @@ public class Hotel {
         g.getAmenitiesBooked().add(a);
     }
 
-    //Return a string showing the list of available rooms to book
+    // Return a string showing the list of available rooms to book
     public String showRooms() {
         String s = "";
         int i = 1;
@@ -102,7 +102,17 @@ public class Hotel {
         return s;
     }
 
-    //Return a string showing the list of available amenities to book
+    //Return a string showing the list of booked rooms
+    public String bookedRooms() {
+        String s = "";
+        Object[] rooms = roomLog.keySet().toArray();
+        for (int i = 0; i < rooms.length; i++) {
+            s += (i + ". Room " + ((Room) rooms[i]).roomID + "\n");
+        }
+        return s;
+    }
+
+    // Return a string showing the list of available amenities to book
     public void showAmenities() {
         int i = 1;
         for (Amenity a : openAmenities) {
@@ -110,5 +120,15 @@ public class Hotel {
             a.displayAmenityDetails();
             i++;
         }
+    }
+
+    //Return a string showing the list of bookedRooms
+    public String bookedAmenities() {
+        String s = "";
+        Object[] amenities = amenityLog.keySet().toArray();
+        for (int i = 0; i < amenities.length; i++) {
+            s += (i + ". " + ((Amenity) amenities[i]).getName() + "\n");
+        }
+        return s;
     }
 }

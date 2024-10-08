@@ -29,8 +29,7 @@ public class GuestPayment extends Payment {
         System.out.println("Processing guest payment of $" + amount);
     }
 
-    // Method to apply discount 
-    @Override
+    // Method to apply discount
     public void applyDiscount(double discountAmount) {
         double total = calculateTotal();
         roomCharges = Math.max(0, total - discountAmount);// Charges >= 0
@@ -51,7 +50,6 @@ public class GuestPayment extends Payment {
     }
 
     // Method to process refund for guest in case of cancellations
-    @Override
     public void processRefund(double refundAmount) {
         System.out.println("Processing refund of $" + refundAmount + " for the guest.");
     }

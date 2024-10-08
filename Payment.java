@@ -5,12 +5,6 @@ public abstract class Payment{
     // Method to process a payment (could be extended for diff. types: cash, card, etc.)
     public abstract void processPayment(double amount);
 
-    // Method to apply a discount 
-    public abstract void applyDiscount(double discountAmount);
-
-    // Method to handle refunds (in case of cancellations)
-    public abstract void processRefund(double refundAmount);
-
     // Method to generate a detailed receipt of the payment transaction
     public abstract String generateReceipt();
 

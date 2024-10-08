@@ -26,22 +26,13 @@ public class UI {
                 entered = input.nextInt();
                 switch (entered) {
                     case 1:
-                        System.out.println("Select an available room from " +
-                                "the following list (for \\033[3m1. Room " +
-                                "200\\033[0m, enter 1");
-                        System.out.println(h.showRooms());
-                        entered = input.nextInt();
-                        Room bookedRoom = h.getOpenRooms().get(entered);
+                        Room bookedRoom = roomSelect(input, h, false);
                         h.reservation(bookedRoom, user);
                         System.out.println("Room " + bookedRoom.getRoomID() +
                                 " successfully reserved for " + user.getName());
                         break;
                     case 2:
-                        System.out.println("Select an available amenity from " +
-                                "the following list (enter the number)");
-                        h.showAmenities();
-                        entered = input.nextInt();
-                        Amenity bookedAmenity = h.getOpenAmenities().get(entered);
+                        Amenity bookedAmenity = amenitySelect(input, h, false);
                         h.reservation(bookedAmenity, user);
                         System.out.println(bookedAmenity.getName() +
                                 " successfully reserved for " + user.getName());
@@ -80,28 +71,63 @@ public class UI {
                     switch (entered) {
                         case 1:
                             Guest guestUser = assignGuestSession(input, h);
-                            System.out.println("Select an available room from " +
-                                    "the following list (for \\033[3m1. Room " +
-                                    "200\\033[0m, enter 1");
-                            System.out.println(h.showRooms());
-                            entered = input.nextInt();
-                            Room bookedRoom = h.getOpenRooms().get(entered);
+                            Room bookedRoom = roomSelect(input, h, false);
                             h.reservation(bookedRoom, guestUser);
                             System.out.println("Room " + bookedRoom.getRoomID() +
                                     " successfully reserved for " + guestUser.getName());
                             break;
                         case 2:
                             Guest guestUser2 = assignGuestSession(input, h);
-                            System.out.println("Select an available amenity from " +
-                                    "the following list (enter the number)");
-                            h.showAmenities();
-                            entered = input.nextInt();
-                            Amenity bookedAmenity = h.getOpenAmenities().get(entered);
+                            Amenity bookedAmenity = amenitySelect(input, h, false);
                             h.reservation(bookedAmenity, guestUser2);
                             System.out.println(bookedAmenity.getName() +
                                     " successfully reserved for " + guestUser2.getName());
                             break;
                         case 3:
+                            do {
+                                System.out.println("Modify Room or Amenity bookings?:\n" +
+                                        "1. Room\n2. Amenity");
+                                entered = input.nextInt();
+                                if (entered != 1 && entered != 2) {
+                                    System.out.println("Invalid entry. Enter 1 for " +
+                                            "Room or 2 for Amenity.");
+                                }
+                            } while (entered != 1 && entered != 2);
+
+                            if (entered == 1) {
+                                Room modifiedRoom = roomSelect(input, h, true);
+                                do {
+                                    System.out.println("Cancel or switch booking?");
+                                    entered = input.nextInt();
+                                    if (entered != 1 && entered != 2) {
+                                        System.out.println("Invalid entry. Enter 1 for " +
+                                                "cancel or 2 for switch.");
+                                    }
+                                } while (entered != 1 && entered != 2);
+                                if (entered == 1) {
+                                    userEmploy.modifyRoom(modifiedRoom);
+                                } else {
+                                    Guest newG = assignGuestSession(input, h);
+                                    userEmploy.modifyRoom(modifiedRoom, newG);
+                                }
+                            } else {
+                                Amenity modifiedAmenity = amenitySelect(input, h, true);
+                                do {
+                                    System.out.println("Cancel or switch booking?");
+                                    entered = input.nextInt();
+                                    if (entered != 1 && entered != 2) {
+                                        System.out.println("Invalid entry. Enter 1 for " +
+                                                "cancel or 2 for switch.");
+                                    }
+                                } while (entered != 1 && entered != 2);
+                                if (entered == 1) {
+                                    userEmploy.modifyAmenity(modifiedAmenity);
+                                } else {
+                                    Guest newG = assignGuestSession(input, h);
+                                    userEmploy.modifyAmenity(modifiedAmenity, newG);
+                                }
+                            }
+                            break;
                         case 4:
                             if (!(userEmploy instanceof Supervisor)) {
                                 System.out.println("Only supervisors have permission " +
@@ -224,5 +250,47 @@ public class UI {
             h.getGuestList().add(user);
         }
         return user;
+    }
+
+    public static Room roomSelect(Scanner input, Hotel h, boolean booked) {
+        Room r = null;
+        int entered;
+        if (!booked) {
+            System.out.println("Select an available room from " +
+                    "the following list (for \\033[3m1. Room " +
+                    "200\\033[0m, enter 1");
+            System.out.println(h.showRooms());
+            entered = input.nextInt();
+            r = h.getOpenRooms().get(entered);
+        } else {
+            System.out.println("Select a booked room from " +
+                    "the following list (for \\033[3m1. Room " +
+                    "200\\033[0m, enter 1");
+            System.out.println(h.bookedRooms());
+            entered = input.nextInt();
+            r = (Room) h.getRoomLog().keySet().toArray()[entered];
+        }
+
+        return r;
+    }
+
+    public static Amenity amenitySelect(Scanner input, Hotel h, boolean booked) {
+        Amenity a = null;
+        int entered;
+        if (!booked) {
+            System.out.println("Select an available amenity from " +
+                    "the following list (enter the number)");
+            h.showAmenities();
+            entered = input.nextInt();
+            a = h.getOpenAmenities().get(entered);
+        } else {
+            System.out.println("Select a booked amenity from\n" +
+                    "the following list (enter the number)");
+            System.out.println(h.bookedAmenities());
+            entered = input.nextInt();
+            a = (Amenity) h.getAmenityLog().keySet().toArray()[entered];
+        }
+
+        return a;
     }
 }
