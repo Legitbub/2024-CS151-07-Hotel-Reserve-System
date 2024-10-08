@@ -7,9 +7,8 @@ public class Hotel {
     private List<Guest> guestList = new ArrayList<>();
     private List<Employee> employeeList = new ArrayList<>();
     private List<Room> openRooms = new ArrayList<>();
-    private List<Amenity> openAmenities = new ArrayList<>();
     private HashMap<Room, Guest> roomLog = new HashMap<>();
-    private HashMap<Amenity, Guest> amenityLog = new HashMap<>();
+    private List<Amenity> amenityLog = new ArrayList<>();
 
     public Hotel() {
         name = "Default Hotel";
@@ -34,16 +33,21 @@ public class Hotel {
         return openRooms;
     }
 
-    public List<Amenity> getOpenAmenities() {
-        return openAmenities;
-    }
-
     public HashMap<Room, Guest> getRoomLog() {
         return roomLog;
     }
 
-    public HashMap<Amenity, Guest> getAmenityLog() {
+    public List<Amenity> getAmenityLog() {
         return amenityLog;
+    }
+
+    public List<Amenity> getOpenAmenities() {
+        List<Amenity> openAmenities = new ArrayList<>();
+        for(Amenity a : amenityLog){
+            if(a.isAvailable)
+                openAmenities.add(a);
+        }
+        return openAmenities;
     }
 
     public void setEmployeeList(List<Employee> l) {
@@ -68,12 +72,12 @@ public class Hotel {
 
     //Add an amenity to the hotel list
     public void addAmenities(Amenity a) {
-        openAmenities.add(a);
+        amenityLog.add(a);
     }
 
-    //Set the list of open amenities
+    //Add multiple amenities to list
     public void addAmenities(List<Amenity> a) {
-        openAmenities.addAll(a);
+        amenityLog.addAll(a);
     }
 
     //Make a room reservation; update logs
@@ -91,12 +95,11 @@ public class Hotel {
 
     //Make an amenity reservation; update logs
     public void reservation(Amenity a, Guest g) {
-        if(a.isAvailable){
-            amenityLog.put(a, g);
+        if(amenityLog.contains(a) && a.isAvailable){
             a.reserve(g);
             g.getAmenitiesBooked().add(a);
             if(a.occupants.size() == a.maxOccupancy){
-                openAmenities.remove(a);
+                a.setAvailable(false);
             }
         }else{
             System.out.println("Amenity is unavailable");
@@ -106,8 +109,9 @@ public class Hotel {
     public void cancelReservation(Amenity a, Guest g){
         if(a.occupants.contains(g)){
             a.cancel(g);
-            amenityLog.remove(g);
-            if(!openAmenities.contains(g))
+            amenityLog.remove(a);
+            if(!a.isAvailable)
+                a.isAvailable = true;
         }else{
             System.out.println("No reservation under the name " + g.getName());
         }
@@ -126,7 +130,7 @@ public class Hotel {
     //Return a string showing the list of available amenities to book
     public void showAmenities() {
         int i = 1;
-        for (Amenity a : openAmenities) {
+        for (Amenity a : getOpenAmenities()) {
             System.out.print(i + ". ");
             a.displayAmenityDetails();
             i++;

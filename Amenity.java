@@ -5,7 +5,31 @@ public abstract class Amenity implements Reservable{
     protected String description;
     protected boolean isAvailable;
     protected int maxOccupancy;
-    protected ArrayList<Guest> occupants;
+    protected ArrayList<Guest> occupants = new ArrayList<>();
+    private static final int DEFAULT_MAX_OCCUPANCY = 30;
+
+    //will finish constructors once subclasses are more flushed out- for now not technically needed in abstract class
+
+    // public Amenity(){
+    //     name = "no name";
+    //     description = "no description";
+    //     isAvailable  = true;
+    //     maxOccupancy = DEFAULT_MAX_OCCUPANCY;
+    // }
+
+    // public Amenity(String name, String description){
+    //     this.name = name;
+    //     this.description = description;
+    //     isAvailable = true;
+    //     maxOccupancy = DEFAULT_MAX_OCCUPANCY;
+    // }
+
+    // public Amenity(String name, String description, int maxOccupancy){
+    //     this.name = name;
+    //     this.description = description;
+    //     isAvailable = true;
+    //     maxOccupancy = DEFAULT_MAX_OCCUPANCY;
+    // }
 
     public String getName(){
         return name;
@@ -48,12 +72,15 @@ public abstract class Amenity implements Reservable{
     //cancel method overridden from Reservable
     @Override
     public void cancel(Guest g){
-        if(occupants.contains(g)){
-            occupants.remove(g);
-        }else{
-            System.out.println("No reservation under the name " + g.getName());
-        }
+        occupants.remove(g);
     }
 
+    @Override
+    public boolean equals(Object obj) {
+        if (obj == null || obj.getClass() != getClass()) {
+            return false;
+        }
+        return name.equals(((Amenity) obj).getName());
+    }
 
 }
