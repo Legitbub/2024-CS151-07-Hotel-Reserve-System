@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.List;
 
 public class Guest {
     private String name;
@@ -32,5 +33,28 @@ public class Guest {
 
     public void setRewardsPoints(double rewardsPoints) {
         this.rewardsPoints = rewardsPoints;
+    }
+
+    public List<Amenity> getAmenitiesBooked() {
+        return amenitiesBooked;
+    }
+
+    //Resets booking status
+    public void checkout() {
+        room.isReserved = false;
+        room = null;
+        amenitiesBooked.clear();
+    }
+
+    public void displayGuestAccount() {
+
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj == null || obj.getClass() != getClass()) {
+            return false;
+        }
+        return name.equals(((Guest) obj).getName());
     }
 }
