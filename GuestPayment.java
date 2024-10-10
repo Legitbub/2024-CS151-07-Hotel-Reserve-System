@@ -1,4 +1,4 @@
-public class GuestPayment extends Payment {
+public class GuestPayment implements  Payment {
 
     private double roomCharges;
     private double amenityCharges;

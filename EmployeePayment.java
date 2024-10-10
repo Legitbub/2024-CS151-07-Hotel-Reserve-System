@@ -1,4 +1,4 @@
-public class EmployeePayment extends Payment {
+public class EmployeePayment implements  Payment {
 
     private double hourlyRate;
     private double hoursWorked;
