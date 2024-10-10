@@ -53,12 +53,18 @@ public class Employee {
         r.guest.checkout();
     }
 
-    public void modifyRoom(Room r, Guest guest) {
+    public void modifyRoom(Room r, Guest guest, Hotel h) {
         r.guest.checkout();
+        h.reservation(r, guest);
     }
 
-    public void modifyAmenity() {
+    public void modifyAmenity(Amenity a, Guest g) {
+        a.cancel(g);
+    }
 
+    public void modifyAmenity(Amenity a, Guest cancelled, Guest replacement, Hotel h) {
+        a.cancel(cancelled);
+        h.reservation(a, replacement);
     }
 
     public void displayEmployeeDetails() {

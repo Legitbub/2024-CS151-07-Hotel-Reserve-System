@@ -42,6 +42,7 @@ public class Guest {
     //Resets booking status
     public void checkout() {
         room.isReserved = false;
+        room.guest = null;
         room = null;
         amenitiesBooked.clear();
     }
