@@ -1,4 +1,4 @@
-public interface class Payment{
+public interface Payment{
     // Method to calculate the total amount for a transaction
     public double calculateTotal();
 
@@ -12,16 +12,15 @@ public interface class Payment{
     public void recordTransaction(String transactionDetails);
 
     // Method to add loyalty points for guest payments
-    public void addLoyaltyPoints(int points) {
-        // Logic to add loyalty points to guest account
+    default void addLoyaltyPoints(int points){
+
     }
+  
     //Method to calculate taxes for both guess and employee
     public double calculateTaxes();
 
-    
-    
     // Method to check if payment has been processed successfully
-    public boolean isPaymentSuccessful() {
-        
+    default boolean isPaymentSuccessful(){
+        return false; //Placeholder
     }
 }
