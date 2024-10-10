@@ -1,4 +1,6 @@
 public class Manager extends Employee{
+
+    private Hotel hotel;
     public Manager(String ID) {
         super(ID);
     }
@@ -7,26 +9,33 @@ public class Manager extends Employee{
         super(ID, name, position, wage);
     }
 
-    //Assign an Employee to a Hotel
-    public void assignEmployee(Employee employee, Hotel assignHotel){
+    //Fire an employee and remove from the list of employee;
+    public void fireEmployee(String employeeID){
+        if(hotel != null){
+            boolean employeeFound = false;
 
+            for(Employee employee : hotel.getEmployeeList()){
+                if(employee.getId().equals(employeeID)){
+                    hotel.getEmployeeList().remove(employee);
+                    System.out.printf("%s has been fired!", employee.getName());
+                    employeeFound = true;
+                }
+            }
+            if(!employeeFound){
+                System.out.println("There is no employee with the provided ID in the system");
+            }
+        }
+        else{
+            System.out.println("Hotel is not initialized");
+        }
     }
-    //Fire an employee and remove from the list of employee based on their ID.
-    public void fireEmployee(int employeeID){
-
-    }
-    //Generate a financial report of all the earnings made.
+    //Generate a financial report of all the earnings made. 
     public void generateFinancialReport(){
 
     }
-    //Not sure if this should be added or not
-    /* 
-    public void promoteEmployee(int employeeID){
-
-    }
-    */
+    //Manager can update pricing of the room if needed.
     public void updateRoomPricing(Room room, double price){
-
+        room.setPrice(price);
     }
     
 }

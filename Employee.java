@@ -4,7 +4,6 @@ public class Employee {
     private double hoursWorked = 0;
     private String position;
     private double wage;
-    private Hotel assignHotel;
     
 
     public Employee(String ID) {

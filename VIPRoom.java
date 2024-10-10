@@ -8,10 +8,11 @@ public class VIPRoom extends Room implements Reservable {
         this.roomID = roomID;
     }
 
-    public VIPRoom(Guest guest, int roomID) {
+    public VIPRoom(Guest guest, int roomID, double price) {
         level = "VIP";
         this.guest = guest;
         this.roomID = roomID;
+        this.price = price;
     }
 
     public void callRoomService() {
