@@ -23,19 +23,19 @@ public class EmployeePayment implements  Payment {
     public double calculateTaxes() {
         double totalIncomeBeforeTax = calculateTotal();
         double incomeAfterTax = 0;
-        if(totalIncomeBeforeTax <= 10099){
+        if(hourlyRate <= 15.0){
             incomeAfterTax = totalIncomeBeforeTax * 0.01;
         }
-        else if(incomeAfterTax >= 10100 && incomeAfterTax <= 23942){
+        else if(hourlyRate >= 16.0 && hourlyRate <= 18.0){
             incomeAfterTax = totalIncomeBeforeTax * 0.02;
         }
-        else if(incomeAfterTax >= 23942 && incomeAfterTax <= 37788){
+        else if(hourlyRate >= 19.0 && hourlyRate <= 21.0){
             incomeAfterTax = totalIncomeBeforeTax * 0.04;
         }
-        else if(incomeAfterTax >= 37789 && incomeAfterTax <= 52455){
+        else if(hourlyRate >= 22.0 && hourlyRate <= 25.0){
             incomeAfterTax = totalIncomeBeforeTax * 0.06;
         }
-        else if(incomeAfterTax >= 52456 && incomeAfterTax <= 66295){
+        else if(hourlyRate >= 26.0 && hourlyRate <= 29.0){
             incomeAfterTax = totalIncomeBeforeTax * 0.08;
         }
         else{

@@ -129,11 +129,11 @@ public class UI {
                             }
                             break;
                         case 4:
-                            if (!(userEmploy instanceof Supervisor)) {
+                            if (!(userEmploy instanceof Manager)) {
                                 System.out.println("Only supervisors have permission " +
                                         "to change employee details.");
                             } else {
-                                ((Supervisor) userEmploy).modifyEmployeeDetails();
+                                ((Manager) userEmploy).modifyEmployeeDetails();
                             }
                             break;
                         case 5:

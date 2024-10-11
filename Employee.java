@@ -4,17 +4,29 @@ public class Employee {
     private double hoursWorked = 0;
     private String position;
     private double wage;
+    private EmployeePayment emplPayment;
     
 
     public Employee(String ID) {
         this.ID = ID;
     }
-
+    
     public Employee(String ID, String name, String position, double wage) {
         this.ID = ID;
         this.name = name;
         this.position = position;
         this.wage = wage;
+        //Create an EmployeePayment for each Employee
+        this.emplPayment = new EmployeePayment(wage, 0);
+    }
+    
+    public EmployeePayment getPayment(){
+        return emplPayment;
+    }
+    //Employee can log hours, which will call and update the logHour method from EmployeePayment class
+    public void logHours(double hours){
+        this.hoursWorked += hours;
+        this.emplPayment.logHours(hours);
     }
 
     public double getWage() {
