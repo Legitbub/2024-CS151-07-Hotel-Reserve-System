@@ -25,8 +25,11 @@ public class Employee {
     }
     //Employee can log hours, which will call and update the logHour method from EmployeePayment class
     public void logHours(double hours){
-        this.hoursWorked += hours;
-        this.emplPayment.logHours(hours);
+        if(hours > 0)
+        {
+            this.hoursWorked += hours;
+            this.emplPayment.logHours(hours); 
+        }
     }
 
     public double getWage() {
