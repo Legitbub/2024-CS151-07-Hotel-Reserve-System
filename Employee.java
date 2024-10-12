@@ -17,7 +17,7 @@ public class Employee {
         this.position = position;
         this.wage = wage;
         //Create an EmployeePayment for each Employee
-        this.emplPayment = new EmployeePayment(wage, 0);
+        this.emplPayment = new EmployeePayment(this);
     }
     
     public EmployeePayment getPayment(){

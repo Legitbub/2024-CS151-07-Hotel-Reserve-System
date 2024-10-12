@@ -11,27 +11,24 @@ public class Manager extends Employee{
     public Manager(String ID, String name, String position, double wage, List<Employee> employeeList) {
         super(ID, name, position, wage);
         //Manager will have access to employeeList
-        this.employeeList = employeeList;
+        
     }
 
     //Fire an employee and remove from the list of employee;
     public void fireEmployee(String employeeID){
         if(hotel != null){
-            boolean employeeFound = false;
+         //removeIf will prevent CoccurentModification Error
+            boolean employeeFound = hotel.getEmployeeList().removeIf(employee -> employee.getId().equals(employeeID) && !employee.getPosition().equalsIgnoreCase("Manager"));
 
-            for(Employee employee : hotel.getEmployeeList()){
-                if(employee.getId().equals(employeeID)){
-                    hotel.getEmployeeList().remove(employee);
-                    System.out.printf("%s has been fired!", employee.getName());
-                    employeeFound = true;
-                }
-            }
             if(!employeeFound){
-                System.out.println("There is no employee with the provided ID in the system");
+             System.out.println("There is no employee with the provided ID in the system");
+            }
+            else{
+             System.out.printf("%s has been fired!", employeeID);
             }
         }
         else{
-            System.out.println("Hotel is not initialized");
+         System.out.println("Hotel is not initialized");
         }
     }
 
@@ -44,15 +41,22 @@ public class Manager extends Employee{
     }
     //Get a general date and pay all
     public void payAll(){
-        for(Employee employee : hotel.getEmployeeList()){
-            EmployeePayment employeePayment = employee.getPayment();
-            double totalPaymentAfterTax = employeePayment.calculateTaxes();
 
-            employeePayment.processPayment(totalPaymentAfterTax);
-            //reset hour back to 0
-            employee.setHoursWorked(0);
-            System.out.println("Payment of $" + totalPaymentAfterTax + " made to " + employee.getName());
+        if(hotel != null){
+            for(Employee employee : hotel.getEmployeeList()){
+                EmployeePayment employeePayment = employee.getPayment();
+                double totalPaymentAfterTax = employeePayment.calculateTotal();
+                
+                
+                //reset hour back to 0
+                employeePayment.processPayment();
+        
+                System.out.println("Payment of $" + totalPaymentAfterTax + " made to " + employee.getName());
 
+            }
+        }
+        else{
+            System.out.println("Hotel is not initialized");
         }
         
     }

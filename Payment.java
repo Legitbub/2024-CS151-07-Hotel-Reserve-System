@@ -3,13 +3,13 @@ public interface Payment{
     public double calculateTotal();
 
     // Method to process a payment (could be extended for diff. types: cash, card, etc.)
-    public void processPayment(double amount);
+    public void processPayment();
 
     // Method to generate a detailed receipt of the payment transaction
     public String generateReceipt();
 
     // Method to record payment information for tracking and auditing purposes
-    public void recordTransaction(String transactionDetails);
+    public void recordTransaction();
 
     // Method to add loyalty points for guest payments
     default void addLoyaltyPoints(int points){

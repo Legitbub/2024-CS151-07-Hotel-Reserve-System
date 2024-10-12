@@ -2,10 +2,12 @@ public class EmployeePayment implements  Payment {
 
     private double hourlyRate;
     private double hoursWorked;
+    private Employee employee;
 
     public EmployeePayment(Employee employee) {
+        this.employee = employee;
         this.hourlyRate = employee.getWage();
-        this.hoursWorked = employee.getHoursWorked;
+        this.hoursWorked = employee.getHoursWorked();
     }
 
     // Method to log hours worked
@@ -22,27 +24,27 @@ public class EmployeePayment implements  Payment {
     @Override
     public double calculateTaxes() {
         double totalIncomeBeforeTax = hourlyRate * hoursWorked;
-        double incomeAfterTax = 0;
+        double taxAmount = 0;
         if(totalIncomeBeforeTax <= 10099/12){
-            incomeAfterTax = totalIncomeBeforeTax * 0.01;
+            taxAmount = totalIncomeBeforeTax * 0.01;
         }
-        else if(incomeAfterTax >= 10100/12 && incomeAfterTax <= 23942/12){
-            incomeAfterTax = totalIncomeBeforeTax * 0.02;
+        else if(totalIncomeBeforeTax >= 10100/12 && totalIncomeBeforeTax <= 23942/12){
+            taxAmount = totalIncomeBeforeTax * 0.02;
         }
-        else if(incomeAfterTax >= 23942/12 && incomeAfterTax <= 37788/12){
-            incomeAfterTax = totalIncomeBeforeTax * 0.04;
+        else if(totalIncomeBeforeTax >= 23942/12 && totalIncomeBeforeTax <= 37788/12){
+            taxAmount = totalIncomeBeforeTax * 0.04;
         }
-        else if(incomeAfterTax >= 37789/12 && incomeAfterTax <= 52455/12){
-            incomeAfterTax = totalIncomeBeforeTax * 0.06;
+        else if(totalIncomeBeforeTax >= 37789/12 && totalIncomeBeforeTax <= 52455/12){
+            taxAmount = totalIncomeBeforeTax * 0.06;
         }
-        else if(incomeAfterTax >= 52456/12 && incomeAfterTax <= 66295/12){
-            incomeAfterTax = totalIncomeBeforeTax * 0.08;
+        else if(totalIncomeBeforeTax >= 52456/12 && totalIncomeBeforeTax <= 66295/12){
+            taxAmount = totalIncomeBeforeTax * 0.08;
         }
         else{
-            incomeAfterTax = totalIncomeBeforeTax * 0.093;
+            taxAmount = totalIncomeBeforeTax * 0.093;
         }
 
-        return incomeAfterTax;
+        return taxAmount;
     }
 
     // Method to process payment
@@ -51,7 +53,7 @@ public class EmployeePayment implements  Payment {
         System.out.println("Processing payment of $" + calculateTotal() +" for the employee.");
         this.hoursWorked = 0;
         employee.setHoursWorked(0);
-        generateReceipt()
+        generateReceipt();
 
     }
 
@@ -62,7 +64,10 @@ public class EmployeePayment implements  Payment {
 
     // Method to modify hoursWorked 
     public void modifyhoursWorked(double hoursWorked) {
-        this.hoursWorked = hoursWorked;
+        if(hoursWorked >= 0){
+            this.hoursWorked = hoursWorked;
+        }
+        
     }
 
     // Method to generate employee paycheck details

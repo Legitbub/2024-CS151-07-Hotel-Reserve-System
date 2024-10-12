@@ -43,7 +43,7 @@ public class GuestPayment implements Payment {
     public void processPayment() {
         redeemLoyaltyPoints();
         System.out.println("Processing guest payment of $" + calculateTotal());
-        guest.setRewardsPoints(roomCharges + amenityCharges)
+        guest.setRewardsPoints(roomCharges + amenityCharges);
         System.out.println(generateReceipt());
         recordTransaction();
     }
