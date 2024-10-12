@@ -72,7 +72,17 @@ public abstract class Amenity implements Reservable{
     //cancel method overridden from Reservable
     @Override
     public void cancel(Guest g){
-        occupants.remove(g);
+        if (occupants.contains(g)) {
+            occupants.remove(g);
+            g.getAmenitiesBooked().remove(this);
+            System.out.println("Cancelled " + name + " booking for " +
+                    g.getName() + ".");
+            if (!isAvailable) {
+                isAvailable = true;
+            }
+        } else {
+            System.out.println("No booking found for " + g.getName());
+        }
     }
 
     @Override

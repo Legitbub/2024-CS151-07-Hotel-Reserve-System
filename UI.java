@@ -28,14 +28,10 @@ public class UI {
                     case 1:
                         Room bookedRoom = roomSelect(input, h, false);
                         h.reservation(bookedRoom, user);
-                        System.out.println("Room " + bookedRoom.getRoomID() +
-                                " successfully reserved for " + user.getName());
                         break;
                     case 2:
                         Amenity bookedAmenity = amenitySelect(input, h, false);
                         h.reservation(bookedAmenity, user);
-                        System.out.println(bookedAmenity.getName() +
-                                " successfully reserved for " + user.getName());
                         break;
                     case 3:
                     case 4:
@@ -73,15 +69,11 @@ public class UI {
                             Guest guestUser = assignGuestSession(input, h);
                             Room bookedRoom = roomSelect(input, h, false);
                             h.reservation(bookedRoom, guestUser);
-                            System.out.println("Room " + bookedRoom.getRoomID() +
-                                    " successfully reserved for " + guestUser.getName());
                             break;
                         case 2:
                             Guest guestUser2 = assignGuestSession(input, h);
                             Amenity bookedAmenity = amenitySelect(input, h, false);
                             h.reservation(bookedAmenity, guestUser2);
-                            System.out.println(bookedAmenity.getName() +
-                                    " successfully reserved for " + guestUser2.getName());
                             break;
                         case 3:
                             do {
@@ -94,6 +86,7 @@ public class UI {
                                 }
                             } while (entered != 1 && entered != 2);
 
+                            // Modify a room booking
                             if (entered == 1) {
                                 Room modifiedRoom = roomSelect(input, h, true);
                                 do {
@@ -108,9 +101,9 @@ public class UI {
                                     userEmploy.modifyRoom(modifiedRoom);
                                 } else {
                                     Guest newG = assignGuestSession(input, h);
-                                    userEmploy.modifyRoom(modifiedRoom, newG);
+                                    userEmploy.modifyRoom(modifiedRoom, newG, h);
                                 }
-                            } else {
+                            } else {                            // Modify an amenity booking
                                 Amenity modifiedAmenity = amenitySelect(input, h, true);
                                 do {
                                     System.out.println("Cancel or switch booking?");
@@ -120,11 +113,15 @@ public class UI {
                                                 "cancel or 2 for switch.");
                                     }
                                 } while (entered != 1 && entered != 2);
+                                System.out.println("Whose" + modifiedAmenity.getName() +
+                                        " reservation will be cancelled?");
+                                String cancelled = input.nextLine();
+                                Guest c = new Guest(cancelled);
                                 if (entered == 1) {
-                                    userEmploy.modifyAmenity(modifiedAmenity);
+                                    userEmploy.modifyAmenity(modifiedAmenity, c);
                                 } else {
                                     Guest newG = assignGuestSession(input, h);
-                                    userEmploy.modifyAmenity(modifiedAmenity, newG);
+                                    userEmploy.modifyAmenity(modifiedAmenity, c, newG, h);
                                 }
                             }
                             break;
@@ -252,6 +249,8 @@ public class UI {
         return user;
     }
 
+    // Returns a room for the user to book or modify, depending
+    // on the boolean parameter
     public static Room roomSelect(Scanner input, Hotel h, boolean booked) {
         Room r = null;
         int entered;
@@ -274,6 +273,8 @@ public class UI {
         return r;
     }
 
+    // Returns an amenity for the user to book or modify, depending
+    // on the boolean parameter
     public static Amenity amenitySelect(Scanner input, Hotel h, boolean booked) {
         Amenity a = null;
         int entered;
@@ -288,9 +289,8 @@ public class UI {
                     "the following list (enter the number)");
             System.out.println(h.bookedAmenities());
             entered = input.nextInt();
-            a = (Amenity) h.getAmenityLog().keySet().toArray()[entered];
+            a = h.getAmenityLog().get(entered);
         }
-
         return a;
     }
 }

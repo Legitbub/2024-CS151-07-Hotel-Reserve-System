@@ -4,7 +4,6 @@ import java.util.List;
 public class Manager extends Employee{
 
     private Hotel hotel;
-    private List<Employee> employeeList;
     public Manager(String ID) {
         super(ID);
     }
@@ -18,15 +17,17 @@ public class Manager extends Employee{
     //Fire an employee and remove from the list of employee;
     public void fireEmployee(String employeeID){
         if(hotel != null){
-            //removeIf will prevent CoccurentModification Error
-            boolean employeeFound = hotel.getEmployeeList().removeIf(employee -> employee.getId().equals(employeeID) && !employee.getPosition().equalsIgnoreCase("Manager"));
-            
+            boolean employeeFound = false;
+
+            for(Employee employee : hotel.getEmployeeList()){
+                if(employee.getId().equals(employeeID)){
+                    hotel.getEmployeeList().remove(employee);
+                    System.out.printf("%s has been fired!", employee.getName());
+                    employeeFound = true;
+                }
+            }
             if(!employeeFound){
                 System.out.println("There is no employee with the provided ID in the system");
-            }
-            else{
-                System.out.printf("%s has been fired!", employeeID);
-
             }
         }
         else{

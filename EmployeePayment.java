@@ -3,9 +3,9 @@ public class EmployeePayment implements  Payment {
     private double hourlyRate;
     private double hoursWorked;
 
-    public EmployeePayment(double hourlyRate, double hoursWorked) {
-        this.hourlyRate = hourlyRate;
-        this.hoursWorked = hoursWorked;
+    public EmployeePayment(Employee employee) {
+        this.hourlyRate = employee.getWage();
+        this.hoursWorked = employee.getHoursWorked;
     }
 
     // Method to log hours worked
@@ -16,26 +16,26 @@ public class EmployeePayment implements  Payment {
     // Method to calculate total payment based on hours worked
     @Override
     public double calculateTotal() {
-        return hourlyRate * hoursWorked;
+        return hourlyRate * hoursWorked - calculateTaxes();
     }
 
     @Override
     public double calculateTaxes() {
-        double totalIncomeBeforeTax = calculateTotal();
+        double totalIncomeBeforeTax = hourlyRate * hoursWorked;
         double incomeAfterTax = 0;
-        if(hourlyRate <= 15.0){
+        if(totalIncomeBeforeTax <= 10099/12){
             incomeAfterTax = totalIncomeBeforeTax * 0.01;
         }
-        else if(hourlyRate >= 16.0 && hourlyRate <= 18.0){
+        else if(incomeAfterTax >= 10100/12 && incomeAfterTax <= 23942/12){
             incomeAfterTax = totalIncomeBeforeTax * 0.02;
         }
-        else if(hourlyRate >= 19.0 && hourlyRate <= 21.0){
+        else if(incomeAfterTax >= 23942/12 && incomeAfterTax <= 37788/12){
             incomeAfterTax = totalIncomeBeforeTax * 0.04;
         }
-        else if(hourlyRate >= 22.0 && hourlyRate <= 25.0){
+        else if(incomeAfterTax >= 37789/12 && incomeAfterTax <= 52455/12){
             incomeAfterTax = totalIncomeBeforeTax * 0.06;
         }
-        else if(hourlyRate >= 26.0 && hourlyRate <= 29.0){
+        else if(incomeAfterTax >= 52456/12 && incomeAfterTax <= 66295/12){
             incomeAfterTax = totalIncomeBeforeTax * 0.08;
         }
         else{
@@ -47,8 +47,12 @@ public class EmployeePayment implements  Payment {
 
     // Method to process payment
     @Override
-    public void processPayment(double amount) {
-        System.out.println("Processing payment of $" + amount + " for the employee.");
+    public void processPayment() {
+        System.out.println("Processing payment of $" + calculateTotal() +" for the employee.");
+        this.hoursWorked = 0;
+        employee.setHoursWorked(0);
+        generateReceipt()
+
     }
 
     // Method to modify hourly rate 
@@ -64,12 +68,12 @@ public class EmployeePayment implements  Payment {
     // Method to generate employee paycheck details
     @Override
     public String generateReceipt() {
-        return "Employee Payment Receipt: Total Hours Worked: " + hoursWorked + ", Total Payment: $" + calculateTotal();
+        return "Employee Payment Receipt: Total Hours Worked: " + hoursWorked + ", Total taxes: $"+calculateTaxes()+", Total Payment: $" + calculateTotal();
     }
 
 
     @Override
-    public void recordTransaction(String transactionDetails) {
-        System.out.println("Recording employee transaction: " + transactionDetails);
+    public void recordTransaction() {
+        System.out.println("Recording employee transaction: " + generateReceipt());
     }
 }

@@ -1,6 +1,6 @@
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
+import java.util.TreeMap;
 
 public class Hotel {
     private String name;
@@ -8,7 +8,7 @@ public class Hotel {
     private List<Employee> employeeList = new ArrayList<>();
     private List<Manager> managerList = new ArrayList<>();
     private List<Room> openRooms = new ArrayList<>();
-    private HashMap<Room, Guest> roomLog = new HashMap<>();
+    private TreeMap<Room, Guest> roomLog = new TreeMap<>();
     private List<Amenity> amenityLog = new ArrayList<>();
 
     public Hotel() {
@@ -37,7 +37,7 @@ public class Hotel {
         return openRooms;
     }
 
-    public HashMap<Room, Guest> getRoomLog() {
+    public TreeMap<Room, Guest> getRoomLog() {
         return roomLog;
     }
 
@@ -91,6 +91,8 @@ public class Hotel {
             roomLog.put(r, g);
             r.reserve(g);
             g.setRoom(r);
+            System.out.println("Room " + r.getRoomID() +
+                    " successfully reserved for " + g.getName());
         }else{
             System.out.println("Room " + r.roomID + " already reserved");
         }
@@ -105,19 +107,10 @@ public class Hotel {
             if(a.occupants.size() == a.maxOccupancy){
                 a.setAvailable(false);
             }
+            System.out.println(a.getName() +
+                    " successfully reserved for " + g.getName());
         }else{
             System.out.println("Amenity is unavailable");
-        }
-    }
-
-    public void cancelReservation(Amenity a, Guest g){
-        if(a.occupants.contains(g)){
-            a.cancel(g);
-            amenityLog.remove(a);
-            if(!a.isAvailable)
-                a.isAvailable = true;
-        }else{
-            System.out.println("No reservation under the name " + g.getName());
         }
     }
 
@@ -151,12 +144,11 @@ public class Hotel {
         }
     }
 
-    //Return a string showing the list of bookedRooms
+    //Return a string showing the list of booked amenities
     public String bookedAmenities() {
         String s = "";
-        Object[] amenities = amenityLog.keySet().toArray();
-        for (int i = 0; i < amenities.length; i++) {
-            s += (i + ". " + ((Amenity) amenities[i]).getName() + "\n");
+        for (int i = 0; i < amenityLog.size(); i++) {
+            s += (i + ". " + amenityLog.get(i).getName() + "\n");
         }
         return s;
     }
