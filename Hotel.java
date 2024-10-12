@@ -6,6 +6,7 @@ public class Hotel {
     private String name;
     private List<Guest> guestList = new ArrayList<>();
     private List<Employee> employeeList = new ArrayList<>();
+    private List<Manager> managerList = new ArrayList<>();
     private List<Room> openRooms = new ArrayList<>();
     private HashMap<Room, Guest> roomLog = new HashMap<>();
     private List<Amenity> amenityLog = new ArrayList<>();
@@ -28,6 +29,9 @@ public class Hotel {
 
     public List<Employee> getEmployeeList() {
         return employeeList;
+    }
+    public List<Manager> getManagerList() {
+        return managerList;
     }
     public List<Room> getOpenRooms() {
         return openRooms;

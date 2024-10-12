@@ -19,7 +19,7 @@ public class Manager extends Employee{
     public void fireEmployee(String employeeID){
         if(hotel != null){
             //removeIf will prevent CoccurentModification Error
-            boolean employeeFound = hotel.getEmployeeList().removeIf(employee -> employee.getId().equals(employeeID));
+            boolean employeeFound = hotel.getEmployeeList().removeIf(employee -> employee.getId().equals(employeeID) && !employee.getPosition().equalsIgnoreCase("Manager"));
             
             if(!employeeFound){
                 System.out.println("There is no employee with the provided ID in the system");
