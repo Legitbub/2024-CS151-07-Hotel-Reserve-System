@@ -63,16 +63,33 @@ public abstract class Amenity implements Reservable{
             isAvailable ? "available" : "unavailable");
     }
 
-    //reserve method overridden from Reservable
+    //reserve method overridden from Reservable, returns true if reservation is successful, false if not
     @Override
-    public void reserve(Guest g){
-        occupants.add(g);
+    public boolean reserve(Guest g){
+        if(isAvailable){
+            occupants.add(g);
+            if(occupants.size() == maxOccupancy){
+                isAvailable = false;
+            }
+            return true;
+        }else{
+            System.out.println("Amenity is unavailable");
+            return false;
+        }
     }
 
     //cancel method overridden from Reservable
     @Override
-    public void cancel(Guest g){
-        occupants.remove(g);
+    public boolean cancel(Guest g){
+        if(occupants.contains(g)){
+            occupants.remove(g);
+            if(!isAvailable)
+                isAvailable = true;
+            return true;
+        }else{
+            System.out.println("No reservation under the name " + g.getName());
+            return false;
+        }
     }
 
     @Override

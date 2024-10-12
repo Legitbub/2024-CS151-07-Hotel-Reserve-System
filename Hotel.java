@@ -1,6 +1,8 @@
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 public class Hotel {
     private String name;
@@ -8,7 +10,7 @@ public class Hotel {
     private List<Employee> employeeList = new ArrayList<>();
     private List<Room> openRooms = new ArrayList<>();
     private HashMap<Room, Guest> roomLog = new HashMap<>();
-    private List<Amenity> amenityLog = new ArrayList<>();
+    private Set<Amenity> amenityLog = new HashSet<>();
 
     public Hotel() {
         name = "Default Hotel";
@@ -91,30 +93,6 @@ public class Hotel {
             System.out.println("Room " + r.roomID + " already reserved");
         }
 
-    }
-
-    //Make an amenity reservation; update logs
-    public void reservation(Amenity a, Guest g) {
-        if(amenityLog.contains(a) && a.isAvailable){
-            a.reserve(g);
-            g.getAmenitiesBooked().add(a);
-            if(a.occupants.size() == a.maxOccupancy){
-                a.setAvailable(false);
-            }
-        }else{
-            System.out.println("Amenity is unavailable");
-        }
-    }
-
-    public void cancelReservation(Amenity a, Guest g){
-        if(a.occupants.contains(g)){
-            a.cancel(g);
-            amenityLog.remove(a);
-            if(!a.isAvailable)
-                a.isAvailable = true;
-        }else{
-            System.out.println("No reservation under the name " + g.getName());
-        }
     }
 
     // Return a string showing the list of available rooms to book
