@@ -4,6 +4,7 @@ public abstract class Amenity implements Reservable{
     protected String name;
     protected String description;
     protected boolean isAvailable;
+    protected double price;
     protected int maxOccupancy;
     protected ArrayList<Guest> occupants = new ArrayList<>();
     private static final int DEFAULT_MAX_OCCUPANCY = 30;
@@ -41,6 +42,10 @@ public abstract class Amenity implements Reservable{
 
     public boolean getAvailability(){
         return isAvailable;
+    }
+
+    public double getPrice() {
+        return price;
     }
 
     public int getMaxOccupancy(){

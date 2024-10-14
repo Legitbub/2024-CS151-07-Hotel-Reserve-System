@@ -1,11 +1,13 @@
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
+import java.util.Scanner;
 
 public class Guest {
     private String name;
     private Room room;
-    private double rewardsPoints;
     private List<Amenity> amenitiesBooked = new ArrayList<Amenity>();
+    private GuestPayment payment = new GuestPayment();
 
     public Guest() {
 
@@ -27,12 +29,12 @@ public class Guest {
         this.room = room;
     }
 
-    public double getRewardsPoints() {
-        return rewardsPoints;
-    }
-
-    public void setRewardsPoints(double rewardsPoints) {
-        this.rewardsPoints = rewardsPoints;
+    public void addToBill(double charges, boolean room) {
+        if (room) {
+            payment.addRoomCharges(charges);
+        } else {
+            payment.addAmenityCharges(charges);
+        }
     }
 
     public List<Amenity> getAmenitiesBooked() {
@@ -47,8 +49,15 @@ public class Guest {
         amenitiesBooked.clear();
     }
 
-    public void displayGuestAccount() {
-
+    public void displayGuestAccount(Scanner input) {
+        System.out.println("Room charges: $" + payment.getRoomCharges());
+        System.out.println("Amenity charges: $" + payment.getAmenityCharges());
+        System.out.println("Available rewards points: " + payment.getLoyaltyPoints());
+        System.out.print("Pay bill?: (Enter \"yes\" for yes, anything else for no)");
+        String pay = input.nextLine().toLowerCase();
+        if (pay.equals("yes")) {
+            payment.processPayment();
+        }
     }
 
     @Override
