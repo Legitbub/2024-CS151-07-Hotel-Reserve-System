@@ -1,7 +1,7 @@
 import java.util.ArrayList;
 import java.util.List;
 
-public class Manager extends Employee{
+public class Manager extends Employee {
 
     private Hotel hotel;
     public Manager(String ID) {

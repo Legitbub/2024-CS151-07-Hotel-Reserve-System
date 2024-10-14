@@ -1,9 +1,7 @@
 public class Employee {
     private String ID;
     private String name;
-    private double hoursWorked = 0;
     private String position;
-    private double wage;
     private EmployeePayment emplPayment;
     
 
@@ -15,9 +13,7 @@ public class Employee {
         this.ID = ID;
         this.name = name;
         this.position = position;
-        this.wage = wage;
-        //Create an EmployeePayment for each Employee
-        this.emplPayment = new EmployeePayment(this);
+        emplPayment = new EmployeePayment(wage);
     }
     
     public EmployeePayment getPayment(){
@@ -25,31 +21,15 @@ public class Employee {
     }
     //Employee can log hours, which will call and update the logHour method from EmployeePayment class
     public void logHours(double hours){
-        if(hours > 0)
-        {
-            this.hoursWorked += hours;
-            this.emplPayment.logHours(hours); 
-        }
-    }
-
-    public double getWage() {
-        return wage;
+        emplPayment.logHours(hours);
     }
 
     public void setWage(double wage) {
-        this.wage = wage;
+        emplPayment.setHourlyRate(wage);
     }
 
     public String getId() {
         return ID;
-    }
-
-    public double getHoursWorked() {
-        return hoursWorked;
-    }
-
-    public void setHoursWorked(double hoursWorked) {
-        this.hoursWorked = hoursWorked;
     }
 
     public String getName() {
@@ -83,7 +63,9 @@ public class Employee {
     }
 
     public void displayEmployeeDetails() {
-        System.out.println("Name: %s , ID: %s, Position: %s, ");
+        System.out.println(name + ", " + position);
+        System.out.printf("Wage: $%.2f", emplPayment.getHourlyRate());
+        System.out.println(", Hours worked: " + emplPayment.getHoursWorked());
     }
 
     @Override

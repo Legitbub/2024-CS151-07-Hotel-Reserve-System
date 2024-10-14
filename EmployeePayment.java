@@ -1,18 +1,28 @@
-public class EmployeePayment implements  Payment {
+public class EmployeePayment implements Payment {
 
     private double hourlyRate;
-    private double hoursWorked;
-    private Employee employee;
+    private double hoursWorked = 0;
 
-    public EmployeePayment(Employee employee) {
-        this.employee = employee;
-        this.hourlyRate = employee.getWage();
-        this.hoursWorked = employee.getHoursWorked();
+    public EmployeePayment(double hourlyRate) {
+        this.hourlyRate = hourlyRate;
+    }
+
+    public double getHourlyRate() {
+        return hourlyRate;
+    }
+
+    public double getHoursWorked() {
+        return hoursWorked;
+    }
+
+    public void setHourlyRate(double hourlyRate) {
+        this.hourlyRate = hourlyRate;
     }
 
     // Method to log hours worked
     public void logHours(double hours) {
         this.hoursWorked += hours;
+        System.out.println("Recorded " + hours + " to timecard.");
     }
 
     // Method to calculate total payment based on hours worked
@@ -51,8 +61,7 @@ public class EmployeePayment implements  Payment {
     @Override
     public void processPayment() {
         System.out.println("Processing payment of $" + calculateTotal() +" for the employee.");
-        this.hoursWorked = 0;
-        employee.setHoursWorked(0);
+        hoursWorked = 0;
         generateReceipt();
 
     }

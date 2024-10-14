@@ -86,14 +86,15 @@ public class Hotel {
 
     //Make a room reservation; update logs
     public void reservation(Room r, Guest g) {
-        if(!r.isReserved){
+        if(!r.isReserved) {
             openRooms.remove(r);
             roomLog.put(r, g);
             r.reserve(g);
             g.setRoom(r);
+            g.addToBill(r.getPrice(), true);
             System.out.println("Room " + r.getRoomID() +
                     " successfully reserved for " + g.getName());
-        }else{
+        } else{
             System.out.println("Room " + r.roomID + " already reserved");
         }
 
@@ -101,15 +102,16 @@ public class Hotel {
 
     //Make an amenity reservation; update logs
     public void reservation(Amenity a, Guest g) {
-        if(amenityLog.contains(a) && a.isAvailable){
+        if (amenityLog.contains(a) && a.isAvailable){
             a.reserve(g);
             g.getAmenitiesBooked().add(a);
             if(a.occupants.size() == a.maxOccupancy){
                 a.setAvailable(false);
             }
+            g.addToBill(a.getPrice(), false);
             System.out.println(a.getName() +
                     " successfully reserved for " + g.getName());
-        }else{
+        } else{
             System.out.println("Amenity is unavailable");
         }
     }
