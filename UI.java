@@ -34,6 +34,7 @@ public class UI {
                         h.reservation(bookedAmenity, user);
                         break;
                     case 3:
+                        user.displayGuestAccount(input);
                     case 4:
                         userNum = selectHotel(input, hotels, userNum, h);
                         break;
@@ -59,8 +60,8 @@ public class UI {
                             "1. Book a room\n" +
                             "2. Book an amenity\n" +
                             "3. Modify a booking\n" +
-                            "4. Modify employee details\n" +
-                            "5. Payment information/Collect paycheck\n" +
+                            "4. Modify employee/hotel details\n" +
+                            "5. Log hours/Paycheck information\n" +
                             "6. Previous\n" +
                             "7. End session");
                     entered = input.nextInt();
@@ -130,10 +131,28 @@ public class UI {
                                 System.out.println("Only supervisors have permission " +
                                         "to change employee details.");
                             } else {
-                                ((Manager) userEmploy).modifyEmployeeDetails();
+                                ((Manager) userEmploy).managerModify(input, h);
                             }
                             break;
                         case 5:
+                            do {
+                                System.out.println("Select an option:\n1) " +
+                                        "Log hours\n2) Check timecard");
+                                entered = input.nextInt();
+                                if (entered != 1 || entered != 2) {
+                                    System.out.println("Please enter 1 or 2 for the below options.");
+                                }
+                            } while (entered != 1 || entered != 2);
+
+                            if (entered == 1) {
+                                System.out.println("Add how many hours to payroll?: ");
+                                double hours = input.nextDouble();
+                                userEmploy.logHours(hours);
+                            } else {
+                                userEmploy.displayEmployeeDetails();
+                                System.out.println("Get ready for that paycheck - $coming soon!$");
+                            }
+                            break;
                         case 6:
                             userNum = selectHotel(input, hotels, userNum, h);
                             break;
@@ -169,7 +188,7 @@ public class UI {
         List<Employee> workers = new ArrayList<>();
         Employee rick = new Employee("001", "Rick", "Guest Services", 22);
         Employee cheri = new Employee("002", "Cheri", "Accounts Manager", 35);
-        Employee bonzo = new Employee("003", "Bonzo", "Supervisor", 80);
+        Manager bonzo = new Manager("003", "Bonzo", "Manager", 80);
         workers.add(rick);
         workers.add(cheri);
         workers.add(bonzo);

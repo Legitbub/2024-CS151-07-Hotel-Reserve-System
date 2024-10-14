@@ -91,6 +91,28 @@ public class Hotel {
             roomLog.put(r, g);
             r.reserve(g);
             g.setRoom(r);
+            g.addToBill(r.getPrice(), true);
+            System.out.println("Room " + r.getRoomID() +
+                    " successfully reserved for " + g.getName());
+        } else{
+            System.out.println("Room " + r.roomID + " already reserved");
+        }
+
+    }
+
+    //Make an amenity reservation; update logs
+    public void reservation(Amenity a, Guest g) {
+        if (amenityLog.contains(a) && a.isAvailable){
+            a.reserve(g);
+            g.getAmenitiesBooked().add(a);
+            if(a.occupants.size() == a.maxOccupancy){
+                a.setAvailable(false);
+            }
+            g.addToBill(a.getPrice(), false);
+            System.out.println(a.getName() +
+                    " successfully reserved for " + g.getName());
+        } else{
+            System.out.println("Amenity is unavailable");
         }
     }
 
