@@ -60,7 +60,7 @@ public class UI {
                             "1. Book a room\n" +
                             "2. Book an amenity\n" +
                             "3. Modify a booking\n" +
-                            "4. Modify employee details\n" +
+                            "4. Modify employee/hotel details\n" +
                             "5. Log hours/Paycheck information\n" +
                             "6. Previous\n" +
                             "7. End session");
@@ -131,7 +131,7 @@ public class UI {
                                 System.out.println("Only supervisors have permission " +
                                         "to change employee details.");
                             } else {
-                                ((Manager) userEmploy).modifyEmployeeDetails();
+                                ((Manager) userEmploy).managerModify(input, h);
                             }
                             break;
                         case 5:

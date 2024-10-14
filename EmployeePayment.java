@@ -60,9 +60,8 @@ public class EmployeePayment implements Payment {
     // Method to process payment
     @Override
     public void processPayment() {
-        System.out.println("Processing payment of $" + calculateTotal() +" for the employee.");
         hoursWorked = 0;
-        generateReceipt();
+        recordTransaction();
 
     }
 
@@ -82,12 +81,14 @@ public class EmployeePayment implements Payment {
     // Method to generate employee paycheck details
     @Override
     public String generateReceipt() {
-        return "Employee Payment Receipt: Total Hours Worked: " + hoursWorked + ", Total taxes: $"+calculateTaxes()+", Total Payment: $" + calculateTotal();
+        return "Employee Payment Receipt:\nTotal Hours Worked: " +
+                hoursWorked + ", Total taxes: $" + calculateTaxes() +
+                ", Total Payment: $" + calculateTotal();
     }
 
 
     @Override
     public void recordTransaction() {
-        System.out.println("Recording employee transaction: " + generateReceipt());
+        System.out.println("Processing employee transaction:\n" + generateReceipt());
     }
 }
