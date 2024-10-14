@@ -79,7 +79,7 @@ public class Employee {
 
     public void modifyAmenity(Amenity a, Guest cancelled, Guest replacement, Hotel h) {
         a.cancel(cancelled);
-        h.reservation(a, replacement);
+        a.reserve(replacement);
     }
 
     public void displayEmployeeDetails() {

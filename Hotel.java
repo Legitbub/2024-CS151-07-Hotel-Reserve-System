@@ -86,17 +86,12 @@ public class Hotel {
 
     //Make a room reservation; update logs
     public void reservation(Room r, Guest g) {
-        if(!r.isReserved){
+        if(r.reserve(g)){
             openRooms.remove(r);
             roomLog.put(r, g);
             r.reserve(g);
             g.setRoom(r);
-            System.out.println("Room " + r.getRoomID() +
-                    " successfully reserved for " + g.getName());
-        }else{
-            System.out.println("Room " + r.roomID + " already reserved");
         }
-
     }
 
     // Return a string showing the list of available rooms to book

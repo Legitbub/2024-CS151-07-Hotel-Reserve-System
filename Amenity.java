@@ -5,31 +5,25 @@ public abstract class Amenity implements Reservable{
     protected String description;
     protected boolean isAvailable;
     protected int maxOccupancy;
+    protected int price;
     protected ArrayList<Guest> occupants = new ArrayList<>();
+    protected ArrayList<Employee> employees = new ArrayList<>();
     private static final int DEFAULT_MAX_OCCUPANCY = 30;
 
-    //will finish constructors once subclasses are more flushed out- for now not technically needed
+    public Amenity(){
+        name = "no name";
+        description = "no description";
+        isAvailable  = true;
+        maxOccupancy = DEFAULT_MAX_OCCUPANCY;
+    }
 
-    // public Amenity(){
-    //     name = "no name";
-    //     description = "no description";
-    //     isAvailable  = true;
-    //     maxOccupancy = DEFAULT_MAX_OCCUPANCY;
-    // }
-
-    // public Amenity(String name, String description){
-    //     this.name = name;
-    //     this.description = description;
-    //     isAvailable = true;
-    //     maxOccupancy = DEFAULT_MAX_OCCUPANCY;
-    // }
-
-    // public Amenity(String name, String description, int maxOccupancy){
-    //     this.name = name;
-    //     this.description = description;
-    //     isAvailable = true;
-    //     maxOccupancy = DEFAULT_MAX_OCCUPANCY;
-    // }
+    public Amenity(String name, String description, int price){
+        this.name = name;
+        this.description = description;
+        isAvailable = true;
+        maxOccupancy = DEFAULT_MAX_OCCUPANCY;
+        this.price = price;
+    }
 
     public String getName(){
         return name;
@@ -80,18 +74,7 @@ public abstract class Amenity implements Reservable{
 
     //cancel method overridden from Reservable
     @Override
-<<<<<<< HEAD
     public boolean cancel(Guest g){
-        if(occupants.contains(g)){
-            occupants.remove(g);
-            if(!isAvailable)
-                isAvailable = true;
-            return true;
-        }else{
-            System.out.println("No reservation under the name " + g.getName());
-            return false;
-=======
-    public void cancel(Guest g){
         if (occupants.contains(g)) {
             occupants.remove(g);
             g.getAmenitiesBooked().remove(this);
@@ -100,9 +83,10 @@ public abstract class Amenity implements Reservable{
             if (!isAvailable) {
                 isAvailable = true;
             }
+            return true;
         } else {
             System.out.println("No booking found for " + g.getName());
->>>>>>> 1b60406e81399c53d14a0756df4cc7cc5347cf95
+            return false;
         }
     }
 
