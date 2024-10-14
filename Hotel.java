@@ -1,16 +1,15 @@
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
+import java.util.TreeMap;
 
 public class Hotel {
     private String name;
     private List<Guest> guestList = new ArrayList<>();
     private List<Employee> employeeList = new ArrayList<>();
+    private List<Manager> managerList = new ArrayList<>();
     private List<Room> openRooms = new ArrayList<>();
-    private HashMap<Room, Guest> roomLog = new HashMap<>();
-    private Set<Amenity> amenityLog = new HashSet<>();
+    private TreeMap<Room, Guest> roomLog = new TreeMap<>();
+    private List<Amenity> amenityLog = new ArrayList<>();
 
     public Hotel() {
         name = "Default Hotel";
@@ -31,11 +30,14 @@ public class Hotel {
     public List<Employee> getEmployeeList() {
         return employeeList;
     }
+    public List<Manager> getManagerList() {
+        return managerList;
+    }
     public List<Room> getOpenRooms() {
         return openRooms;
     }
 
-    public HashMap<Room, Guest> getRoomLog() {
+    public TreeMap<Room, Guest> getRoomLog() {
         return roomLog;
     }
 
@@ -89,6 +91,8 @@ public class Hotel {
             roomLog.put(r, g);
             r.reserve(g);
             g.setRoom(r);
+            System.out.println("Room " + r.getRoomID() +
+                    " successfully reserved for " + g.getName());
         }else{
             System.out.println("Room " + r.roomID + " already reserved");
         }
@@ -125,12 +129,11 @@ public class Hotel {
         }
     }
 
-    //Return a string showing the list of bookedRooms
+    //Return a string showing the list of booked amenities
     public String bookedAmenities() {
         String s = "";
-        Object[] amenities = amenityLog.keySet().toArray();
-        for (int i = 0; i < amenities.length; i++) {
-            s += (i + ". " + ((Amenity) amenities[i]).getName() + "\n");
+        for (int i = 0; i < amenityLog.size(); i++) {
+            s += (i + ". " + amenityLog.get(i).getName() + "\n");
         }
         return s;
     }

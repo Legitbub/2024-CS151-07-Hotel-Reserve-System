@@ -1,11 +1,13 @@
-public class EmployeePayment extends Payment {
+public class EmployeePayment implements  Payment {
 
     private double hourlyRate;
     private double hoursWorked;
+    private Employee employee;
 
-    public EmployeePayment(double hourlyRate, double hoursWorked) {
-        this.hourlyRate = hourlyRate;
-        this.hoursWorked = hoursWorked;
+    public EmployeePayment(Employee employee) {
+        this.employee = employee;
+        this.hourlyRate = employee.getWage();
+        this.hoursWorked = employee.getHoursWorked();
     }
 
     // Method to log hours worked
@@ -16,39 +18,43 @@ public class EmployeePayment extends Payment {
     // Method to calculate total payment based on hours worked
     @Override
     public double calculateTotal() {
-        return hourlyRate * hoursWorked;
+        return hourlyRate * hoursWorked - calculateTaxes();
     }
 
     @Override
     public double calculateTaxes() {
-        double totalIncomeBeforeTax = calculateTotal();
-        double incomeAfterTax = 0;
-        if(totalIncomeBeforeTax <= 10099){
-            incomeAfterTax = totalIncomeBeforeTax * 0.01;
+        double totalIncomeBeforeTax = hourlyRate * hoursWorked;
+        double taxAmount = 0;
+        if(totalIncomeBeforeTax <= 10099/12){
+            taxAmount = totalIncomeBeforeTax * 0.01;
         }
-        else if(incomeAfterTax >= 10100 && incomeAfterTax <= 23942){
-            incomeAfterTax = totalIncomeBeforeTax * 0.02;
+        else if(totalIncomeBeforeTax >= 10100/12 && totalIncomeBeforeTax <= 23942/12){
+            taxAmount = totalIncomeBeforeTax * 0.02;
         }
-        else if(incomeAfterTax >= 23942 && incomeAfterTax <= 37788){
-            incomeAfterTax = totalIncomeBeforeTax * 0.04;
+        else if(totalIncomeBeforeTax >= 23942/12 && totalIncomeBeforeTax <= 37788/12){
+            taxAmount = totalIncomeBeforeTax * 0.04;
         }
-        else if(incomeAfterTax >= 37789 && incomeAfterTax <= 52455){
-            incomeAfterTax = totalIncomeBeforeTax * 0.06;
+        else if(totalIncomeBeforeTax >= 37789/12 && totalIncomeBeforeTax <= 52455/12){
+            taxAmount = totalIncomeBeforeTax * 0.06;
         }
-        else if(incomeAfterTax >= 52456 && incomeAfterTax <= 66295){
-            incomeAfterTax = totalIncomeBeforeTax * 0.08;
+        else if(totalIncomeBeforeTax >= 52456/12 && totalIncomeBeforeTax <= 66295/12){
+            taxAmount = totalIncomeBeforeTax * 0.08;
         }
         else{
-            incomeAfterTax = totalIncomeBeforeTax * 0.093;
+            taxAmount = totalIncomeBeforeTax * 0.093;
         }
 
-        return incomeAfterTax;
+        return taxAmount;
     }
 
     // Method to process payment
     @Override
-    public void processPayment(double amount) {
-        System.out.println("Processing payment of $" + amount + " for the employee.");
+    public void processPayment() {
+        System.out.println("Processing payment of $" + calculateTotal() +" for the employee.");
+        this.hoursWorked = 0;
+        employee.setHoursWorked(0);
+        generateReceipt();
+
     }
 
     // Method to modify hourly rate 
@@ -58,18 +64,21 @@ public class EmployeePayment extends Payment {
 
     // Method to modify hoursWorked 
     public void modifyhoursWorked(double hoursWorked) {
-        this.hoursWorked = hoursWorked;
+        if(hoursWorked >= 0){
+            this.hoursWorked = hoursWorked;
+        }
+        
     }
 
     // Method to generate employee paycheck details
     @Override
     public String generateReceipt() {
-        return "Employee Payment Receipt: Total Hours Worked: " + hoursWorked + ", Total Payment: $" + calculateTotal();
+        return "Employee Payment Receipt: Total Hours Worked: " + hoursWorked + ", Total taxes: $"+calculateTaxes()+", Total Payment: $" + calculateTotal();
     }
 
 
     @Override
-    public void recordTransaction(String transactionDetails) {
-        System.out.println("Recording employee transaction: " + transactionDetails);
+    public void recordTransaction() {
+        System.out.println("Recording employee transaction: " + generateReceipt());
     }
 }

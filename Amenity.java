@@ -80,6 +80,7 @@ public abstract class Amenity implements Reservable{
 
     //cancel method overridden from Reservable
     @Override
+<<<<<<< HEAD
     public boolean cancel(Guest g){
         if(occupants.contains(g)){
             occupants.remove(g);
@@ -89,6 +90,19 @@ public abstract class Amenity implements Reservable{
         }else{
             System.out.println("No reservation under the name " + g.getName());
             return false;
+=======
+    public void cancel(Guest g){
+        if (occupants.contains(g)) {
+            occupants.remove(g);
+            g.getAmenitiesBooked().remove(this);
+            System.out.println("Cancelled " + name + " booking for " +
+                    g.getName() + ".");
+            if (!isAvailable) {
+                isAvailable = true;
+            }
+        } else {
+            System.out.println("No booking found for " + g.getName());
+>>>>>>> 1b60406e81399c53d14a0756df4cc7cc5347cf95
         }
     }
 
