@@ -98,15 +98,9 @@ public class Hotel {
         if(r.reserve(g)){
             openRooms.remove(r);
             roomLog.put(r, g);
-            r.reserve(g);
             g.setRoom(r);
             g.addToBill(r.getPrice(), true);
-            System.out.println("Room " + r.getRoomID() +
-                    " successfully reserved for " + g.getName());
-        } else{
-            System.out.println("Room " + r.roomID + " already reserved");
         }
-
     }
 
     //Make an amenity reservation; update logs
@@ -131,6 +125,7 @@ public class Hotel {
         int i = 1;
         for (Room r : openRooms) {
             s += (i + ". Room " + r.roomID + "\n");
+            i++;
         }
         return s;
     }
@@ -158,8 +153,8 @@ public class Hotel {
     //Return a string showing the list of booked amenities
     public String bookedAmenities() {
         String s = "";
-        for (int i = 0; i < amenityLog.size(); i++) {
-            s += (i + ". " + amenityLog.get(i).getName() + "\n");
+        for (int i = 1; i <= amenityLog.size(); i++) {
+            s += (i + ". " + amenityLog.get(i - 1).getName() + "\n");
         }
         return s;
     }

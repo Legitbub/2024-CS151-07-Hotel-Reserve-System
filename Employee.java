@@ -61,7 +61,7 @@ public class Employee {
     public void displayEmployeeDetails() {
         System.out.println(name + ", " + position);
         System.out.printf("Wage: $%.2f", emplPayment.getHourlyRate());
-        System.out.println(", Hours worked: " + emplPayment.getHoursWorked());
+        System.out.printf(", Hours worked: %.2f\n", emplPayment.getHoursWorked());
     }
 
     @Override
