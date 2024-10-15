@@ -86,7 +86,7 @@ public class Hotel {
 
     //Make a room reservation; update logs
     public void reservation(Room r, Guest g) {
-        if(!r.isReserved) {
+        if(r.reserve(g)){
             openRooms.remove(r);
             roomLog.put(r, g);
             r.reserve(g);
