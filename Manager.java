@@ -16,12 +16,12 @@ public class Manager extends Employee {
         System.out.println("Select an employee to crush the dreams " +
             "of (enter the number in the list, or 0 to show mercy): ");
         List<Employee> l = h.getEmployeeList();
-        for (int i = 1; i <= l.size(); i++) {
-            System.out.println(i + ". " + l.get(i).getName() +
+        for (int i = 0; i < l.size(); i++) {
+            System.out.println((i + 1) + ". " + l.get(i).getName() +
                     " (" + l.get(i).getId() + ")");
         }
-        int entered = input.nextInt();
-        if (entered > 0) {
+        int entered = input.nextInt() - 1;
+        if (entered >= 0 && entered < l.size()) {
             Employee dead = l.get(entered);
             if (dead.getPosition().equalsIgnoreCase("Manager")) {
                 System.out.println("Managers cannot be fired at this time.");
@@ -32,7 +32,7 @@ public class Manager extends Employee {
         } else {
             System.out.println("Everyone's job is safe...for now...");
         }
-    }
+    }   
 
     public void setEmployeeStats(Employee e, double hours, double wage) {
         e.getPayment().modifyhoursWorked(hours);
@@ -104,6 +104,9 @@ public class Manager extends Employee {
 
     // Manager can update pricing of the room if needed.
     public void updateRoomPricing(Room room, double price){
+        if(price <= 0.0){
+            System.out.println("Price of room cannot be negative!");
+        }
         room.setPrice(price);
     }
     

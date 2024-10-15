@@ -10,13 +10,15 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import java.util.List;
+import java.io.ByteArrayInputStream;
+import java.io.InputStream;
 import java.util.ArrayList;
-
+import java.util.Scanner;
 
 
 public class JUnitTest {
 
-    //FOR EMPLOYEE CLASS TESTING
+    //----FOR EMPLOYEE CLASS TESTING----
     private Employee emp1;
     private Employee emp2;
     private VIPRoom VIPRoom;
@@ -26,18 +28,25 @@ public class JUnitTest {
     private Hotel hotel;
     private Pool pool;
 
-    //FOR GUEST CLASS TESTIN
+    //----FOR GUEST CLASS TESTING----
     private Guest guest3;
     private StandardRoom standardRoom2;
     private VIPRoom VIPRoom2;
     private Gym gym;
     private GuestPayment guestPayment;
 
-    
+
+    //----FOR MANAGER CLASS TESTING----
+    private Manager manager;
+    private Hotel hotel2;
+    private Employee emp5;
+    private Employee emp6;
+    private StandardRoom standardRoom3;
+    private List<Employee> workers;
 
     @BeforeEach
     public void setUp() {
-        //FOR EMPLOYEE CLASS TESTING    
+        //---FOR EMPLOYEE CLASS TESTING---    
         emp1 = new Employee("E001", "Alice", "Manager", 20.0);
         emp2 = new Employee("E002");
         guest = new Guest("Alice Smith");
@@ -53,14 +62,27 @@ public class JUnitTest {
         pool.reserve(guest);
         guest.setRoom(standardRoom);
 
-        //FOR GUEST CLASS TESTING
+        //---FOR GUEST CLASS TESTING---
         standardRoom2 = new StandardRoom(101); 
         VIPRoom2 = new VIPRoom(201); 
         gym = new Gym("Gym", "Workout", 100);
         guest3 = new Guest("Jane Trey");
         guestPayment = new GuestPayment();
 
+        //---FOR MANAGER CLASS TESTING---
+        manager = new Manager("M001", "Alice", "Manager", 5000);
+        hotel2 = new Hotel("Sunshine Hotel");
+        emp5 = new Employee("E001", "John", "Receptionist", 15);
+        emp6 = new Employee("E002", "Jane", "Housekeeping", 12);
+        standardRoom3 = new StandardRoom(101);
+
+        workers = new ArrayList<>();
+        workers.add(emp5);
+        workers.add(emp6);
+        hotel2.setEmployeeList(workers);
+
         
+
     }
     //-----------FOR EMPLOYEE CLASS TESTING--------------
     @Test
@@ -124,10 +146,8 @@ public class JUnitTest {
         assertTrue(guest.getAmenitiesBooked().contains(pool), "The guest should reserved pool");
 
         emp1.modifyAmenity(pool, guest);
-        // Check if the guest has the amenity in their booking list
         assertFalse(guest.getAmenitiesBooked().contains(pool), "The guest should finished booking pool");
 
-        // Check if the pool is marked as reserved
         assertTrue(pool.isAvailable, "The pool should be marked as available.");
     }
 
@@ -135,21 +155,12 @@ public class JUnitTest {
     @Test
     void testEmployeeModifyAmenityWithCheckingOutAndCheckingIn() {        
         emp1.modifyAmenity(pool, guest, guest2, hotel);
-        // Check if the guest has the amenity in their booking list
+
         assertFalse(guest.getAmenitiesBooked().contains(pool), "The pool should not be in current list of amenity booked for guest 1");
         assertTrue(guest2.getAmenitiesBooked().contains(pool), "The guest 2 should finished booking pool");
 
-        // Check if the pool is marked as reserved
         assertTrue(pool.isAvailable, "The pool should be marked as available.");
     }
-
-
-    @Test
-    void testEmployeeSetWage() {
-        emp1.setWage(25.0);
-        assertEquals(25.0, emp1.getPayment().getHourlyRate());
-    }
-
 
     @Test
     void testEmployeeEquals() {
@@ -203,23 +214,69 @@ public class JUnitTest {
 
         guest3.getAmenitiesBooked().add(gym);
         assertTrue(guest3.getAmenitiesBooked().contains(gym), "The guest should have gym booked in the list of amaenity.");
+
+        guest3.getAmenitiesBooked().add(pool);
+        assertTrue(guest3.getAmenitiesBooked().contains(pool), "The guest should have pool booked in the list of amaenity.");
+
     }
 
     @Test
     void testCheckout() {
-        // Assign room and book amenity
+        // Assign room and book amenity for guest 3
         guest3.setRoom(standardRoom2);
         assertTrue(standardRoom2.reserve(guest3), "Room should be reserved");
         guest3.getAmenitiesBooked().add(pool);
         
-        // Perform checkout
         guest3.checkout();
         
-        // Assertions
         assertNull(guest3.getRoom(), "Guest should have no room assigned after checking out.");
         assertFalse(standardRoom2.isReserved, "The room should not be reserved after.");
         assertTrue(guest3.getAmenitiesBooked().isEmpty(), "The list of booked amenities that guest had should be empty");
     }
+
+
+    //--------FOR MANAGER CLASS TESTING------------
+
+    @Test
+    public void testSetEmployeeStats() {
+        manager.setEmployeeStats(emp5, 40, 20);
+        assertEquals(40, emp5.getPayment().getHoursWorked(), "Employee hours should be updated.");
+        assertEquals(20, emp5.getPayment().getHourlyRate(), "Employee hourly rate should be updated.");
+    }
+
+    @Test
+    public void testUpdateRoomPricing() {
+        manager.updateRoomPricing(standardRoom3, 150.00);
+        assertEquals(150.00, standardRoom3.getPrice(), 0.01, "Room price should be updated.");
+    }
+
+    @Test
+    public void testPayAll() {
+
+        emp5.getPayment().modifyhoursWorked(40);
+        emp6.getPayment().modifyhoursWorked(35);
+
+        manager.payAll(hotel2);
+        
+        assertEquals(0, emp5.getPayment().getHoursWorked(), "Employee hours should reset after payment.");
+        assertEquals(0, emp6.getPayment().getHoursWorked(), "Employee hours should reset after payment.");
+        
+    }
+
+    @Test
+    public void testFireEmployee() {
+        String input = "1\n"; //Pick the first employee in the list to get fired
+        InputStream in = new ByteArrayInputStream(input.getBytes());
+        Scanner scanner = new Scanner(in);
+        
+        manager.fireEmployee(scanner, hotel2);
+        
+        assertFalse(hotel2.getEmployeeList().contains(emp5), "Employee 5 should be fired and removed from the hotel.");
+        assertTrue(hotel2.getEmployeeList().contains(emp6), "Employee 6 should still be in the list.");
+    }
+
+
+
         
 
 }
