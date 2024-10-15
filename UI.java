@@ -34,13 +34,14 @@ public class UI {
                         h.reservation(bookedAmenity, user);
                         break;
                     case 3:
-                        user.displayGuestAccount(input);
+                        user.displayGuestAccount(input, h);
                     case 4:
                         userNum = selectHotel(input, hotels, userNum, h);
                         break;
                     case 5:
                         session = false;
                         userNum = 0;
+                        input.close();
                         break;
                     default:
                         System.out.println("Invalid entry. Try again.");
@@ -159,6 +160,7 @@ public class UI {
                         case 7:
                             session = false;
                             userNum = 0;
+                            input.close();
                             break;
                         default:
                             System.out.println("Invalid entry. Try again.");
@@ -259,6 +261,8 @@ public class UI {
         String name = input.nextLine();
         Guest user = new Guest(name);
         if (h.getGuestList().contains(user)) {
+            int index = h.getGuestList().indexOf(user);
+            user = h.getGuestList().get(index);
             System.out.println("Welcome back " + name + "!");
             returning = true;
         }

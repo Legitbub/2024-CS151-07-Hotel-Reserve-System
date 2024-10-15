@@ -15,8 +15,16 @@ public class EmployeePayment implements Payment {
         return hoursWorked;
     }
 
-    public void setHourlyRate(double hourlyRate) {
-        this.hourlyRate = hourlyRate;
+    // Method to modify hourly rate
+    public void modifyHourlyRate(double newRate) {
+        this.hourlyRate = newRate;
+    }
+
+    // Method to modify hoursWorked
+    public void modifyhoursWorked(double hoursWorked) {
+        if(hoursWorked >= 0){
+            this.hoursWorked = hoursWorked;
+        }
     }
 
     // Method to log hours worked
@@ -59,23 +67,10 @@ public class EmployeePayment implements Payment {
 
     // Method to process payment
     @Override
-    public void processPayment() {
-        hoursWorked = 0;
+    public void processPayment(Hotel h) {
         recordTransaction();
+        hoursWorked = 0;
 
-    }
-
-    // Method to modify hourly rate 
-    public void modifyHourlyRate(double newRate) {
-        this.hourlyRate = newRate;
-    }
-
-    // Method to modify hoursWorked 
-    public void modifyhoursWorked(double hoursWorked) {
-        if(hoursWorked >= 0){
-            this.hoursWorked = hoursWorked;
-        }
-        
     }
 
     // Method to generate employee paycheck details

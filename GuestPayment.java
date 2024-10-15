@@ -52,12 +52,14 @@ public class GuestPayment implements Payment {
 
     // Method to process guest payment
     @Override
-    public void processPayment() {
+    public void processPayment(Hotel h) {
         if (loyaltyPoints > 0) {
             redeemLoyaltyPoints();
         }
-        System.out.println("Processing guest payment of $" + calculateTotal());
+        double revenue = calculateTotal();
+        System.out.println("Processing guest payment of $" + revenue);
         addRewards(roomCharges + amenityCharges);
+        h.addEarnings(revenue);
         recordTransaction();
     }
 

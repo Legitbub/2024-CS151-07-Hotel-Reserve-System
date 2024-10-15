@@ -42,20 +42,21 @@ public class Guest {
 
     //Resets booking status
     public void checkout() {
+        room.cancel(this);
         room.isReserved = false;
         room.guest = null;
         room = null;
         amenitiesBooked.clear();
     }
 
-    public void displayGuestAccount(Scanner input) {
+    public void displayGuestAccount(Scanner input, Hotel h) {
         System.out.println("Room charges: $" + payment.getRoomCharges());
         System.out.println("Amenity charges: $" + payment.getAmenityCharges());
         System.out.println("Available rewards points: " + payment.getLoyaltyPoints());
         System.out.print("Pay bill?: (Enter \"yes\" for yes, anything else for no)");
         String pay = input.nextLine().toLowerCase();
         if (pay.equals("yes")) {
-            payment.processPayment();
+            payment.processPayment(h);
         }
     }
 

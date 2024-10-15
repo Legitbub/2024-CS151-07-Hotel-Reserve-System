@@ -11,7 +11,7 @@ public class Buffet extends Amenity implements Reservable{
         super();
     };
 
-    public Buffet(String name, String description, int price, MenuType menuType){
+    public Buffet(String name, String description, double price, MenuType menuType){
         super(name, description, price);
         this.menuType = menuType;
     }
