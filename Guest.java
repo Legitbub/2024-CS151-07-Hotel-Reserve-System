@@ -25,8 +25,11 @@ public class Guest {
     }
 
     public void setRoom(Room room) {
-        this.room = room;
+        if(this.getRoom() == null){
+            this.room = room;
+        }
     }
+    
 
     public void addToBill(double charges, boolean room) {
         if (room) {
