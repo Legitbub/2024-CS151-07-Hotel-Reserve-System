@@ -1,21 +1,46 @@
 import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.DynamicTest.stream;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
+
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+
+
 
 public class JUnitTest {
 
     private Employee emp1;
     private Employee emp2;
+    private VIPRoom VIPRoom;
+    private StandardRoom standardRoom;
+    private Guest guest;
+    private Guest guest2;
+    private Hotel hotel;
+    private Pool pool;
+    
 
     @BeforeEach
     public void setUp() {
         emp1 = new Employee("E001", "Alice", "Manager", 20.0);
         emp2 = new Employee("E002");
+        guest = new Guest("Alice Smith");
+        guest2 = new Guest ("Bob Will");
+        standardRoom = new StandardRoom(guest, 101, 100.0); 
+        VIPRoom = new VIPRoom(guest, 201, 200.0); 
+        pool = new Pool("Pool", "Swimming Pool", 30);
+        hotel = new Hotel("Test Hotel");
+
+        hotel.addRooms(standardRoom);
+        hotel.addRooms(VIPRoom);
+        hotel.addAmenities(pool);
+        pool.reserve(guest);
+        guest.setRoom(standardRoom);
+
+        
     }
     @Test
     public void testConstructorWithID() {
@@ -54,16 +79,49 @@ public class JUnitTest {
         assertEquals(8, emp1.getPayment().getHoursWorked());
     }
 
-    //Waiting for Josh to Finish
-    @Test
-    void testModifyRoom() {
+    
 
-    }
-    //Waiting for Josh to Finish
+    //This test will remove guest from the room without having another guest assigned to the room right after.
     @Test
-    void testModifyAmenity() {
-
+    void testModifyRoomWithOnlyCheckingGuestOut() {
+        emp1.modifyRoom(standardRoom);
+        assertEquals(guest.getRoom(), null, "Guest should be checked out from room.");
+        assertTrue(hotel.getOpenRooms().contains(standardRoom), "Room should be marked as open");
     }
+
+    //This testwill remove the current guest and check in another guest right away.
+    @Test
+    void testModifyRoomWithCheckingOutAndCheckingIn() {
+        emp1.modifyRoom(standardRoom, guest2, hotel);
+        assertEquals(guest.getRoom(), null, "First guest should be checked out from room.");
+        assertEquals(guest2.getRoom(), standardRoom, "Room should not be reserved to guest 2");
+        assertFalse(hotel.getOpenRooms().contains(standardRoom), "Room should be marked as reserved");
+    }
+    //Check out guest from amenity without having another guest reserve
+    @Test
+    void testModifyAmenityWithOnlyCheckingOut() {
+        assertTrue(guest.getAmenitiesBooked().contains(pool), "The guest should reserved pool");
+
+        emp1.modifyAmenity(pool, guest);
+        // Check if the guest has the amenity in their booking list
+        assertFalse(guest.getAmenitiesBooked().contains(pool), "The guest should finished booking pool");
+
+        // Check if the pool is marked as reserved
+        assertTrue(pool.isAvailable, "The pool should be marked as available.");
+    }
+
+    //This test will remove the current guest and reserve for another guest
+    @Test
+    void testModifyAmenityWithCheckingOutAndCheckingIn() {        
+        emp1.modifyAmenity(pool, guest, guest2, hotel);
+        // Check if the guest has the amenity in their booking list
+        assertFalse(guest.getAmenitiesBooked().contains(pool), "The guest should finished booking pool");
+        assertTrue(guest2.getAmenitiesBooked().contains(pool), "The guest should finished booking pool");
+
+        // Check if the pool is marked as reserved
+        assertTrue(pool.isAvailable, "The pool should be marked as available.");
+    }
+
 
     @Test
     void testSetWage() {
