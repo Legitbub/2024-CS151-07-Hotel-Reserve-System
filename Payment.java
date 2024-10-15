@@ -3,7 +3,7 @@ public interface Payment{
     double calculateTotal();
 
     // Method to process a payment (could be extended for diff. types: cash, card, etc.)
-    void processPayment();
+    void processPayment(Hotel h);
 
     // Method to generate a detailed receipt of the payment transaction
     String generateReceipt();

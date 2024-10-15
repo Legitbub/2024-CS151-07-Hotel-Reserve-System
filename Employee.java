@@ -24,10 +24,6 @@ public class Employee {
         emplPayment.logHours(hours);
     }
 
-    public void setWage(double wage) {
-        emplPayment.setHourlyRate(wage);
-    }
-
     public String getId() {
         return ID;
     }

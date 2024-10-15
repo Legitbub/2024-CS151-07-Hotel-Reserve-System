@@ -6,7 +6,6 @@ public abstract class Amenity implements Reservable{
     protected boolean isAvailable;
     //protected double price;
     protected int maxOccupancy;
-    protected int price;
     protected ArrayList<Guest> occupants = new ArrayList<>();
     protected ArrayList<Employee> employees = new ArrayList<>();
     private static final int DEFAULT_MAX_OCCUPANCY = 30;
@@ -18,7 +17,7 @@ public abstract class Amenity implements Reservable{
         maxOccupancy = DEFAULT_MAX_OCCUPANCY;
     }
 
-    public Amenity(String name, String description, int price){
+    public Amenity(String name, String description, double price){
         this.name = name;
         this.description = description;
         isAvailable = true;

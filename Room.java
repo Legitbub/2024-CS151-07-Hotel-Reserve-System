@@ -19,6 +19,11 @@ public abstract class Room implements Reservable, Comparable<Room> {
         }
     }
 
+    @Override
+    public boolean cancel(Guest g) {
+        System.out.println(g.getName() + " checked out of room " + roomID);
+        return true;
+    }
     public int getRoomID() {
         return roomID;
     }

@@ -10,6 +10,7 @@ public class Hotel {
     private List<Room> openRooms = new ArrayList<>();
     private TreeMap<Room, Guest> roomLog = new TreeMap<>();
     private List<Amenity> amenityLog = new ArrayList<>();
+    private double revenue = 0;
 
     public Hotel() {
         name = "Default Hotel";
@@ -56,6 +57,14 @@ public class Hotel {
 
     public void setEmployeeList(List<Employee> l) {
         employeeList = l;
+    }
+
+    public double getRevenue() {
+        return revenue;
+    }
+
+    public void addEarnings(double revenue) {
+        this.revenue += revenue;
     }
 
     //Add a room to the hotel list
