@@ -7,13 +7,13 @@ public abstract class Room implements Reservable, Comparable<Room> {
 
     @Override
     public boolean reserve(Guest g) {
-        if(!isReserved){
+        if (!isReserved) {
             guest = g;
             isReserved = true;
             System.out.println("Room " + roomID +
                     " successfully reserved for " + g.getName());
             return true;
-        }else{
+        } else {
             System.out.println("Room " + roomID + " already reserved");
             return false;
         }

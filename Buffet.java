@@ -3,10 +3,8 @@ import java.util.ArrayList;
 public class Buffet extends Amenity implements Reservable{
     private ArrayList<String> menu = new ArrayList<>();
     private ArrayList<ArrayList<Guest>> parties = new ArrayList<>();
-    private enum MenuType{BREAKFAST, LUNCH, DINNER}
-
-    MenuType menuType;
-    
+    private MenuType menuType;
+    enum MenuType{BREAKFAST, LUNCH, DINNER}
     public Buffet(){
         super();
     };
@@ -15,8 +13,6 @@ public class Buffet extends Amenity implements Reservable{
         super(name, description, price);
         this.menuType = menuType;
     }
-
-        
 
     public void showMenu(){
         System.out.println(menu.toString());

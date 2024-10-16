@@ -53,14 +53,17 @@ public class Guest {
     }
 
     public void displayGuestAccount(Scanner input, Hotel h) {
-        System.out.println("Room charges: $" + payment.getRoomCharges());
-        System.out.println("Amenity charges: $" + payment.getAmenityCharges());
+        System.out.printf("Room charges: $%.2f\n", payment.getRoomCharges());
+        System.out.printf("Amenity charges: $%.2f\n", payment.getAmenityCharges());
         System.out.println("Available rewards points: " + payment.getLoyaltyPoints());
-        System.out.print("Pay bill?: (Enter \"yes\" for yes, anything else for no)");
+        System.out.print("Pay bill? (Enter \"yes\" for yes, anything else for no): ");
         String pay = input.nextLine().toLowerCase();
         if (pay.equals("yes")) {
             payment.processPayment(h);
+        } else {
+            System.out.print("Press enter to exit payment system.");
         }
+        input.nextLine();
     }
 
     @Override

@@ -6,6 +6,7 @@ public class VIPRoom extends Room implements Reservable {
     public VIPRoom(int roomID) {
         level = "VIP";
         this.roomID = roomID;
+        price = 150;
     }
 
     public VIPRoom(Guest guest, int roomID, double price) {
