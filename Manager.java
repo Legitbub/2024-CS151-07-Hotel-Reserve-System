@@ -157,8 +157,16 @@ public class Manager extends Employee {
                 " in total profit.\n", h.getRevenue());
     }
 
+    public void viewOccupantHistory(Room room) {
+        System.out.println("Viewing occupant history for Room ID: " + room.getRoomID());
+        room.displayOccupantHistory();
+    }
+
     // Manager can update pricing of the room if needed.
     public void updateRoomPricing(Room room, double price){
+        if(price <= 0.0){
+            System.out.println("Price of room cannot be negative!");
+        }
         room.setPrice(price);
     }
     

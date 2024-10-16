@@ -1,6 +1,7 @@
 import java.util.ArrayList;
 import java.util.List;
 import java.util.TreeMap;
+import java.util.Random;
 
 public class Hotel {
     private String name;
@@ -99,7 +100,19 @@ public class Hotel {
             openRooms.remove(r);
             roomLog.put(r, g);
             g.setRoom(r);
+            applyDiscountToFifthGuest(g);
             g.addToBill(r.getPrice(), true);
+            
+        }
+    }
+    //Random give every fifth guest a discount between 10%-20%
+    private void applyDiscountToFifthGuest(Guest g){
+        if(guestList.size() % 5 == 0){
+            Random random = new Random();
+            //Chooses a random discount between 10 - 20
+            double discountPercentage = 10 + random.nextDouble() * 10;
+            System.out.println("Applying a discount of " + discountPercentage + "% for guest " + g.getName());
+            g.getRoom().applyDiscount(discountPercentage);
         }
     }
 

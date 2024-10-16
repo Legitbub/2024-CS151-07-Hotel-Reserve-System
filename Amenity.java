@@ -66,6 +66,7 @@ public abstract class Amenity implements Reservable{
     public boolean reserve(Guest g){
         if(isAvailable) {
             occupants.add(g);
+            g.getAmenitiesBooked().add(this);
             if(occupants.size() == maxOccupancy){
                 isAvailable = false;
             }
