@@ -273,6 +273,28 @@ public class JUnitTest {
         
         assertFalse(hotel2.getEmployeeList().contains(emp5), "Employee 5 should be fired and removed from the hotel.");
         assertTrue(hotel2.getEmployeeList().contains(emp6), "Employee 6 should still be in the list.");
+
+        String input2 = "1\n"; //Pick the first employee in the list to get fired
+        InputStream in2 = new ByteArrayInputStream(input2.getBytes());
+        Scanner scanner2 = new Scanner(in2);
+
+        manager.fireEmployee(scanner2, hotel2);
+        assertFalse(hotel2.getEmployeeList().contains(emp6));
+        assertTrue(hotel2.getEmployeeList().isEmpty());
+
+        scanner.close();
+        scanner2.close();
+
+    }
+    @Test
+    public void testGenerateFinancialReport() {
+        // Add some revenue
+        hotel2.addEarnings(1000);
+        hotel2.addEarnings(500);
+        
+        // Redirect system output to capture the printed message
+        String revenueReport = "Sunshine Hotel has made $1500.0 in total profit.";
+        assertEquals(revenueReport, hotel2.getName() + " has made $" + hotel2.getRevenue() + " in total profit.");
     }
 
 
