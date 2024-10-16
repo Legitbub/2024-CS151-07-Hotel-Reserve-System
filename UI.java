@@ -314,7 +314,7 @@ public class UI {
                         "200, enter 1):");
                 System.out.println(h.showRooms());
                 entered = input.nextInt() - 1;
-                if (entered > 0 && entered < h.getOpenRooms().size()) {
+                if (entered >= 0 && entered < h.getOpenRooms().size()) {
                     r = h.getOpenRooms().get(entered);
                 } else {
                     System.out.println("Invalid entry. Try again.");
@@ -329,7 +329,7 @@ public class UI {
                             "200, enter 1):");
                     System.out.println(h.bookedRooms());
                     entered = input.nextInt() - 1;
-                    if (entered > 0 && entered < h.getRoomLog().size()) {
+                    if (entered >= 0 && entered < h.getRoomLog().size()) {
                         r = (Room) h.getRoomLog().keySet().toArray()[entered];
                     } else {
                         System.out.println("Invalid entry. Try again.");
@@ -354,7 +354,7 @@ public class UI {
                         " the following list (enter the number): ");
                 h.showAmenities();
                 entered = input.nextInt() - 1;
-                if (entered > 0 && entered < h.getOpenAmenities().size()) {
+                if (entered >= 0 && entered < h.getOpenAmenities().size()) {
                     a = h.getOpenAmenities().get(entered);
                 } else {
                     System.out.println("Invalid entry. Try again.");
@@ -367,7 +367,7 @@ public class UI {
                             "the following list (enter the number)");
                     System.out.println(h.bookedAmenities());
                     entered = input.nextInt() - 1;
-                    if (entered > 0 && entered < h.getAmenityLog().size()) {
+                    if (entered >= 0 && entered < h.getAmenityLog().size()) {
                         a = h.getAmenityLog().get(entered);
                     } else {
                         System.out.println("Invalid entry. Try again.");
