@@ -101,6 +101,11 @@ public class Manager extends Employee {
         System.out.println("Hotel " + h.getName() + " has made $" +
                 h.getRevenue() + " in total profit.");
     }
+    
+    public void viewOccupantHistory(Room room) {
+        System.out.println("Viewing occupant history for Room ID: " + room.getRoomID());
+        room.displayOccupantHistory(); 
+    }
 
     // Manager can update pricing of the room if needed.
     public void updateRoomPricing(Room room, double price){
