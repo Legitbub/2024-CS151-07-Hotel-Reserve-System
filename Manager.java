@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.InputMismatchException;
 import java.util.List;
 import java.util.Scanner;
 
@@ -17,40 +18,64 @@ public class Manager extends Employee {
             "of (enter the number in the list, or 0 to show mercy): ");
         List<Employee> l = h.getEmployeeList();
         for (int i = 1; i <= l.size(); i++) {
-            System.out.println(i + ". " + l.get(i).getName() +
-                    " (" + l.get(i).getId() + ")");
+            System.out.println(i + ". " + l.get(i - 1).getName() +
+                    " (" + l.get(i - 1).getId() + ")");
         }
-        int entered = input.nextInt();
-        if (entered > 0) {
-            Employee dead = l.get(entered);
-            if (dead.getPosition().equalsIgnoreCase("Manager")) {
-                System.out.println("Managers cannot be fired at this time.");
-            } else {
-                h.getEmployeeList().remove(dead);
-                System.out.printf("Employee %s has been fired!", dead.getId());
+        boolean correct = false;
+        int entered = 0;
+        while (!correct) {
+            try {
+                entered = input.nextInt();
+                if (entered > 0) {
+                    Employee dead = l.get(entered - 1);
+                    if (dead.getPosition().equalsIgnoreCase("Manager")) {
+                        System.out.println("Managers cannot be fired at this time.");
+                    } else {
+                        h.getEmployeeList().remove(dead);
+                        System.out.printf("Employee %s has been fired!\n", dead.getId());
+                    }
+                } else {
+                    System.out.print("Everyone's job is safe...for now...");
+                }
+                correct = true;
+            } catch (InputMismatchException | IndexOutOfBoundsException e) {
+                System.out.print("Invalid input. The souls of the employees " +
+                        "are just waiting to be destroyed...\nSelect an " +
+                        "employee to crush the dreams of (enter the number " +
+                        "in the list, or 0 to show mercy): ");
+                input.nextLine();
             }
-        } else {
-            System.out.println("Everyone's job is safe...for now...");
         }
+        input.nextLine();
     }
 
     public void setEmployeeStats(Employee e, double hours, double wage) {
         e.getPayment().modifyhoursWorked(hours);
         e.getPayment().modifyHourlyRate(wage);
+        System.out.println("Successfully modified " + e.getName() + "'s details.");
     }
 
     // Handle the edits to employees and hotel features;
     public void managerModify(Scanner input, Hotel h) {
-        int entered;
+        int entered = 0;
         do {
             System.out.println("Select an option, boss:" +
                     "\n1) Change hours/wages\n2) Pay employees" +
                     "\n3) Fire employee\n4) Review hotel earnings");
-            entered = input.nextInt();
-            if (entered > 3 || entered < 1) {
+            boolean correct = false;
+            while (!correct) {
+                try {
+                    entered = input.nextInt();
+                    correct = true;
+                } catch (InputMismatchException e) {
+                    System.out.print("Invalid entry. Try again: ");
+                    input.nextLine();
+                }
+            }
+            if (entered > 4 || entered < 1) {
                 System.out.println("Enter a number from the list of options.");
             }
-        } while (entered > 3 || entered < 1);
+        } while (entered > 4 || entered < 1);
 
         switch (entered) {
             case 1:
@@ -58,21 +83,50 @@ public class Manager extends Employee {
                         "(enter the number in the list, or 0 to cancel):");
                 List<Employee> l = h.getEmployeeList();
                 for (int i = 1; i <= l.size(); i++) {
-                    System.out.println(i + ". " + l.get(i).getName() +
-                            " (" + l.get(i).getId() + ")");
+                    System.out.println(i + ". " + l.get(i - 1).getName() +
+                            " (" + l.get(i - 1).getId() + ")");
                 }
-                entered = input.nextInt();
-                if (entered > 0) {
-                    Employee e = l.get(entered);
-                    System.out.println("Current logged hours: " +
-                            e.getPayment().getHoursWorked() + "\nCurrent" +
-                            " wage: $" + e.getPayment().getHourlyRate());
-                    System.out.println("Enter new logged hours amount: ");
-                    double hours = input.nextDouble();
-                    System.out.println("Enter new wage: $");
-                    double wage = input.nextDouble();
-                    setEmployeeStats(e, hours, wage);
+                boolean correct = false;
+                Employee em = null;
+                double hours = 0;
+                double wage = 0;
+                while (!correct) {
+                    try {
+                        entered = input.nextInt();
+                        correct = true;
+                        em = l.get(entered - 1);
+                        System.out.printf("Current logged hours: " +
+                                em.getPayment().getHoursWorked() + "\nCurrent" +
+                                " wage: $%.2f\n", em.getPayment().getHourlyRate());
+                    } catch (InputMismatchException | IndexOutOfBoundsException e) {
+                        System.out.print("Invalid input. Try again: ");
+                        input.nextLine();
+                        correct = false;
+                    }
                 }
+                correct = false;
+                while (!correct) {
+                    try {
+                        System.out.print("Enter new logged hours amount: ");
+                        hours = input.nextDouble();
+                        correct = true;
+                    } catch (InputMismatchException e) {
+                        System.out.print("Invalid input. Try again: ");
+                        input.nextLine();
+                    }
+                }
+                correct = false;
+                while (!correct) {
+                    try {
+                        System.out.print("Enter new wage: $");
+                        wage = input.nextDouble();
+                        correct = true;
+                    } catch (InputMismatchException e) {
+                        System.out.print("Invalid input. Try again: ");
+                        input.nextLine();
+                    }
+                }
+                setEmployeeStats(em, hours, wage);
                 break;
             case 2:
                 payAll(h);
@@ -85,6 +139,7 @@ public class Manager extends Employee {
                 break;
             default:
         }
+        input.nextLine();
     }
     // Get a general date and pay all
     public void payAll(Hotel h) {
@@ -98,8 +153,8 @@ public class Manager extends Employee {
     }
     // Generate a financial report of all the earnings made.
     public void generateFinancialReport(Hotel h) {
-        System.out.println("Hotel " + h.getName() + " has made $" +
-                h.getRevenue() + " in total profit.");
+        System.out.printf("Hotel " + h.getName() + " has made $%.2f" +
+                " in total profit.\n", h.getRevenue());
     }
 
     // Manager can update pricing of the room if needed.
