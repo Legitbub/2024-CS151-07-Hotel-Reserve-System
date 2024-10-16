@@ -66,7 +66,7 @@ public class Employee {
 
     @Override
     public boolean equals(Object obj) {
-        if (obj == null || obj.getClass() != getClass()) {
+        if (obj == null || !(obj instanceof Employee)) {
             return false;
         }
         return ID.equals(((Employee) obj).ID);

@@ -76,9 +76,9 @@ public class EmployeePayment implements Payment {
     // Method to generate employee paycheck details
     @Override
     public String generateReceipt() {
-        return "Employee Payment Receipt:\nTotal Hours Worked: " +
-                hoursWorked + ", Total taxes: $" + calculateTaxes() +
-                ", Total Payment: $" + calculateTotal();
+        return String.format("Employee Payment Receipt:\nTotal Hours Worked: " +
+                hoursWorked + ", Total taxes: $%.2f, Total Payment: $%.2f",
+                calculateTaxes(), calculateTotal());
     }
 
 
