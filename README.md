@@ -118,6 +118,7 @@ The project is organized into the following classes and interfaces, reflecting a
 # Contributions: 
 ### Justin Dam - `UI` , `Hotel`, `Manager implementation`
 ### Vats Panchal - `Payment class`, `Employee Payment`, `Guest Payment` & `Readme`
+### Anh Tran: `UML`, `JUnit test`, `Manager Class` & `Room Class`
 
 # Acknowledgments:
 This project was developed as part of the CS151 course at San Jose State University. Special thanks to Professor Telvin Zhong for his guidence and suggestions.
