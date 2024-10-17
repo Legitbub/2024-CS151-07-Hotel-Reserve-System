@@ -1,33 +1,123 @@
-Group Member: Anh Tran, Joshua Mack, Justin Dam, Vats Panchal
+# Overview
+The Hotel Reserve System is a comprehensive hotel management solution designed to streamline guest reservations, employee management, room and amenity bookings, and payment processing. The system is built using object-oriented principles and includes various classes and interfaces to handle different hotel operations efficiently
 
-We will be working on a Hotel management system. From our initial discussion, we have decided for classes we will have Hotel Class, Guest Class, Employee Class, Room Abstract class, Payment class(Employee Paying subclass & Guest Paying subclass), Amenity Abstract class, Reservable(Interface).
+# Table of Contents
+1. Features
+2. Installation
+3. Project Structure
+4. Contribution
+5. Acknowledgments
 
-The Guest class represents individuals staying at the hotel. It stores guest information and handles operations like making and canceling reservations. Also store guest information for future visits, keeping track of their data. Includes Arrival and Departure Date so that the same room can not be booked by different parties (Possibly a Booking subclass to deal with this). 
+# Features:
 
-Employee Class: contains hours worked, methods for modifying reservations (amenities and rooms that implement reservable), wage/salary information, name, employee ID, and position
-
-Hotel Class: defines the hotel's lists of rooms, guests, employees, and a quick data structure (i.e. dictionary or hashmap) to keep track of what amenities it offers 
-
-Room (abstract) Class: serves as a holder for different types of rooms, with different features. Room objects will contain guests, methods to create/modify reservations, and a log of amenities ordered that gets updated by the appropriate methods.
-
-Payment (abstract) Class: manages the financial transactions for the hotel, including charges for guest stays, amenities, and services.
-Subclass EmployeePayment will deal with employee paychecks, hours worked, and modifications to their attributes
-Subclass GuestPayment will calculate guest charges for rooms and amenities and redemptions of points
-
-Amenity (abstract): represents various attractions offered by the hotel. Can be reserved.
-	Subclasses (gym, pool, conference rooms, spa, etc.) to be added
-
-Reservable Interface: defines methods for reserving and canceling reservations. Both rooms and amenities that can be reserved must implement this interface.
+### 1. Room Management:
 
 
-# **Overview: (H2)**
+	Room Reservation: The system provides the ability to reserve, release, and check the availability of rooms. 
+	Rooms are classified into different types:
 
-# **Design: (H2)**
+		Standard Room: A basic room option available for reservation with attributes like room size, cost, and availability.
 
-# **Installation Instructions: (H2)**
+		VIP Room: A premium room option with additional features and a higher cost.
 
-# **Usage: (H2)**
+	The system ensures that room status (available or reserved) is consistently tracked and managed.
+### 2. Amenity Management:
 
-# **Contribution: (H2)**
+
+	Amenity Booking: Guests can book various amenities offered by the hotel, including:
+
+		Gym: Provides access to workout equipment and health services. The gym’s availability, equipment usage, and maintenance schedules are handled by the system.
+
+		Pool: Guests can book time slots to use the swimming pool. The system manages pool availability, temperature settings, and maintenance schedules.
+
+		Restaurant: Manages seat reservations, menu options, and food services. Guests can reserve tables and enjoy the dining facilities.
+### 3. Guest Management:
+
+	Guest Profiles: The system manages guest information, including guest ID, contact details, and reservation history. 
+
+	Guests can:
+		
+		Make Reservations: Book rooms and amenities directly through the system.
+		Pay Bills: Guests can process payments for room bookings, amenities, and additional services through the integrated payment system.
+### 4. Employee Management:
+
+	Employee Profiles: The system tracks employee details, including employee ID, job titles, and salary. 
+
+	Employees can:
+
+		Clock In/Clock Out: Track working hours.
+		Perform Assigned Duties: Log daily tasks and responsibilities.
+
+	Manager Role: In addition to regular employee functions. 
+	Managers can:
+
+		Approve Leave Requests: Handle employee requests for time off.
+		Monitor Performance: Track employee performance, Financial Accounts and provide feedback or  evaluations.
+### 5. Payment System:
+
+	Guest Payment: A secure system for processing guest payments, including room charges, amenity bookings, and additional fees.
+
+	Employee Payment: The system manages payroll for employees, ensuring timely and accurate payment of salaries based on working hours and role.
+### 6. Reservation System:
+
+	The system implements a unified reservation process for both rooms and amenities through the Reservable Interface, which ensures consistent methods for booking, releasing, and managing reservations.
+
+# Installation Instructions:
+To set up the project locally:
+
+Clone the repository:
+```rb
+git clone https://github.com/vatspanchal/2024-CS151-07-Hotel-Reserve-System.git
+```
+
+Navigate to the project directory:
+```rb
+cd 2024-CS151-07-Hotel-Reserve-System
+```
+
+Run the project:
+```rb
+ javac UI.java
+ ```
 
 
+# Project Structure: 
+The project is organized into the following classes and interfaces, reflecting a modular design to handle hotel operations such as reservations, employee management, and amenity services.
+
+### 1. **Room Management**
+   - **Room (Abstract)**: The base class for all rooms, containing common attributes like `roomNumber`,and `cost`.
+     - **StandardRoom**: Inherits from `Room`. Represents a standard room type with basic features.
+     - **VIPRoom**: Inherits from `Room`. Represents a premium room type with additional luxury features.
+   - **Key Methods**: `reserve()`, `compareTo()`,
+
+### 2. **Amenity Management**
+   - **Amenity (Abstract)**: The base class for hotel amenities, providing attributes like `name`, `cost`, `availability`, and `schedule`.
+     - **Gym**: Inherits from `Amenity`. Manages access to the hotel's workout facilities.
+     - **Pool**: Inherits from `Amenity`. Manages pool services such as availability and water temperature.
+     - **Restaurant**: Inherits from `Amenity`. Manages dining services, including table reservations and menu options.
+   - **Key Methods**: `reserve()`, `cancel()`, `getAvailability()`, 
+
+### 3. **Guest and Employee Management**
+   - **Guest**: Handles guest-related operations such as reservations, and bill payments.
+     - Attributes: `guestID`, `name`, `contactDetails`
+     - **Key Methods**: `displayGuestAccount()`, `checkout()`
+   - **Employee**: Represents hotel employees, tracking work hours and tasks.
+     - Attributes: `employeeID`, `name`, `role`, `salary`
+   - **Manager**: Inherits from `Employee`, providing additional managerial functions.
+
+### 4. **Payment System**
+   - **Payment (Abstract)**: The base class for handling payments.
+     - **GuestPayment**: Inherits from `Payment`, handling guest transactions for rooms and amenities.
+     - **EmployeePayment**: Inherits from `Payment`, managing payroll and salaries for employees.
+   - **Key Methods**: `processPayment()`, `refund()`, `generateInvoice()`
+
+### 5. **Reservation System**
+   - **Reservable (Interface)**: Implemented by any class that represents a reservable entity, such as rooms or amenities. Provides methods to handle the reservation process.
+     - **Key Methods**: `reserve()`, `cancel()`
+
+# Contributions: 
+### Justin Dam - `UI` , `Hotel`, `Manager implementation`
+### Vats Panchal - `Payment class`, `Employee Payment`, `Guest Payment` & `Readme`
+
+# **Acknowledgments: (H2)**
+This project was developed as part of the CS151 course at San Jose State University. Special thanks to Professor Telvin Zhong for his guidence and suggestions.
