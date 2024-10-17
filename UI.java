@@ -50,6 +50,7 @@ public class UI {
                         break;
                     case 3:
                         user.displayGuestAccount(input, h);
+                        break;
                     case 4:
                         if (user.getAmenitiesBooked().isEmpty()) {
                             System.out.println("Cannot add rating without " +
@@ -58,7 +59,7 @@ public class UI {
                             System.out.println("Which amenity will you rate?:");
                             for (int i = 1; i < user.getAmenitiesBooked().size(); i++) {
                                 System.out.println(i + ". " +
-                                        user.getAmenitiesBooked().get(i - 1));
+                                        user.getAmenitiesBooked().get(i - 1).getName());
                             }
                             correct = false;
                             while (!correct) {
@@ -88,7 +89,9 @@ public class UI {
                         break;
                     case 5:
                         Room r = roomSelect(input, h, true);
-                        r.callRoomService();
+                        if (r != null) {
+                            r.callRoomService();
+                        }
                         break;
                     case 6:
                         userNum = selectHotel(input, hotels, userNum);
