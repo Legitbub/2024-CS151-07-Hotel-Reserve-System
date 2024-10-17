@@ -30,7 +30,7 @@ Amenity Booking: Guests can book various amenities offered by the hotel, includi
 
 		Pool: Guests can book time slots to use the swimming pool. The system manages pool availability, temperature settings, and maintenance schedules.
 
-		Restaurant: Manages seat reservations, menu options, and food services. Guests can reserve tables and enjoy the dining facilities.
+		Buffet: Manages seat reservations, menu options, and food services. Guests can reserve tables and enjoy the dining facilities.
 ### 3. Guest Management:
 
 Guest Profiles: The system manages guest information, including guest ID, contact details, and reservation history. 
@@ -95,7 +95,7 @@ The project is organized into the following classes and interfaces, reflecting a
    - **Amenity (Abstract)**: The base class for hotel amenities, providing attributes like `name`, `cost`, `availability`, and `schedule`.
      - **Gym**: Inherits from `Amenity`. Manages access to the hotel's workout facilities.
      - **Pool**: Inherits from `Amenity`. Manages pool services such as availability and water temperature.
-     - **Restaurant**: Inherits from `Amenity`. Manages dining services, including table reservations and menu options.
+     - **Buffet**: Inherits from `Amenity`. Manages dining services, including table reservations and menu options.
    - **Key Methods**: `reserve()`, `cancel()`, `getAvailability()`, 
 
 ### 3. **Guest and Employee Management**
@@ -119,7 +119,8 @@ The project is organized into the following classes and interfaces, reflecting a
 # Contributions: 
 ### Justin Dam - `UI` , `Hotel`, `Manager implementation`
 ### Vats Panchal - `Payment class`, `Employee Payment`, `Guest Payment` & `Readme`
-### Anh Tran: `UML`, `JUnit test`, `Manager Class` & `Room Class`
+### Anh Tran - `UML`, `JUnit test`, `Manager Class` & `Room Class`
+### Joshua Mack - `Room`, `Amenity`, and associated subclasses 
 
 # Acknowledgments:
 This project was developed as part of the CS151 course at San Jose State University. Special thanks to Professor Telvin Zhong for his guidence and suggestions.

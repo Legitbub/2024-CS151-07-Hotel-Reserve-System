@@ -88,7 +88,7 @@ public abstract class Room implements Reservable, Comparable<Room> {
 
     }
 
-    // Method to call room service and add charges whenever guest call for roomserivce
+    // Method to call room service and add charges whenever guest call for room service
     public void callRoomService() {
         if (guest != null) { 
             guest.addToBill(ROOM_SERVICE_PRICE, true); // Add room service charges to the guest's bill under room charges
