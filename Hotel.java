@@ -1,6 +1,7 @@
 import java.util.ArrayList;
 import java.util.List;
 import java.util.TreeMap;
+import java.util.Random;
 
 public class Hotel {
     private String name;
@@ -10,6 +11,7 @@ public class Hotel {
     private List<Room> openRooms = new ArrayList<>();
     private TreeMap<Room, Guest> roomLog = new TreeMap<>();
     private List<Amenity> amenityLog = new ArrayList<>();
+    private double revenue = 0;
 
     public Hotel() {
         name = "Default Hotel";
@@ -58,6 +60,14 @@ public class Hotel {
         employeeList = l;
     }
 
+    public double getRevenue() {
+        return revenue;
+    }
+
+    public void addEarnings(double revenue) {
+        this.revenue += revenue;
+    }
+
     //Add a room to the hotel list
     public void addRooms(Room r) {
         for (Room room : openRooms) {
@@ -86,11 +96,39 @@ public class Hotel {
 
     //Make a room reservation; update logs
     public void reservation(Room r, Guest g) {
-        if(r.reserve(g)){
+        if (r.reserve(g)) {
             openRooms.remove(r);
             roomLog.put(r, g);
-            r.reserve(g);
             g.setRoom(r);
+            applyDiscountToFifthGuest(g);
+            g.addToBill(r.getPrice(), true);
+            
+        }
+    }
+    //Random give every fifth guest a discount between 10%-20%
+    private void applyDiscountToFifthGuest(Guest g){
+        if(guestList.size() % 5 == 0){
+            Random random = new Random();
+            //Chooses a random discount between 10 - 20
+            double discountPercentage = 10 + random.nextDouble() * 10;
+            System.out.println("Applying a discount of " + discountPercentage + "% for guest " + g.getName());
+            g.getRoom().applyDiscount(discountPercentage);
+        }
+    }
+
+    //Make an amenity reservation; update logs
+    public void reservation(Amenity a, Guest g) {
+        if (amenityLog.contains(a) && a.isAvailable) {
+            a.reserve(g);
+            g.getAmenitiesBooked().add(a);
+            if (a.occupants.size() == a.maxOccupancy) {
+                a.setAvailable(false);
+            }
+            g.addToBill(a.getPrice(), false);
+            System.out.println(a.getName() +
+                    " successfully reserved for " + g.getName());
+        } else {
+            System.out.println("Amenity is unavailable");
         }
     }
 
@@ -100,6 +138,7 @@ public class Hotel {
         int i = 1;
         for (Room r : openRooms) {
             s += (i + ". Room " + r.roomID + "\n");
+            i++;
         }
         return s;
     }
@@ -127,8 +166,8 @@ public class Hotel {
     //Return a string showing the list of booked amenities
     public String bookedAmenities() {
         String s = "";
-        for (int i = 0; i < amenityLog.size(); i++) {
-            s += (i + ". " + amenityLog.get(i).getName() + "\n");
+        for (int i = 1; i <= amenityLog.size(); i++) {
+            s += (i + ". " + amenityLog.get(i - 1).getName() + "\n");
         }
         return s;
     }

@@ -1,18 +1,36 @@
-public class EmployeePayment implements  Payment {
+public class EmployeePayment implements Payment {
 
     private double hourlyRate;
-    private double hoursWorked;
-    private Employee employee;
+    private double hoursWorked = 0;
 
-    public EmployeePayment(Employee employee) {
-        this.employee = employee;
-        this.hourlyRate = employee.getWage();
-        this.hoursWorked = employee.getHoursWorked();
+    public EmployeePayment(double hourlyRate) {
+        this.hourlyRate = hourlyRate;
+    }
+
+    public double getHourlyRate() {
+        return hourlyRate;
+    }
+
+    public double getHoursWorked() {
+        return hoursWorked;
+    }
+
+    // Method to modify hourly rate
+    public void modifyHourlyRate(double newRate) {
+        this.hourlyRate = newRate;
+    }
+
+    // Method to modify hoursWorked
+    public void modifyhoursWorked(double hoursWorked) {
+        if(hoursWorked >= 0){
+            this.hoursWorked = hoursWorked;
+        }
     }
 
     // Method to log hours worked
     public void logHours(double hours) {
         this.hoursWorked += hours;
+        System.out.println("Recorded " + hours + " to timecard.");
     }
 
     // Method to calculate total payment based on hours worked
@@ -49,36 +67,23 @@ public class EmployeePayment implements  Payment {
 
     // Method to process payment
     @Override
-    public void processPayment() {
-        System.out.println("Processing payment of $" + calculateTotal() +" for the employee.");
-        this.hoursWorked = 0;
-        employee.setHoursWorked(0);
-        generateReceipt();
+    public void processPayment(Hotel h) {
+        recordTransaction();
+        hoursWorked = 0;
 
-    }
-
-    // Method to modify hourly rate 
-    public void modifyHourlyRate(double newRate) {
-        this.hourlyRate = newRate;
-    }
-
-    // Method to modify hoursWorked 
-    public void modifyhoursWorked(double hoursWorked) {
-        if(hoursWorked >= 0){
-            this.hoursWorked = hoursWorked;
-        }
-        
     }
 
     // Method to generate employee paycheck details
     @Override
     public String generateReceipt() {
-        return "Employee Payment Receipt: Total Hours Worked: " + hoursWorked + ", Total taxes: $"+calculateTaxes()+", Total Payment: $" + calculateTotal();
+        return String.format("Employee Payment Receipt:\nTotal Hours Worked: " +
+                hoursWorked + ", Total taxes: $%.2f, Total Payment: $%.2f",
+                calculateTaxes(), calculateTotal());
     }
 
 
     @Override
     public void recordTransaction() {
-        System.out.println("Recording employee transaction: " + generateReceipt());
+        System.out.println("Processing employee transaction:\n" + generateReceipt());
     }
 }

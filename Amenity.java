@@ -4,6 +4,7 @@ public abstract class Amenity implements Reservable{
     protected String name;
     protected String description;
     protected boolean isAvailable;
+    protected double price;
     protected int maxOccupancy;
     protected ArrayList<Integer> ratings = new ArrayList<>();
     protected ArrayList<Guest> occupants = new ArrayList<>();
@@ -46,6 +47,10 @@ public abstract class Amenity implements Reservable{
         return isAvailable;
     }
 
+    public double getPrice() {
+        return price;
+    }
+
     public int getMaxOccupancy(){
         return maxOccupancy;
     }
@@ -69,8 +74,9 @@ public abstract class Amenity implements Reservable{
     //reserve method overridden from Reservable, returns true if reservation is successful, false if not
     @Override
     public boolean reserve(Guest g){
-        if(isAvailable){
+        if(isAvailable) {
             occupants.add(g);
+            g.getAmenitiesBooked().add(this);
             if(occupants.size() == maxOccupancy){
                 isAvailable = false;
             }
@@ -84,7 +90,7 @@ public abstract class Amenity implements Reservable{
 
     //cancel method overridden from Reservable
     @Override
-    public boolean cancel(Guest g){
+    public boolean cancel(Guest g) {
         if (occupants.contains(g)) {
             occupants.remove(g);
             g.getAmenitiesBooked().remove(this);
