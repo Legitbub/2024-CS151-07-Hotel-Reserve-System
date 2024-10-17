@@ -6,8 +6,12 @@ public abstract class Amenity implements Reservable{
     protected boolean isAvailable;
     protected double price;
     protected int maxOccupancy;
+    protected ArrayList<Integer> ratings = new ArrayList<>();
     protected ArrayList<Guest> occupants = new ArrayList<>();
-    protected ArrayList<Employee> employees = new ArrayList<>();
+    protected int totalReservations;
+    protected float basePrice;
+    protected float currentPrice;
+    private static final int DEFAULT_BASE_PRICE = 15;
     private static final int DEFAULT_MAX_OCCUPANCY = 30;
 
     public Amenity(){
@@ -15,14 +19,20 @@ public abstract class Amenity implements Reservable{
         description = "no description";
         isAvailable  = true;
         maxOccupancy = DEFAULT_MAX_OCCUPANCY;
+        basePrice = DEFAULT_BASE_PRICE;
     }
 
-    public Amenity(String name, String description, double price){
+    public Amenity(String name, String description, float basePrice){
         this.name = name;
         this.description = description;
         isAvailable = true;
         maxOccupancy = DEFAULT_MAX_OCCUPANCY;
-        this.price = price;
+        if(basePrice>0){
+            this.basePrice = basePrice;
+        }else{
+            basePrice = DEFAULT_BASE_PRICE;
+        }
+        currentPrice = basePrice;
     }
 
     public String getName(){
@@ -70,6 +80,7 @@ public abstract class Amenity implements Reservable{
             if(occupants.size() == maxOccupancy){
                 isAvailable = false;
             }
+            totalReservations++;
             return true;
         }else{
             System.out.println("Amenity is unavailable");
@@ -93,6 +104,37 @@ public abstract class Amenity implements Reservable{
             System.out.println("No booking found for " + g.getName());
             return false;
         }
+    }
+
+    //guest with reservation rates amenity from 0-10
+    public void rate(Guest g, int rating){
+        if(occupants.contains(g)){
+            if(rating >= 0 && rating <= 10){
+                ratings.add(rating);
+                System.out.println("Sucessfully added rating to " + name);
+                updatePrice();
+            }else{
+                System.out.println("Please enter a number between 0 and 10");
+            }
+        }else{
+            System.out.println("Cannot add rating without outstanding reservation");
+        }
+    }
+
+    //return average rating
+    public float calculateRating(){
+        float avg = 0;
+        for(int rating : ratings){
+            avg += rating;
+        }
+        return avg/ratings.size();
+    }
+
+    //update price based on total reservations and current rating
+    public void updatePrice(){
+        float addedDemandPrice = totalReservations*0.05f;
+        float ratingMultiplier = 1+((calculateRating()-5)/10);
+        currentPrice = (currentPrice+addedDemandPrice)*ratingMultiplier;
     }
 
     @Override
