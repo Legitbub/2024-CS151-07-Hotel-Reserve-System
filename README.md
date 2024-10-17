@@ -2,11 +2,11 @@
 The Hotel Reserve System is a comprehensive hotel management solution designed to streamline guest reservations, employee management, room and amenity bookings, and payment processing. The system is built using object-oriented principles and includes various classes and interfaces to handle different hotel operations efficiently
 
 # Table of Contents
-1. Features
-2. Installation
-3. Project Structure
-4. Contribution
-5. Acknowledgments
+1. [Features](#Features)
+2. [Installation](#installation-instructions)
+3. [Project Structure](#project-structure)
+4. [Contribution](#contributions)
+5. [Acknowledgments](#acknowledgments)
 
 # Features:
 
@@ -119,5 +119,5 @@ The project is organized into the following classes and interfaces, reflecting a
 ### Justin Dam - `UI` , `Hotel`, `Manager implementation`
 ### Vats Panchal - `Payment class`, `Employee Payment`, `Guest Payment` & `Readme`
 
-# **Acknowledgments: (H2)**
+# Acknowledgments:
 This project was developed as part of the CS151 course at San Jose State University. Special thanks to Professor Telvin Zhong for his guidence and suggestions.
