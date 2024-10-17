@@ -13,18 +13,18 @@ The Hotel Reserve System is a comprehensive hotel management solution designed t
 ### 1. Room Management:
 
 
-	Room Reservation: The system provides the ability to reserve, release, and check the availability of rooms. 
+Room Reservation: The system provides the ability to reserve, release, and check the availability of rooms. 
 	Rooms are classified into different types:
 
 		Standard Room: A basic room option available for reservation with attributes like room size, cost, and availability.
 
 		VIP Room: A premium room option with additional features and a higher cost.
 
-	The system ensures that room status (available or reserved) is consistently tracked and managed.
+The system ensures that room status (available or reserved) is consistently tracked and managed.
 ### 2. Amenity Management:
 
 
-	Amenity Booking: Guests can book various amenities offered by the hotel, including:
+Amenity Booking: Guests can book various amenities offered by the hotel, including:
 
 		Gym: Provides access to workout equipment and health services. The gym’s availability, equipment usage, and maintenance schedules are handled by the system.
 
@@ -33,34 +33,35 @@ The Hotel Reserve System is a comprehensive hotel management solution designed t
 		Restaurant: Manages seat reservations, menu options, and food services. Guests can reserve tables and enjoy the dining facilities.
 ### 3. Guest Management:
 
-	Guest Profiles: The system manages guest information, including guest ID, contact details, and reservation history. 
+Guest Profiles: The system manages guest information, including guest ID, contact details, and reservation history. 
 
-	Guests can:
+Guests can:
 		
 		Make Reservations: Book rooms and amenities directly through the system.
 		Pay Bills: Guests can process payments for room bookings, amenities, and additional services through the integrated payment system.
 ### 4. Employee Management:
 
-	Employee Profiles: The system tracks employee details, including employee ID, job titles, and salary. 
+Employee Profiles: The system tracks employee details, including employee ID, job titles, and salary. 
 
-	Employees can:
+Employees can:
 
 		Clock In/Clock Out: Track working hours.
 		Perform Assigned Duties: Log daily tasks and responsibilities.
 
-	Manager Role: In addition to regular employee functions. 
-	Managers can:
+Manager Role: In addition to regular employee functions.
+
+Managers can:
 
 		Approve Leave Requests: Handle employee requests for time off.
 		Monitor Performance: Track employee performance, Financial Accounts and provide feedback or  evaluations.
 ### 5. Payment System:
 
-	Guest Payment: A secure system for processing guest payments, including room charges, amenity bookings, and additional fees.
+Guest Payment: A secure system for processing guest payments, including room charges, amenity bookings, and additional fees.
 
-	Employee Payment: The system manages payroll for employees, ensuring timely and accurate payment of salaries based on working hours and role.
+Employee Payment: The system manages payroll for employees, ensuring timely and accurate payment of salaries based on working hours and role.
 ### 6. Reservation System:
 
-	The system implements a unified reservation process for both rooms and amenities through the Reservable Interface, which ensures consistent methods for booking, releasing, and managing reservations.
+The system implements a unified reservation process for both rooms and amenities through the Reservable Interface, which ensures consistent methods for booking, releasing, and managing reservations.
 
 # Installation Instructions:
 To set up the project locally:
