@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.InputMismatchException;
 import java.util.List;
 import java.util.Scanner;
 
@@ -25,7 +26,16 @@ public class UI {
                         "3. Make a payment\n" +
                         "4. Previous\n" +
                         "5. End session");
-                entered = input.nextInt();
+                boolean correct = false;
+                while (!correct) {
+                    try {
+                        entered = input.nextInt();
+                        correct = true;
+                    } catch (InputMismatchException e) {
+                        System.out.println("Invalid entry. Try again.");
+                        input.nextLine();
+                    }
+                }
                 input.nextLine();
                 switch (entered) {
                     case 1:
@@ -68,7 +78,16 @@ public class UI {
                             "5. Log hours/Paycheck information\n" +
                             "6. Previous\n" +
                             "7. End session");
-                    entered = input.nextInt();
+                    boolean correct = false;
+                    while (!correct) {
+                        try {
+                            entered = input.nextInt();
+                            correct = true;
+                        } catch (InputMismatchException e) {
+                            System.out.println("Invalid entry. Try again.");
+                            input.nextLine();
+                        }
+                    }
                     input.nextLine();
                     switch (entered) {
                         case 1:
@@ -118,7 +137,16 @@ public class UI {
                                     do {
                                         System.out.println("Cancel or switch booking? " +
                                                 "(Enter 1 for cancel or 2 for switch): ");
-                                        entered = input.nextInt();
+                                        boolean correct2 = false;
+                                        while (!correct2) {
+                                            try {
+                                                entered = input.nextInt();
+                                                correct2 = true;
+                                            } catch (InputMismatchException e) {
+                                                System.out.println("Invalid entry. Try again.");
+                                                input.nextLine();
+                                            }
+                                        }
                                         if (entered != 1 && entered != 2) {
                                             System.out.println("Invalid entry. Enter 1 for " +
                                                     "cancel or 2 for switch.");
@@ -202,8 +230,8 @@ public class UI {
 
         List<Employee> workers = new ArrayList<>();
         Employee rick = new Employee("001", "Rick", "Guest Services", 22);
-        Employee cheri = new Employee("002", "Cheri", "Accounts Manager", 35);
-        Manager bonzo = new Manager("003", "Bonzo", "Manager", 80);
+        Employee cheri = new Employee("002", "Cheri", "Accounts", 35);
+        Employee bonzo = new Manager("003", "Bonzo", "Manager", 80);
         workers.add(rick);
         workers.add(cheri);
         workers.add(bonzo);
@@ -232,14 +260,22 @@ public class UI {
     }
 
     public static int getUserNum(Scanner input) {
-        System.out.print("Guest or Employee Login? (Enter 1 for Guest " +
-                "portal or 2 for Employee portal): ");
-        int userNum = input.nextInt();
-        while (userNum != 1 && userNum != 2) {
-            System.out.println("Invalid entry. Try again.");
-            System.out.print("Guest or Employee Login? (Enter 1 for Guest " +
+        boolean correct = false;
+        int userNum = 0;
+        while (!correct && userNum != 1 && userNum != 2) {
+            try {
+                System.out.print("Guest or Employee Login? (Enter 1 for Guest " +
                     "portal or 2 for Employee portal): ");
-            userNum = input.nextInt();
+                userNum = input.nextInt();
+                if (userNum != 1 && userNum != 2) {
+                    System.out.println("Invalid entry. Try again.");
+                } else {
+                    correct = true;
+                }
+            } catch (InputMismatchException e) {
+                System.out.println("Invalid entry. Try again.");
+                input.nextLine();
+            }
         }
         input.nextLine();
         return userNum;
@@ -252,14 +288,24 @@ public class UI {
     // Returns the user number for the initial method call
     public static int selectHotel(Scanner input, List<Hotel> hotels,
                                   int userNum) {
-        int entered;
+        int entered = 0;
         do {
             System.out.println("Select your hotel (enter a number):\n" +
                     "1. Beachfront\n" +
                     "2. Grand Street\n" +
                     "3. Urban Life\n" +
                     "4. Previous");
-            entered = input.nextInt();
+            boolean correct = false;
+            while (!correct) {
+                try {
+                    entered = input.nextInt();
+                    correct = true;
+                } catch (InputMismatchException e) {
+                    System.out.println("Invalid entry. Try again.");
+                    input.nextLine();
+                }
+            }
+
             switch (entered) {
                 case 1:
                     h = hotels.get(0);
@@ -306,14 +352,23 @@ public class UI {
     // on the boolean parameter
     public static Room roomSelect(Scanner input, Hotel h, boolean booked) {
         Room r = null;
-        int entered;
+        int entered = 0;
         if (!booked) {
             do {
                 System.out.println("Select an available room from " +
                         "the following list (for 1. Room " +
                         "200, enter 1):");
                 System.out.println(h.showRooms());
-                entered = input.nextInt() - 1;
+                boolean correct = false;
+                while (!correct) {
+                    try {
+                        entered = input.nextInt() - 1;
+                        correct = true;
+                    } catch (InputMismatchException e) {
+                        System.out.println("Invalid entry. Try again.");
+                        input.nextLine();
+                    }
+                }
                 if (entered >= 0 && entered < h.getOpenRooms().size()) {
                     r = h.getOpenRooms().get(entered);
                 } else {
@@ -328,7 +383,16 @@ public class UI {
                             "the following list (for 1. Room " +
                             "200, enter 1):");
                     System.out.println(h.bookedRooms());
-                    entered = input.nextInt() - 1;
+                    boolean correct = false;
+                    while (!correct) {
+                        try {
+                            entered = input.nextInt() - 1;
+                            correct = true;
+                        } catch (InputMismatchException e) {
+                            System.out.println("Invalid entry. Try again.");
+                            input.nextLine();
+                        }
+                    }
                     if (entered >= 0 && entered < h.getRoomLog().size()) {
                         r = (Room) h.getRoomLog().keySet().toArray()[entered];
                     } else {
@@ -347,13 +411,22 @@ public class UI {
     // on the boolean parameter
     public static Amenity amenitySelect(Scanner input, Hotel h, boolean booked) {
         Amenity a = null;
-        int entered;
+        int entered = 0;
         if (!booked) {
             do {
                 System.out.println("Select an available amenity from " +
                         " the following list (enter the number): ");
                 h.showAmenities();
-                entered = input.nextInt() - 1;
+                boolean correct = false;
+                while (!correct) {
+                    try {
+                        entered = input.nextInt() - 1;
+                        correct = true;
+                    } catch (InputMismatchException e) {
+                        System.out.println("Invalid entry. Try again.");
+                        input.nextLine();
+                    }
+                }
                 if (entered >= 0 && entered < h.getOpenAmenities().size()) {
                     a = h.getOpenAmenities().get(entered);
                 } else {
@@ -366,7 +439,16 @@ public class UI {
                     System.out.println("Select a booked amenity from" +
                             "the following list (enter the number)");
                     System.out.println(h.bookedAmenities());
-                    entered = input.nextInt() - 1;
+                    boolean correct = false;
+                    while (!correct) {
+                        try {
+                            entered = input.nextInt() - 1;
+                            correct = true;
+                        } catch (InputMismatchException e) {
+                            System.out.println("Invalid entry. Try again.");
+                            input.nextLine();
+                        }
+                    }
                     if (entered >= 0 && entered < h.getAmenityLog().size()) {
                         a = h.getAmenityLog().get(entered);
                     } else {

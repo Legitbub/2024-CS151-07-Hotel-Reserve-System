@@ -96,7 +96,7 @@ public class Hotel {
 
     //Make a room reservation; update logs
     public void reservation(Room r, Guest g) {
-        if(r.reserve(g)){
+        if (r.reserve(g)) {
             openRooms.remove(r);
             roomLog.put(r, g);
             g.setRoom(r);
@@ -118,16 +118,16 @@ public class Hotel {
 
     //Make an amenity reservation; update logs
     public void reservation(Amenity a, Guest g) {
-        if (amenityLog.contains(a) && a.isAvailable){
+        if (amenityLog.contains(a) && a.isAvailable) {
             a.reserve(g);
             g.getAmenitiesBooked().add(a);
-            if(a.occupants.size() == a.maxOccupancy){
+            if (a.occupants.size() == a.maxOccupancy) {
                 a.setAvailable(false);
             }
             g.addToBill(a.getPrice(), false);
             System.out.println(a.getName() +
                     " successfully reserved for " + g.getName());
-        } else{
+        } else {
             System.out.println("Amenity is unavailable");
         }
     }
