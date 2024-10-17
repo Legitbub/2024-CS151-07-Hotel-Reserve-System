@@ -20,3 +20,14 @@ Amenity (abstract): represents various attractions offered by the hotel. Can be 
 Reservable Interface: defines methods for reserving and canceling reservations. Both rooms and amenities that can be reserved must implement this interface.
 
 
+# **Overview: (H2)**
+
+# **Design: (H2)**
+
+# **Installation Instructions: (H2)**
+
+# **Usage: (H2)**
+
+# **Contribution: (H2)**
+
+
