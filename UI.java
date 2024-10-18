@@ -24,8 +24,10 @@ public class UI {
                         "1. Book a room\n" +
                         "2. Book an amenity\n" +
                         "3. Make a payment\n" +
-                        "4. Previous\n" +
-                        "5. End session");
+                        "4. Leave a rating\n" +
+                        "5. Call room service\n" +
+                        "6. Previous\n" +
+                        "7. End session");
                 boolean correct = false;
                 while (!correct) {
                     try {
@@ -48,10 +50,53 @@ public class UI {
                         break;
                     case 3:
                         user.displayGuestAccount(input, h);
+                        break;
                     case 4:
-                        userNum = selectHotel(input, hotels, userNum);
+                        if (user.getAmenitiesBooked().isEmpty()) {
+                            System.out.println("Cannot add rating without " +
+                                    "outstanding reservation");
+                        } else {
+                            System.out.println("Which amenity will you rate?:");
+                            for (int i = 1; i < user.getAmenitiesBooked().size(); i++) {
+                                System.out.println(i + ". " +
+                                        user.getAmenitiesBooked().get(i - 1).getName());
+                            }
+                            correct = false;
+                            while (!correct) {
+                                try {
+                                    entered = input.nextInt() - 1;
+                                    correct = true;
+                                } catch (InputMismatchException | IndexOutOfBoundsException e) {
+                                    System.out.println("Invalid entry. Try again.");
+                                    input.nextLine();
+                                }
+                            }
+                            Amenity rated = user.getAmenitiesBooked().get(entered);
+                            do {
+                                System.out.print("How would you rate this amenity " +
+                                        "(from 1 - 10)?: ");
+                                try {
+                                    entered = input.nextInt();
+                                } catch (InputMismatchException e) {
+                                    System.out.println("Invalid entry. Please enter " +
+                                            "a number between 0 and 10.");
+                                    input.nextLine();
+                                }
+                            } while (entered < 1 || entered > 10);
+                            input.nextLine();
+                            rated.rate(user, entered);
+                        }
                         break;
                     case 5:
+                        Room r = roomSelect(input, h, true);
+                        if (r != null) {
+                            r.callRoomService();
+                        }
+                        break;
+                    case 6:
+                        userNum = selectHotel(input, hotels, userNum);
+                        break;
+                    case 7:
                         session = false;
                         userNum = 0;
                         input.close();
@@ -241,10 +286,10 @@ public class UI {
 
         List<Amenity> amenities = new ArrayList<>();
         Buffet buffet = new Buffet("Le Food Buffet", "Eat until you KABOOM!",
-                75, Buffet.MenuType.DINNER);
+                75, "Dinner");
         Gym gym = new Gym("Buff Dungeon", "A gym for real bros", 15);
         Pool pool = new Pool("The Ocean", "It's a really big pool",
-                10, 10000, 2000, 50000);
+                10, 10000, 2000, 50000, 85);
         amenities.add(buffet);
         amenities.add(gym);
         amenities.add(pool);

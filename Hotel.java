@@ -147,8 +147,8 @@ public class Hotel {
     public String bookedRooms() {
         String s = "";
         Object[] rooms = roomLog.keySet().toArray();
-        for (int i = 0; i < rooms.length; i++) {
-            s += (i + ". Room " + ((Room) rooms[i]).roomID + "\n");
+        for (int i = 1; i <= rooms.length; i++) {
+            s += (i + ". Room " + ((Room) rooms[i - 1]).roomID + "\n");
         }
         return s;
     }
