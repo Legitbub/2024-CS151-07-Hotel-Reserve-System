@@ -62,21 +62,22 @@ public class UI {
                                     "outstanding reservation");
                         } else {
                             System.out.println("Which amenity will you rate?:");
-                            for (int i = 1; i < user.getAmenitiesBooked().size(); i++) {
+                            for (int i = 1; i <= user.getAmenitiesBooked().size(); i++) {
                                 System.out.println(i + ". " +
                                         user.getAmenitiesBooked().get(i - 1).getName());
                             }
+                            Amenity rated = null;
                             correct = false;
                             while (!correct) {
                                 try {
                                     entered = input.nextInt() - 1;
+                                    rated = user.getAmenitiesBooked().get(entered);
                                     correct = true;
                                 } catch (InputMismatchException | IndexOutOfBoundsException e) {
                                     System.out.println("Invalid entry. Try again.");
                                     input.nextLine();
                                 }
                             }
-                            Amenity rated = user.getAmenitiesBooked().get(entered);
                             do {
                                 System.out.print("How would you rate this amenity " +
                                         "(from 1 - 10)?: ");

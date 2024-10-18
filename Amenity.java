@@ -53,6 +53,7 @@ public abstract class Amenity implements Reservable{
     public int getMaxOccupancy(){
         return maxOccupancy;
     }
+
     public ArrayList<Guest> getOccupants(){
         return occupants;
     }

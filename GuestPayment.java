@@ -57,10 +57,12 @@ public class GuestPayment implements Payment {
             redeemLoyaltyPoints();
         }
         double revenue = calculateTotal();
-        System.out.println("Processing guest payment of $" + revenue);
+        System.out.printf("Processing guest payment of $%.2f\n", revenue);
         addRewards(roomCharges + amenityCharges);
         h.addEarnings(revenue);
         recordTransaction();
+        roomCharges = 0;
+        amenityCharges = 0;
     }
 
     // Method to calculate taxes on the total bill
@@ -73,9 +75,10 @@ public class GuestPayment implements Payment {
     // Method to generate receipt for guest
     @Override
     public String generateReceipt() {
-        return "Guest Payment Receipt: Room Charges: $" + roomCharges +
-                ", Amenity Charges: $" + amenityCharges + ", Taxes: $" +
-                calculateTaxes() + ", Total: $" + calculateTotal();
+        return String.format("Guest Payment Receipt: Room Charges: $%.2f" +
+                ", Amenity Charges: $%.2f" + ", Taxes: $%.2f" +
+                ", Total: $%.2f", roomCharges, amenityCharges,
+                calculateTaxes(), calculateTotal());
     }
 
     // Method to process refund for guest in case of cancellations

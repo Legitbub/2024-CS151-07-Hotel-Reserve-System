@@ -29,7 +29,7 @@ public abstract class Room implements Reservable, Comparable<Room> {
     @Override
     public boolean cancel(Guest g) {
         System.out.println(g.getName() + " checked out of room " + roomID);
-        addOccupantToHistory(g);
+        addOccupantToHistory(guest);
         return true;
     }
 
