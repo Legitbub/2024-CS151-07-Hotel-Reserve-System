@@ -4,7 +4,6 @@ public abstract class Amenity implements Reservable{
     protected String name;
     protected String description;
     protected boolean isAvailable;
-    protected double price;
     protected int maxOccupancy;
     protected ArrayList<Integer> ratings = new ArrayList<>();
     protected ArrayList<Guest> occupants = new ArrayList<>();
@@ -47,23 +46,32 @@ public abstract class Amenity implements Reservable{
         return isAvailable;
     }
 
-    public double getPrice() {
-        return price;
+    public double getCurrentPrice() {
+        return currentPrice;
     }
 
     public int getMaxOccupancy(){
         return maxOccupancy;
     }
-
     public ArrayList<Guest> getOccupants(){
         return occupants;
+    }
+
+    public void setName(String name){
+        this.name = name;
+    }
+
+    public void setDescription(String description){
+        this.description = description;
     }
 
     public void setAvailable(boolean isAvailable){
         this.isAvailable = isAvailable;
     }
 
-
+    public void setMaxOccupancy(int maxOccupancy){
+        this.maxOccupancy = maxOccupancy;
+    }
 
     //display name, description, and availability of amenity
     public void displayAmenityDetails(){
@@ -128,7 +136,7 @@ public abstract class Amenity implements Reservable{
 
     //update price based on total reservations and current rating
     public void updatePrice(){
-        float addedDemandPrice = totalReservations*0.05f;
+        float addedDemandPrice = totalReservations*0.1f;
         float ratingMultiplier = 1+((calculateRating()-5)/10);
         currentPrice = (currentPrice+addedDemandPrice)*ratingMultiplier;
     }

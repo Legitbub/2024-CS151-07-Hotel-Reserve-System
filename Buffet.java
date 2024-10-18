@@ -11,6 +11,14 @@ public class Buffet extends Amenity implements Reservable{
         this.menuType = menuType;
     }
 
+    public ArrayList<String> getMenu(){
+        return menu;
+    }
+
+    public void setMenu(ArrayList<String> menu){
+        this.menu = menu;
+    }
+
     public String getMenuType(){
         return menuType;
     }

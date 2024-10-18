@@ -8,7 +8,7 @@ public class StandardRoom extends Room implements Reservable {
     public StandardRoom(int roomID) {
         level = "Standard";
         this.roomID = roomID;
-        this.price = price;
+        price = 100;
     }
 
     public StandardRoom(Guest guest, int roomID, double price) {
