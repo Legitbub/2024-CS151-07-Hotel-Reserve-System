@@ -8,14 +8,14 @@ public class Employee {
     public Employee(String ID) {
         this.ID = ID;
     }
-    
+
     public Employee(String ID, String name, String position, double wage) {
         this.ID = ID;
         this.name = name;
         this.position = position;
         emplPayment = new EmployeePayment(wage);
     }
-    
+
     public EmployeePayment getPayment(){
         return emplPayment;
     }
@@ -36,9 +36,18 @@ public class Employee {
         return position;
     }
 
+    public void setID(String ID){
+        this.ID = ID;
+    }
+
+    public void setName(String name){
+        this.name = name;
+    }
+
     public void setPosition(String position) {
         this.position = position;
     }
+
 
     public void modifyRoom(Room r) {
         r.guest.checkout();

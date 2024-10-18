@@ -16,8 +16,13 @@ public class UI {
         while (session) {
             userNum = selectHotel(input, hotels, userNum);
 
+
             // User is a Guest
             while (userNum == 1) {
+                while (h.getGuestList().size() >= 100 && userNum == 1) {
+                    System.out.println("Hotel is full, select a different hotel.");
+                    userNum = selectHotel(input, hotels, userNum);
+                }
                 System.out.print("New Guest session initiated. ");
                 Guest user = assignGuestSession(input, h);
                 System.out.println("Select an option (enter a number):\n" +

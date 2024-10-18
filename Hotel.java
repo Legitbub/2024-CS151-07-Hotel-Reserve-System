@@ -124,7 +124,7 @@ public class Hotel {
             if (a.occupants.size() == a.maxOccupancy) {
                 a.setAvailable(false);
             }
-            g.addToBill(a.getPrice(), false);
+            g.addToBill(a.getCurrentPrice(), false);
             System.out.println(a.getName() +
                     " successfully reserved for " + g.getName());
         } else {
