@@ -89,6 +89,7 @@ public abstract class Amenity implements Reservable{
                 isAvailable = false;
             }
             totalReservations++;
+            updatePrice();
             return true;
         }else{
             System.out.println("Amenity is unavailable");
