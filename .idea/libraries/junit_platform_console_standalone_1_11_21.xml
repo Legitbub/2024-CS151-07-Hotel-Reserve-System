@@ -1,9 +1,0 @@
-<component name="libraryTable">
-  <library name="junit-platform-console-standalone-1.11.21">
-    <CLASSES>
-      <root url="jar://$PROJECT_DIR$/out/production/2024-CS151-07-Hotel-Reserve-System/lib/junit-platform-console-standalone-1.11.2.jar!/" />
-    </CLASSES>
-    <JAVADOC />
-    <SOURCES />
-  </library>
-</component>
