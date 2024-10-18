@@ -28,16 +28,9 @@ public abstract class Room implements Reservable, Comparable<Room> {
 
     @Override
     public boolean cancel(Guest g) {
-        if (guest != null && guest.equals(g)) { // Ensure the correct guest is canceling
-            System.out.println(g.getName() + " checked out of room " + roomID);
-            addOccupantToHistory(guest); 
-            guest = null; 
-            isReserved = false; 
-            return true; 
-        } else {
-            System.out.println("No reservation found for " + g.getName() + " in room " + roomID);
-            return false; 
-        }
+        System.out.println(g.getName() + " checked out of room " + roomID);
+        addOccupantToHistory(guest);
+        return true;
     }
 
     public int getRoomID() {
