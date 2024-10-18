@@ -61,6 +61,8 @@ public class GuestPayment implements Payment {
         addRewards(roomCharges + amenityCharges);
         h.addEarnings(revenue);
         recordTransaction();
+        roomCharges = 0;
+        amenityCharges = 0;
     }
 
     // Method to calculate taxes on the total bill
