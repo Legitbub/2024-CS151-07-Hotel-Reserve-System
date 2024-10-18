@@ -24,6 +24,10 @@ public class Guest {
         return room;
     }
 
+    public void setName(String name){
+        this.name = name;
+    }
+
     public void setRoom(Room room) {
         if(this.getRoom() == null){
             this.room = room;

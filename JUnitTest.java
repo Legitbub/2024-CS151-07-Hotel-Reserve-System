@@ -14,6 +14,7 @@ import java.io.ByteArrayInputStream;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Scanner;
+import java.util.concurrent.PriorityBlockingQueue;
 
 
 public class JUnitTest {
@@ -81,7 +82,15 @@ public class JUnitTest {
         workers.add(emp6);
         hotel2.setEmployeeList(workers);
 
-        
+
+        //---FOR AMENITY CLASS TESTING---
+        Pool pool1 = new Pool("pool1", "olympic sized pool", 100, 50, 25, 2, 80);
+        Gym gym1 = new Gym("gym1", "a gym", 10);
+        Buffet buffet1 = new Buffet("breakfast buffet", "buffet that serves breakfast", 25, "breakfast");
+        amenities.add(pool1); 
+        amenities.add(gym1);
+        amenities.add(buffet1);
+
 
     }
     //-----------FOR EMPLOYEE CLASS TESTING--------------
@@ -298,7 +307,37 @@ public class JUnitTest {
     }
 
 
+    //--------FOR AMENITY CLASS TESTING------------
+    @Test
+    public void testAmenityReserve(){
+        pool1.setMaxOccupancy(1);
+        assertTrue(pool1.isAvailable());
+        assertTrue(pool1.reserve(guest));
+        assertFalse(pool1.isAvailable());
+        assertFalse(pool1.reserve(guest2));
+    }
 
-        
+    @Test
+    public void testAmenityCancel(){
+        pool1.setMaxOccupancy(1);
+        pool1.reserve(guest);
+        assertTrue(pool1.cancel(guest));
+        assertTrue(pool1.isAvailable);
+        assertFalse(pool1.cancel(guest));
+    }
+    
+    @Test
+    public void testRatingPricing(){
+        pool1.reserve(guest);
+        pool1.reserve(guest2);
+        pool1.reserve(guest3);
+
+        pool1.rate(guest, 6);
+        pool1.rate(guest2, 8);
+        pool1.rate(guest3, 10);
+
+        assertEquals(pool1.getCurrentPrice, 130.13);
+    }
+
 
 }
