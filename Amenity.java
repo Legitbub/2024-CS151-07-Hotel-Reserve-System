@@ -119,13 +119,9 @@ public abstract class Amenity implements Reservable{
         if(occupants.contains(g)){
             if(rating >= 0 && rating <= 10){
                 ratings.add(rating);
-                System.out.println("Sucessfully added rating to " + name);
+                System.out.println("Successfully added rating to " + name + ".");
                 updatePrice();
-            }else{
-                System.out.println("Please enter a number between 0 and 10");
             }
-        }else{
-            System.out.println("Cannot add rating without outstanding reservation");
         }
     }
 

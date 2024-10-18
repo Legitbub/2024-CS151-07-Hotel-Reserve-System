@@ -70,6 +70,10 @@ public class Guest {
         input.nextLine();
     }
 
+    public void begone(Hotel h) {
+        h.getGuestList().remove(this);
+        System.out.println("R.I.P.\nThey were never here...");
+    }
     @Override
     public boolean equals(Object obj) {
         if (obj == null || obj.getClass() != getClass()) {
