@@ -81,7 +81,6 @@ public class EmployeePayment implements Payment {
                 calculateTaxes(), calculateTotal());
     }
 
-
     @Override
     public void recordTransaction() {
         System.out.println("Processing employee transaction:\n" + generateReceipt());
