@@ -155,7 +155,17 @@ public class UI {
                             do {
                                 System.out.println("Modify Room or Amenity bookings?:\n" +
                                         "1. Room\n2. Amenity");
-                                entered = input.nextInt();
+                                correct = false;
+                                while (!correct) {
+                                    try {
+                                        entered = input.nextInt();
+                                        correct = true;
+                                    } catch (InputMismatchException e) {
+                                        System.out.println("Invalid entry. Enter 1 for " +
+                                                "Room or 2 for Amenity.");
+                                        input.nextLine();
+                                    }
+                                }
                                 if (entered != 1 && entered != 2) {
                                     System.out.println("Invalid entry. Enter 1 for " +
                                             "Room or 2 for Amenity.");
@@ -169,12 +179,22 @@ public class UI {
                                     do {
                                         System.out.print("Cancel or switch booking? " +
                                                 "(Enter 1 for cancel or 2 for switch): ");
-                                        entered = input.nextInt();
+                                        correct = false;
+                                        while (!correct) {
+                                            try {
+                                                entered = input.nextInt();
+                                                correct = true;
+                                            } catch (InputMismatchException e) {
+                                                System.out.println("Invalid entry. Try again.");
+                                                input.nextLine();
+                                            }
+                                        }
                                         if (entered != 1 && entered != 2) {
                                             System.out.println("Invalid entry. Enter 1 for " +
                                                     "cancel or 2 for switch.");
                                         }
                                     } while (entered != 1 && entered != 2);
+                                    input.nextLine();
                                     if (entered == 1) {
                                         userEmploy.modifyRoom(modifiedRoom);
                                     } else {
