@@ -149,7 +149,7 @@ public class UI {
     public static void endSession(Scanner input) {
         System.out.println("Ending session...");
         input.close();
-        System.exit(1);
+        System.exit(0);
     }
 
     // Helper method to retrieve employee by ID
