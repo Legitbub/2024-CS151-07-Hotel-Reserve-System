@@ -1,4 +1,4 @@
-import java.util.ArrayList;
+
 import java.util.InputMismatchException;
 import java.util.List;
 import java.util.Scanner;
@@ -13,9 +13,9 @@ public class Manager extends Employee {
     }
 
     // Fire an employee and remove from the list of employees;
-    public void fireEmployee(Scanner input, Hotel h){
+    public void fireEmployee(Scanner input, Hotel h) {
         System.out.println("Select an employee to crush the dreams " +
-            "of (enter the number in the list, or 0 to show mercy): ");
+                "of (enter the number in the list, or 0 to show mercy): ");
         List<Employee> l = h.getEmployeeList();
         for (int i = 1; i <= l.size(); i++) {
             System.out.println(i + ". " + l.get(i - 1).getName() +
@@ -141,16 +141,18 @@ public class Manager extends Employee {
         }
         input.nextLine();
     }
+
     // Get a general date and pay all
     public void payAll(Hotel h) {
-        for(Employee employee : h.getEmployeeList()) {
+        for (Employee employee : h.getEmployeeList()) {
             EmployeePayment employeePayment = employee.getPayment();
 
-            //reset hour back to 0
+            // reset hour back to 0
             employeePayment.processPayment(h);
             System.out.println("made to " + employee.getName());
         }
     }
+
     // Generate a financial report of all the earnings made.
     public void generateFinancialReport(Hotel h) {
         System.out.printf("Hotel " + h.getName() + " has made $%.2f" +
@@ -163,11 +165,11 @@ public class Manager extends Employee {
     }
 
     // Manager can update pricing of the room if needed.
-    public void updateRoomPricing(Room room, double price){
-        if(price <= 0.0){
+    public void updateRoomPricing(Room room, double price) {
+        if (price <= 0.0) {
             System.out.println("Price of room cannot be negative!");
         }
         room.setPrice(price);
     }
-    
+
 }

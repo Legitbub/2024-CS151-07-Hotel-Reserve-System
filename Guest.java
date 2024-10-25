@@ -24,16 +24,15 @@ public class Guest {
         return room;
     }
 
-    public void setName(String name){
+    public void setName(String name) {
         this.name = name;
     }
 
     public void setRoom(Room room) {
-        if(this.getRoom() == null){
+        if (this.getRoom() == null) {
             this.room = room;
         }
     }
-    
 
     public void addToBill(double charges, boolean room) {
         if (room) {
@@ -47,7 +46,7 @@ public class Guest {
         return amenitiesBooked;
     }
 
-    //Resets booking status
+    // Resets booking status
     public void checkout() {
         room.cancel(this);
         room.isReserved = false;
@@ -57,11 +56,22 @@ public class Guest {
     }
 
     public void displayGuestAccount(Scanner input, Hotel h) {
+        // Check if there are any charges for active reservation before proceed
+        if (payment.getRoomCharges() == 0 && payment.getAmenityCharges() == 0) {
+            System.out.println("No room or amenity charges to pay. PLease reserve a room first.");
+            System.out.println("Press enter to exit payment system.");
+            input.nextLine();
+            return;
+        }
+
+        // Only display if there are charges
         System.out.printf("Room charges: $%.2f\n", payment.getRoomCharges());
         System.out.printf("Amenity charges: $%.2f\n", payment.getAmenityCharges());
         System.out.println("Available rewards points: " + payment.getLoyaltyPoints());
         System.out.print("Pay bill? (Enter \"yes\" for yes, anything else for no): ");
+
         String pay = input.nextLine().toLowerCase();
+
         if (pay.equals("yes")) {
             payment.processPayment(h);
         } else {
@@ -74,6 +84,7 @@ public class Guest {
         h.getGuestList().remove(this);
         System.out.println("R.I.P.\nThey were never here...");
     }
+
     @Override
     public boolean equals(Object obj) {
         if (obj == null || obj.getClass() != getClass()) {

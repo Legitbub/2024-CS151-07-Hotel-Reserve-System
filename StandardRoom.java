@@ -1,8 +1,8 @@
-public class StandardRoom extends Room implements Reservable {
+public class StandardRoom extends Room {
     public StandardRoom() {
         level = "Standard";
         price = 100;
-        
+
     }
 
     public StandardRoom(int roomID) {
