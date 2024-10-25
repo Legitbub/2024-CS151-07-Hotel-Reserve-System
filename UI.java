@@ -77,8 +77,7 @@ public class UI {
                         case 7:
                             session = false;
                             userNum = 0;
-                            input.close();
-                            break;
+                            endSession(input);
                         default:
                             System.out.println("Invalid entry. Try again.");
                     }
@@ -138,7 +137,7 @@ public class UI {
                 case 6:
                     userNum = selectHotel(input, hotels, userNum);
                 case 7:
-                    session = endSession(input);
+                    endSession(input);
                 default:
                     System.out.println("Invalid entry. Try again.");
             }
@@ -147,10 +146,10 @@ public class UI {
     }
 
     // Helper method to end session
-    public static boolean endSession(Scanner input) {
+    public static void endSession(Scanner input) {
         System.out.println("Ending session...");
         input.close();
-        return false;
+        System.exit(1);
     }
 
     // Helper method to retrieve employee by ID
