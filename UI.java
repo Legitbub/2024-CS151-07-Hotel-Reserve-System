@@ -169,6 +169,7 @@ public class UI {
 
         if (bookedRoom != null) {
             h.reservation(bookedRoom, guest);
+
         } else {
             System.out.println("Room booking failed.");
         }
@@ -179,6 +180,7 @@ public class UI {
         Amenity bookedAmenity = amenitySelect(input, h, false);
         if (bookedAmenity != null) {
             h.reservation(bookedAmenity, guest);
+
         } else {
             System.out.println("Amenity booking failed.");
         }
@@ -190,8 +192,10 @@ public class UI {
 
         if (bookingType == 1) {
             modifyRoomBooking(input, h, userEmploy);
+
         } else if (bookingType == 2) {
             modifyAmenityBooking(input, h, userEmploy);
+
         } else {
             System.out.println("Invalid entry.");
         }
@@ -204,11 +208,14 @@ public class UI {
             return;
 
         int action = getValidatedIntInput(input, "Cancel or switch booking? (Enter 1 for cancel or 2 for switch): ");
+
         if (action == 1) {
             userEmploy.modifyRoom(modifiedRoom);
+
         } else if (action == 2) {
             Guest newGuest = assignGuestSession(input, h);
             userEmploy.modifyRoom(modifiedRoom, newGuest, h);
+
         } else {
             System.out.println("Invalid entry.");
         }
@@ -221,15 +228,18 @@ public class UI {
             return;
 
         int action = getValidatedIntInput(input, "Cancel or switch booking? (Enter 1 for cancel or 2 for switch): ");
+
         if (action == 1) {
             System.out.print("Whose reservation will be cancelled?: ");
             String guestName = input.nextLine();
             userEmploy.modifyAmenity(modifiedAmenity, new Guest(guestName));
+
         } else if (action == 2) {
             Guest newGuest = assignGuestSession(input, h);
             System.out.print("Whose reservation will be switched?: ");
             String guestName = input.nextLine();
             userEmploy.modifyAmenity(modifiedAmenity, new Guest(guestName), newGuest, h);
+
         } else {
             System.out.println("Invalid entry.");
         }
@@ -392,8 +402,8 @@ public class UI {
                             "options from the menu.");
             }
         } while (entered < 1 || entered >= 4);
+
         System.out.println("Welcome to the " + h.getName() + "!");
-        input.nextLine();
         return userNum;
     }
 
@@ -421,58 +431,68 @@ public class UI {
     public static Room roomSelect(Scanner input, Hotel h, boolean booked) {
         Room r = null;
         int entered = 0;
+
         if (!booked) {
             do {
                 System.out.println("Select an available room from " +
                         "the following list (for 1. Room " +
                         "200, enter 1):");
                 System.out.println(h.showRooms());
-                boolean correct = false;
-                while (!correct) {
-                    try {
-                        entered = input.nextInt() - 1;
-                        correct = true;
-                    } catch (InputMismatchException e) {
-                        System.out.println("Invalid entry. Try again.");
-                        input.nextLine();
-                    }
-                }
-                if (entered >= 0 && entered < h.getOpenRooms().size()) {
+                entered = getValidRoomSelection(input, h.getOpenRooms().size());
+
+                if (entered >= 0) {
                     r = h.getOpenRooms().get(entered);
                 } else {
                     System.out.println("Invalid entry. Try again.");
                 }
-            } while (entered < 0 || entered >= h.getOpenRooms().size());
+            } while (entered < 0);
 
         } else {
+            // selecting booked room
             if (h.getRoomLog().size() > 0) {
                 do {
                     System.out.println("Select a booked room from " +
                             "the following list (for 1. Room " +
                             "200, enter 1):");
                     System.out.println(h.bookedRooms());
-                    boolean correct = false;
-                    while (!correct) {
-                        try {
-                            entered = input.nextInt() - 1;
-                            correct = true;
-                        } catch (InputMismatchException e) {
-                            System.out.println("Invalid entry. Try again.");
-                            input.nextLine();
-                        }
-                    }
-                    if (entered >= 0 && entered < h.getRoomLog().size()) {
+                    entered = getValidRoomSelection(input, h.getRoomLog().size());
+
+                    if (entered >= 0) {
                         r = (Room) h.getRoomLog().keySet().toArray()[entered];
                     } else {
                         System.out.println("Invalid entry. Try again.");
                     }
-                } while (entered < 0 && entered >= h.getRoomLog().size());
+
+                } while (entered < 0);
             } else {
                 System.out.println("No rooms are booked at the moment.");
             }
         }
         input.nextLine();
         return r;
+    }
+
+    // Method to get valid integer input for room selection
+    public static int getValidRoomSelection(Scanner input, int roomCount) {
+        int selection = -1;
+        boolean valid = false;
+
+        while (!valid) {
+            try {
+                selection = input.nextInt() - 1;
+
+                if (selection >= 0 && selection < roomCount) {
+                    valid = true;
+                } else {
+                    System.out.println("Invalid room number. Try again.");
+                    selection = -1; // Reset
+                }
+            } catch (InputMismatchException e) {
+                System.out.println("Invalid entry. Please enter a number.");
+                input.nextLine();
+            }
+        }
+        return selection;
     }
 
     // Returns an amenity for the user to book or modify, depending
@@ -554,6 +574,7 @@ public class UI {
 
     }
 
+    // -------------------------------------------------------------------------------------------------------
     // Method to display booked amenities
     public static void displayAmenities(Guest user) {
         for (int i = 1; i <= user.getAmenitiesBooked().size(); i++) {
@@ -597,4 +618,5 @@ public class UI {
             }
         }
     }
+    // -----------------------------------------------------------------------------
 }
