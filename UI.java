@@ -16,254 +16,59 @@ public class UI {
         while (session) {
             userNum = selectHotel(input, hotels, userNum);
 
-
             // User is a Guest
             while (userNum == 1) {
-                while (h.getGuestList().size() >= 100 && userNum == 1) {
+                // Check if the hotel is full
+                if (h.getGuestList().size() >= 100) {
                     System.out.println("Hotel is full, select a different hotel.");
                     userNum = selectHotel(input, hotels, userNum);
+                    continue; // Skip to next iteration if full
                 }
                 System.out.print("New Guest session initiated. ");
                 Guest user = assignGuestSession(input, h);
-                System.out.println("Select an option (enter a number):\n" +
-                        "1. Book a room\n" +
-                        "2. Book an amenity\n" +
-                        "3. Make a payment\n" +
-                        "4. Leave a rating\n" +
-                        "5. Call room service\n" +
-                        "6. Previous\n" +
-                        "7. End session");
-                boolean correct = false;
-                while (!correct) {
-                    try {
-                        entered = input.nextInt();
-                        correct = true;
-                    } catch (InputMismatchException e) {
-                        System.out.println("Invalid entry. Try again.");
-                        input.nextLine();
-                    }
-                }
-                input.nextLine();
-                switch (entered) {
-                    case 1:
-                        Room bookedRoom = roomSelect(input, h, false);
-                        h.reservation(bookedRoom, user);
-                        break;
-                    case 2:
-                        Amenity bookedAmenity = amenitySelect(input, h, false);
-                        h.reservation(bookedAmenity, user);
-                        break;
-                    case 3:
-                        user.displayGuestAccount(input, h);
-                        break;
-                    case 4:
-                        if (user.getAmenitiesBooked().isEmpty()) {
-                            System.out.println("Cannot add rating without " +
-                                    "outstanding reservation");
-                        } else {
-                            System.out.println("Which amenity will you rate?:");
-                            for (int i = 1; i <= user.getAmenitiesBooked().size(); i++) {
-                                System.out.println(i + ". " +
-                                        user.getAmenitiesBooked().get(i - 1).getName());
-                            }
-                            Amenity rated = null;
-                            correct = false;
-                            while (!correct) {
-                                try {
-                                    entered = input.nextInt() - 1;
-                                    rated = user.getAmenitiesBooked().get(entered);
-                                    correct = true;
-                                } catch (InputMismatchException | IndexOutOfBoundsException e) {
-                                    System.out.println("Invalid entry. Try again.");
-                                    input.nextLine();
-                                }
-                            }
-                            do {
-                                System.out.print("How would you rate this amenity " +
-                                        "(from 1 - 10)?: ");
-                                try {
-                                    entered = input.nextInt();
-                                } catch (InputMismatchException e) {
-                                    System.out.println("Invalid entry. Please enter " +
-                                            "a number between 0 and 10.");
-                                    input.nextLine();
-                                }
-                            } while (entered < 1 || entered > 10);
-                            input.nextLine();
-                            rated.rate(user, entered);
-                        }
-                        break;
-                    case 5:
-                        Room r = roomSelect(input, h, true);
-                        if (r != null) {
-                            r.callRoomService();
-                        }
-                        break;
-                    case 6:
-                        userNum = selectHotel(input, hotels, userNum);
-                        break;
-                    case 7:
-                        session = false;
-                        userNum = 0;
-                        input.close();
-                        break;
-                    default:
-                        System.out.println("Invalid entry. Try again.");
-                }
-            }
 
-            // User is an employee
-            while (userNum == 2) {
-                System.out.print("Enter employee ID: ");
-                String ID = input.nextLine();
-                Employee search = new Employee(ID);
-                if (h.getEmployeeList().contains(search)) {
-                    int searchIndex = h.getEmployeeList().indexOf(search);
-                    Employee userEmploy = h.getEmployeeList().get(searchIndex);
-                    System.out.println("Welcome back " + userEmploy.getName() + "!");
+                while (true) {
                     System.out.println("Select an option (enter a number):\n" +
                             "1. Book a room\n" +
                             "2. Book an amenity\n" +
-                            "3. Modify a booking\n" +
-                            "4. Modify employee/hotel details\n" +
-                            "5. Log hours/Paycheck information\n" +
+                            "3. Make a payment\n" +
+                            "4. Leave a rating\n" +
+                            "5. Call room service\n" +
                             "6. Previous\n" +
                             "7. End session");
-                    boolean correct = false;
-                    while (!correct) {
+
+                    // Validate user input
+                    while (true) {
                         try {
                             entered = input.nextInt();
-                            correct = true;
+                            input.nextLine(); // Consume new line
+                            break; // Exit loop
+
                         } catch (InputMismatchException e) {
                             System.out.println("Invalid entry. Try again.");
                             input.nextLine();
                         }
                     }
-                    input.nextLine();
+
                     switch (entered) {
-                        case 1:
-                            Guest guestUser = assignGuestSession(input, h);
+                        case 1: // Book a room
                             Room bookedRoom = roomSelect(input, h, false);
-                            h.reservation(bookedRoom, guestUser);
+                            h.reservation(bookedRoom, user);
                             break;
                         case 2:
-                            Guest guestUser2 = assignGuestSession(input, h);
                             Amenity bookedAmenity = amenitySelect(input, h, false);
-                            h.reservation(bookedAmenity, guestUser2);
+                            h.reservation(bookedAmenity, user);
                             break;
                         case 3:
-                            do {
-                                System.out.println("Modify Room or Amenity bookings?:\n" +
-                                        "1. Room\n2. Amenity");
-                                correct = false;
-                                while (!correct) {
-                                    try {
-                                        entered = input.nextInt();
-                                        correct = true;
-                                    } catch (InputMismatchException e) {
-                                        System.out.println("Invalid entry. Enter 1 for " +
-                                                "Room or 2 for Amenity.");
-                                        input.nextLine();
-                                    }
-                                }
-                                if (entered != 1 && entered != 2) {
-                                    System.out.println("Invalid entry. Enter 1 for " +
-                                            "Room or 2 for Amenity.");
-                                }
-                            } while (entered != 1 && entered != 2);
-
-                            // Modify a room booking
-                            if (entered == 1) {
-                                Room modifiedRoom = roomSelect(input, h, true);
-                                if (modifiedRoom != null) {
-                                    do {
-                                        System.out.print("Cancel or switch booking? " +
-                                                "(Enter 1 for cancel or 2 for switch): ");
-                                        correct = false;
-                                        while (!correct) {
-                                            try {
-                                                entered = input.nextInt();
-                                                correct = true;
-                                            } catch (InputMismatchException e) {
-                                                System.out.println("Invalid entry. Try again.");
-                                                input.nextLine();
-                                            }
-                                        }
-                                        if (entered != 1 && entered != 2) {
-                                            System.out.println("Invalid entry. Enter 1 for " +
-                                                    "cancel or 2 for switch.");
-                                        }
-                                    } while (entered != 1 && entered != 2);
-                                    input.nextLine();
-                                    if (entered == 1) {
-                                        userEmploy.modifyRoom(modifiedRoom);
-                                    } else {
-                                        Guest newG = assignGuestSession(input, h);
-                                        userEmploy.modifyRoom(modifiedRoom, newG, h);
-                                    }
-                                }
-                            } else {                            // Modify an amenity booking
-                                Amenity modifiedAmenity = amenitySelect(input, h, true);
-                                if (modifiedAmenity != null) {
-                                    do {
-                                        System.out.println("Cancel or switch booking? " +
-                                                "(Enter 1 for cancel or 2 for switch): ");
-                                        boolean correct2 = false;
-                                        while (!correct2) {
-                                            try {
-                                                entered = input.nextInt();
-                                                correct2 = true;
-                                            } catch (InputMismatchException e) {
-                                                System.out.println("Invalid entry. Try again.");
-                                                input.nextLine();
-                                            }
-                                        }
-                                        if (entered != 1 && entered != 2) {
-                                            System.out.println("Invalid entry. Enter 1 for " +
-                                                    "cancel or 2 for switch.");
-                                        }
-                                    } while (entered != 1 && entered != 2);
-                                    input.nextLine();
-                                    System.out.println("Whose " + modifiedAmenity.getName() +
-                                            " reservation will be cancelled?: ");
-                                    String cancelled = input.nextLine();
-                                    Guest c = new Guest(cancelled);
-                                    if (entered == 1) {
-                                        userEmploy.modifyAmenity(modifiedAmenity, c);
-                                    } else {
-                                        Guest newG = assignGuestSession(input, h);
-                                        userEmploy.modifyAmenity(modifiedAmenity, c, newG, h);
-                                    }
-                                }
-                            }
+                            user.displayGuestAccount(input, h);
                             break;
                         case 4:
-                            if (!(userEmploy instanceof Manager)) {
-                                System.out.println("Only supervisors have permission " +
-                                        "to change employee details.");
-                            } else {
-                                ((Manager) userEmploy).managerModify(input, h);
-                            }
+                            leaveRating(input, user);
                             break;
                         case 5:
-                            do {
-                                System.out.println("Select an option:\n1) " +
-                                        "Log hours\n2) Check timecard");
-                                entered = input.nextInt();
-                                if (entered != 1 && entered != 2) {
-                                    System.out.println("Please enter 1 or 2 for the below options.");
-                                }
-                            } while (entered != 1 && entered != 2);
-                            input.nextLine();
-
-                            if (entered == 1) {
-                                System.out.println("Add how many hours to payroll?: ");
-                                double hours = input.nextDouble();
-                                input.nextLine();
-                                userEmploy.logHours(hours);
-                            } else {
-                                userEmploy.displayEmployeeDetails();
-                                System.out.println("Get ready for that paycheck - $coming soon!$");
+                            Room r = roomSelect(input, h, true);
+                            if (r != null) {
+                                r.callRoomService();
                             }
                             break;
                         case 6:
@@ -277,12 +82,204 @@ public class UI {
                         default:
                             System.out.println("Invalid entry. Try again.");
                     }
-                } else {
-                    System.out.println("Invalid Employee ID. Try again.");
                 }
+
+            }
+
+            // User is an employee
+            while (userNum == 2) {
+                employeeSession(input, h, userNum, hotels);
+            }
+
+        }
+
+    }
+
+    // --------------------------------------------------------------------------------------------------
+    // Main employee session method
+    public static void employeeSession(Scanner input, Hotel h, int userNum, List<Hotel> hotels) {
+        System.out.println("Enter employee ID: ");
+        String ID = input.nextLine();
+        Employee search = new Employee(ID);
+
+        if (!h.getEmployeeList().contains(search)) {
+            System.out.println("Invalid Employee ID. Try again.");
+            return;
+        }
+
+        Employee userEmploy = getEmployeeById(h, ID);
+        System.out.println("Welcome back " + userEmploy.getName() + "!");
+
+        boolean session = true;
+
+        while (session && userNum == 2) {
+            int option = getValidatedIntInput(input, """
+                    Select an option (enter a number):
+                    1. Book a room
+                    2. Book an amenity
+                    3. Modify a booking
+                    4. Modify employee/hotel details
+                    5. Log hours/Paycheck information
+                    6. Previous
+                    7. End session
+                    """);
+
+            switch (option) {
+                case 1:
+                    handleRoomBooking(input, h, assignGuestSession(input, h));
+                case 2:
+                    handleAmenityBooking(input, h, assignGuestSession(input, h));
+                case 3:
+                    handleModifyBooking(input, h, userEmploy);
+                case 4:
+                    handleEmployeeModification(input, h, userEmploy);
+                case 5:
+                    handlePayroll(input, userEmploy);
+                case 6:
+                    userNum = selectHotel(input, hotels, userNum);
+                case 7:
+                    session = endSession(input);
+                default:
+                    System.out.println("Invalid entry. Try again.");
+            }
+
+        }
+    }
+
+    // Helper method to end session
+    public static boolean endSession(Scanner input) {
+        System.out.println("Ending session...");
+        input.close();
+        return false;
+    }
+
+    // Helper method to retrieve employee by ID
+    public static Employee getEmployeeById(Hotel h, String ID) {
+        for (Employee e : h.getEmployeeList()) {
+            if (e.getId().equals(ID)) {
+                return e;
+            }
+        }
+        return null; // If no matching employee found
+    }
+
+    // Helper to handle room booking
+    public static void handleRoomBooking(Scanner input, Hotel h, Guest guest) {
+        Room bookedRoom = roomSelect(input, h, false);
+
+        if (bookedRoom != null) {
+            h.reservation(bookedRoom, guest);
+        } else {
+            System.out.println("Room booking failed.");
+        }
+    }
+
+    // Method to handle amenity booking
+    public static void handleAmenityBooking(Scanner input, Hotel h, Guest guest) {
+        Amenity bookedAmenity = amenitySelect(input, h, false);
+        if (bookedAmenity != null) {
+            h.reservation(bookedAmenity, guest);
+        } else {
+            System.out.println("Amenity booking failed.");
+        }
+    }
+
+    // Method to handle the modify booking
+    public static void handleModifyBooking(Scanner input, Hotel h, Employee userEmploy) {
+        int bookingType = getValidatedIntInput(input, "Modify Room or Amenity bookings?:\n1. Room\n2. Amenity");
+
+        if (bookingType == 1) {
+            modifyRoomBooking(input, h, userEmploy);
+        } else if (bookingType == 2) {
+            modifyAmenityBooking(input, h, userEmploy);
+        } else {
+            System.out.println("Invalid entry.");
+        }
+    }
+
+    // Method to modify room booking
+    public static void modifyRoomBooking(Scanner input, Hotel h, Employee userEmploy) {
+        Room modifiedRoom = roomSelect(input, h, true);
+        if (modifiedRoom == null)
+            return;
+
+        int action = getValidatedIntInput(input, "Cancel or switch booking? (Enter 1 for cancel or 2 for switch): ");
+        if (action == 1) {
+            userEmploy.modifyRoom(modifiedRoom);
+        } else if (action == 2) {
+            Guest newGuest = assignGuestSession(input, h);
+            userEmploy.modifyRoom(modifiedRoom, newGuest, h);
+        } else {
+            System.out.println("Invalid entry.");
+        }
+    }
+
+    // Method to modify amenity booking
+    public static void modifyAmenityBooking(Scanner input, Hotel h, Employee userEmploy) {
+        Amenity modifiedAmenity = amenitySelect(input, h, true);
+        if (modifiedAmenity == null)
+            return;
+
+        int action = getValidatedIntInput(input, "Cancel or switch booking? (Enter 1 for cancel or 2 for switch): ");
+        if (action == 1) {
+            System.out.print("Whose reservation will be cancelled?: ");
+            String guestName = input.nextLine();
+            userEmploy.modifyAmenity(modifiedAmenity, new Guest(guestName));
+        } else if (action == 2) {
+            Guest newGuest = assignGuestSession(input, h);
+            System.out.print("Whose reservation will be switched?: ");
+            String guestName = input.nextLine();
+            userEmploy.modifyAmenity(modifiedAmenity, new Guest(guestName), newGuest, h);
+        } else {
+            System.out.println("Invalid entry.");
+        }
+    }
+
+    // Method to handle employee modification
+    public static void handleEmployeeModification(Scanner input, Hotel h, Employee userEmploy) {
+        if (userEmploy instanceof Manager manager) {
+            manager.managerModify(input, h);
+
+        } else {
+            System.out.println("Only supervisors have permission to change employee details.");
+        }
+    }
+
+    // Method to handle pay roll
+    public static void handlePayroll(Scanner input, Employee userEmploy) {
+        int payrollOption = getValidatedIntInput(input, "Select an option:\n1) Log hours\n2) Check timecard");
+
+        if (payrollOption == 1) {
+            System.out.print("Add how many hours to payroll?: ");
+            double hours = input.nextDouble();
+            input.nextLine();
+            userEmploy.logHours(hours);
+
+        } else if (payrollOption == 2) {
+            userEmploy.displayEmployeeDetails();
+            System.out.println("Get ready for that paycheck - $coming soon!$");
+
+        } else {
+            System.out.println("Invalid entry.");
+        }
+    }
+
+    // Method to get validated input
+    public static int getValidatedIntInput(Scanner input, String prompt) {
+        int entered;
+        while (true) {
+            System.out.print(prompt);
+            try {
+                entered = input.nextInt();
+                input.nextLine();
+                return entered;
+            } catch (InputMismatchException e) {
+                System.out.println("Invalid entry. Please enter a number.");
+                input.nextLine();
             }
         }
     }
+    // ----------------------------------------------------------------------------------------------------------------------
 
     public static List<Hotel> buildHotels() {
         Hotel beachfront = new Hotel("Beachfront");
@@ -336,7 +333,7 @@ public class UI {
         while (!correct && userNum != 1 && userNum != 2) {
             try {
                 System.out.print("Guest or Employee Login? (Enter 1 for Guest " +
-                    "portal or 2 for Employee portal): ");
+                        "portal or 2 for Employee portal): ");
                 userNum = input.nextInt();
                 if (userNum != 1 && userNum != 2) {
                     System.out.println("Invalid entry. Try again.");
@@ -358,7 +355,7 @@ public class UI {
     // until a hotel is selected
     // Returns the user number for the initial method call
     public static int selectHotel(Scanner input, List<Hotel> hotels,
-                                  int userNum) {
+            int userNum) {
         int entered = 0;
         do {
             System.out.println("Select your hotel (enter a number):\n" +
@@ -532,5 +529,72 @@ public class UI {
         }
         input.nextLine();
         return a;
+    }
+
+    // Method to handle rating logic
+    public static void leaveRating(Scanner input, Guest user) {
+        if (user.getAmenitiesBooked().isEmpty()) {
+            System.out.println("Cannot add rating without " +
+                    "outstanding reservation");
+            return; // Exit if no booked amenities
+        }
+
+        // Display amenities for rating
+        System.out.println("Which amenity will you rate?:");
+        displayAmenities(user);
+
+        Amenity rated = selectAmenity(input, user);
+
+        if (rated == null) {
+            return; // Exit if selection invalid
+        }
+
+        // Handle rating input
+        int rating = getRating(input);
+
+    }
+
+    // Method to display booked amenities
+    public static void displayAmenities(Guest user) {
+        for (int i = 1; i <= user.getAmenitiesBooked().size(); i++) {
+            System.out.println(i + ". " + user.getAmenitiesBooked().get(i - 1).getName());
+        }
+    }
+
+    // Method to select an amenity
+    public static Amenity selectAmenity(Scanner input, Guest user) {
+        int entered = -1;
+
+        while (true) {
+            try {
+                entered = input.nextInt() - 1;
+                return user.getAmenitiesBooked().get(entered);
+            } catch (InputMismatchException | IndexOutOfBoundsException e) {
+                System.out.println("Invalid entry. Try again.");
+                input.nextLine();
+            }
+        }
+    }
+
+    // Method to get a valid rating from the user
+    public static int getRating(Scanner input) {
+        int entered = -1;
+
+        while (true) {
+            System.out.println("How would you rate this amenity (from 1 - 10)?:");
+
+            try {
+                entered = input.nextInt();
+
+                if (entered >= 1 && entered <= 10) {
+                    return entered; // Return valid rating
+                } else {
+                    System.out.println("Please enter a number between 1 and 10.");
+                }
+            } catch (InputMismatchException e) {
+                System.out.println("Invalid entry. Please enter a number between 1 and 10.");
+                input.nextLine();
+            }
+        }
     }
 }

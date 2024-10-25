@@ -1,15 +1,16 @@
-public class Pool extends Amenity implements Reservable{
+public class Pool extends Amenity {
     private float length;
     private float width;
     private float maxDepth;
     private float waterTemp;
     private Employee lifeguard;
-    
-    public Pool(String name, String description, float basePrice){
+
+    public Pool(String name, String description, float basePrice) {
         super(name, description, basePrice);
     }
 
-    public Pool(String name, String description, float basePrice, float length, float width, float maxDepth, float waterTemp){
+    public Pool(String name, String description, float basePrice, float length, float width, float maxDepth,
+            float waterTemp) {
         super(name, description, basePrice);
         this.length = length;
         this.width = width;
@@ -17,43 +18,43 @@ public class Pool extends Amenity implements Reservable{
         this.waterTemp = waterTemp;
     }
 
-    public float getLength(){
+    public float getLength() {
         return length;
     }
 
-    public void setLength(float length){
+    public void setLength(float length) {
         this.length = length;
     }
 
-    public float getWidth(){
+    public float getWidth() {
         return width;
     }
 
-    public void setWidth(float width){
+    public void setWidth(float width) {
         this.width = width;
     }
 
-    public float getMaxDepth(){
+    public float getMaxDepth() {
         return maxDepth;
     }
 
-    public void setMaxDepth(float maxDepth){
+    public void setMaxDepth(float maxDepth) {
         this.maxDepth = maxDepth;
     }
 
-    public float getWaterTemp(){
+    public float getWaterTemp() {
         return waterTemp;
     }
 
-    public void setWaterTemp(float waterTemp){
+    public void setWaterTemp(float waterTemp) {
         this.waterTemp = waterTemp;
     }
 
-    public Employee getLifeguard(){
+    public Employee getLifeguard() {
         return lifeguard;
     }
 
-    public void setLifeguard(Employee lifeguard){
+    public void setLifeguard(Employee lifeguard) {
         this.lifeguard = lifeguard;
     }
 }

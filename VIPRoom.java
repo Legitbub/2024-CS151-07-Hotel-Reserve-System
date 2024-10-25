@@ -1,4 +1,4 @@
-public class VIPRoom extends Room implements Reservable {
+public class VIPRoom extends Room {
     public VIPRoom() {
         level = "VIP";
     }
