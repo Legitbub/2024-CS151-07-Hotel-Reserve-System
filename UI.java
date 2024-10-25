@@ -14,10 +14,10 @@ public class UI {
         int entered = 0;
 
         while (session) {
-            userNum = selectHotel(input, hotels, userNum);
-
             // User is a Guest
             while (userNum == 1) {
+                userNum = selectHotel(input, hotels, userNum);
+
                 // Check if the hotel is full
                 if (h.getGuestList().size() >= 100) {
                     System.out.println("Hotel is full, select a different hotel.");
@@ -80,6 +80,7 @@ public class UI {
                             endSession(input);
                         default:
                             System.out.println("Invalid entry. Try again.");
+                            break;
                     }
                 }
 
@@ -87,6 +88,9 @@ public class UI {
 
             // User is an employee
             while (userNum == 2) {
+                userNum = selectHotel(input, hotels, userNum);
+                input.nextLine();
+
                 employeeSession(input, h, userNum, hotels);
             }
 
@@ -97,6 +101,11 @@ public class UI {
     // --------------------------------------------------------------------------------------------------
     // Main employee session method
     public static void employeeSession(Scanner input, Hotel h, int userNum, List<Hotel> hotels) {
+        if (input == null) {
+            System.out.println("Error: No ID found.");
+            return;
+        }
+
         System.out.println("Enter employee ID: ");
         String ID = input.nextLine();
         Employee search = new Employee(ID);
@@ -339,13 +348,16 @@ public class UI {
     public static int getUserNum(Scanner input) {
         boolean correct = false;
         int userNum = 0;
-        while (!correct && userNum != 1 && userNum != 2) {
+
+        while (!correct) {
             try {
                 System.out.print("Guest or Employee Login? (Enter 1 for Guest " +
                         "portal or 2 for Employee portal): ");
                 userNum = input.nextInt();
+
                 if (userNum != 1 && userNum != 2) {
                     System.out.println("Invalid entry. Try again.");
+
                 } else {
                     correct = true;
                 }
